@@ -472,164 +472,396 @@ if (typeof module !== "undefined") module.exports = SJ;
 
 </script>
 <script>
-// FX v3: 은은한 '샤르르' 파티클 엔진. 터지는 섬광·화면 흔들림 없이, 천천히 스며드는 빛·흩날리는 반짝임·옅은 안개로 분위기를 만든다.
-// 카드별 효과는 황금여명회(Golden Dawn) 원소/행성 배속을 근거로 하고, 상징이 뚜렷한 카드(탑·별·달·태양·죽음·악마·연인·은둔자)는 그 그림의 핵심 현상을 부드럽게 옮긴다.
+// FX v4 — 샤르륵: 작은 가루, 느린 바람, 긴 잔광. 링/광구/방사광 없음.
 const FX = (() => {
-  const RM = matchMedia("(prefers-reduced-motion: reduce)").matches;
-  const cv = document.createElement("canvas"); cv.id = "fx";
-  cv.style.cssText = "position:fixed;inset:0;width:100%;height:100%;pointer-events:none;z-index:60";
-  // 베일: 어둡게 덮지 않고, 주변만 살짝 흐리고 낮춰 카드에 시선이 모이게 한다
-  const vg = document.createElement("div"); vg.id = "fxVeil";
-  vg.style.cssText = "position:fixed;inset:0;pointer-events:none;z-index:59;opacity:0;-webkit-backdrop-filter:blur(2.5px);backdrop-filter:blur(2.5px);background:radial-gradient(ellipse at var(--fx,50%) var(--fy,50%),transparent 0,transparent 22%,rgba(8,6,22,.28) 60%,rgba(6,4,18,.45) 100%);transition:opacity 1.1s ease;-webkit-mask:radial-gradient(ellipse at var(--fx,50%) var(--fy,50%),transparent 0,transparent 20%,#000 52%);mask:radial-gradient(ellipse at var(--fx,50%) var(--fy,50%),transparent 0,transparent 20%,#000 52%)";
-  const ctx = cv.getContext("2d");
-  let W = 0, H = 0, DPR = 1, parts = [], rays = [], blooms = [], running = false, last = 0, T = 0;
-  const fit = () => { DPR = Math.min(devicePixelRatio || 1, 2); W = innerWidth; H = innerHeight; cv.width = W * DPR; cv.height = H * DPR; ctx.setTransform(DPR, 0, 0, DPR, 0, 0); };
+  const motion = matchMedia("(prefers-reduced-motion: reduce)");
   const R = (a, b) => a + Math.random() * (b - a);
-  const pick = (a) => a[(Math.random() * a.length) | 0];
-  const mk = (s, fn) => { const c = document.createElement("canvas"); c.width = c.height = s; fn(c.getContext("2d"), s); return c; };
-  const SPR = {};
-  // 안개 덩어리: 흐린 원을 겹친 불규칙한 노이즈 스프라이트
-  const puff = (rgb, v) => SPR["p" + rgb + v] || (SPR["p" + rgb + v] = mk(128, (g, s) => {
-    let seed = v * 9301 + 49297; const rnd = () => (seed = (seed * 9301 + 49297) % 233280) / 233280;
-    try { g.filter = "blur(4px)"; } catch (e) {}
-    for (let i = 0; i < 40; i++) { const a = rnd() * 6.283, d = rnd() ** 1.6 * s * 0.3, x = s / 2 + Math.cos(a) * d, y = s / 2 + Math.sin(a) * d, r = s * (0.08 + rnd() * 0.16);
-      const gr = g.createRadialGradient(x, y, 0, x, y, r); gr.addColorStop(0, `rgba(${rgb},${0.18 + rnd() * 0.16})`); gr.addColorStop(1, `rgba(${rgb},0)`); g.fillStyle = gr; g.fillRect(0, 0, s, s); } }));
-  const glow = (rgb) => SPR["g" + rgb] || (SPR["g" + rgb] = mk(64, (g, s) => { const r = g.createRadialGradient(s / 2, s / 2, 0, s / 2, s / 2, s / 2); r.addColorStop(0, "rgba(255,255,255,.95)"); r.addColorStop(0.12, `rgba(${rgb},.75)`); r.addColorStop(0.45, `rgba(${rgb},.16)`); r.addColorStop(1, `rgba(${rgb},0)`); g.fillStyle = r; g.fillRect(0, 0, s, s); }));
-  // 별빛 반짝임: 작은 코어 + 가는 십자 빛줄기
-  const twinkle = (rgb) => SPR["t" + rgb] || (SPR["t" + rgb] = mk(128, (g, s) => { const c = s / 2; const r = g.createRadialGradient(c, c, 0, c, c, c * 0.24); r.addColorStop(0, "rgba(255,255,255,1)"); r.addColorStop(0.3, `rgba(${rgb},.7)`); r.addColorStop(1, `rgba(${rgb},0)`); g.fillStyle = r; g.fillRect(0, 0, s, s);
-    for (const [w, a] of [[c, 0], [c * 0.45, Math.PI / 4]]) { g.save(); g.translate(c, c); g.rotate(a); for (let k = 0; k < 2; k++) { g.rotate(Math.PI / 2); const l = g.createLinearGradient(-w, 0, w, 0); l.addColorStop(0, `rgba(${rgb},0)`); l.addColorStop(0.5, "rgba(255,255,255,.75)"); l.addColorStop(1, `rgba(${rgb},0)`); g.fillStyle = l; g.fillRect(-w, -0.6, w * 2, 1.2); } g.restore(); } }));
-  const bokeh = (rgb) => SPR["b" + rgb] || (SPR["b" + rgb] = mk(96, (g, s) => { const c = s / 2; const r = g.createRadialGradient(c, c, 0, c, c, c * 0.95); r.addColorStop(0, `rgba(${rgb},.12)`); r.addColorStop(0.8, `rgba(${rgb},.18)`); r.addColorStop(0.92, `rgba(${rgb},.28)`); r.addColorStop(1, `rgba(${rgb},0)`); g.fillStyle = r; g.fillRect(0, 0, s, s); }));
-  const petal = (v) => SPR["pe" + v] || (SPR["pe" + v] = mk(64, (g, s) => { g.translate(s / 2, s / 2); const l = g.createLinearGradient(0, -s * 0.4, 0, s * 0.4); l.addColorStop(0, ["#ffe1ea", "#fff0f4", "#fbd0dc"][v]); l.addColorStop(0.75, ["#f39ab4", "#f6b8ca", "#e6799c"][v]); l.addColorStop(1, "#c8507a"); g.fillStyle = l;
-    g.beginPath(); g.moveTo(0, s * 0.4); g.bezierCurveTo(-s * 0.36, s * 0.1, -s * 0.3, -s * 0.38, -s * 0.04, -s * 0.36); g.quadraticCurveTo(0, -s * 0.3, s * 0.04, -s * 0.36); g.bezierCurveTo(s * 0.3, -s * 0.38, s * 0.36, s * 0.1, 0, s * 0.4); g.fill(); }));
-  const raySpr = (rgb) => SPR["r" + rgb] || (SPR["r" + rgb] = (() => { const c = document.createElement("canvas"); c.width = 256; c.height = 64; const g = c.getContext("2d"); const im = g.createImageData(256, 64); const [cr, cg, cb] = rgb.split(",").map(Number);
-    for (let x = 0; x < 256; x++) { const t = x / 255, along = Math.min(1, t / 0.1) * (1 - t) ** 1.6; for (let y = 0; y < 64; y++) { const d = (y - 31.5) / 32 * (1 + t * 0.3), a = along * Math.exp(-d * d * 5); const i = (y * 256 + x) * 4; im.data[i] = cr; im.data[i + 1] = cg; im.data[i + 2] = cb; im.data[i + 3] = a * 255; } }
-    g.putImageData(im, 0, 0); return c; })());
+  const pick = a => a[(Math.random() * a.length) | 0];
+  const clamp = (v, a, b) => Math.max(a, Math.min(b, v));
+  const finite = (v, fallback) => Number.isFinite(v) ? v : fallback;
+  const strength = p => clamp(finite(p, 1), 0, 1.5);
   const RGB = {
-    fire: ["255,190,110", "255,160,80", "255,225,160"], water: ["150,210,255", "190,235,255", "130,170,255"], air: ["225,235,255", "200,215,255", "245,248,255"],
-    earth: ["240,210,140", "215,230,160", "255,238,190"], wood: ["160,235,175", "130,215,190", "215,250,200"], light: ["255,236,190", "255,248,232", "225,210,255"],
-    love: ["255,175,200", "255,215,228", "245,210,150"], shadow: ["175,140,255", "130,100,230", "215,185,255"], moon: ["205,218,255", "180,198,255", "238,242,255"],
-    sun: ["255,222,150", "255,240,205", "255,200,110"], star: ["205,228,255", "255,255,255", "180,205,255"], arcane: ["255,218,150", "205,178,255", "255,244,215"],
-    hell: ["255,130,110", "220,80,110", "255,180,150"],
+    light: ["247,223,166", "230,235,245", "255,244,216"],
+    fire: ["249,191,108", "239,160,91", "255,224,169"],
+    water: ["193,222,241", "229,238,247", "169,203,228"],
+    air: ["220,231,244", "195,213,233", "242,243,247"],
+    earth: ["231,196,124", "245,220,167", "211,181,116"],
+    wood: ["185,215,170", "219,228,189", "231,217,167"],
+    love: ["242,198,211", "246,224,220", "232,208,162"],
+    shadow: ["146,119,185", "171,147,202", "119,104,157"],
+    moon: ["191,205,230", "221,229,244", "169,185,219"],
+    sun: ["250,215,151", "255,233,186", "238,193,119"],
+    star: ["209,229,244", "235,241,247", "188,210,237"],
+    arcane: ["241,216,168", "208,192,228", "239,233,216"],
+    hell: ["209,137,125", "187,109,133", "227,168,140"],
   };
-  const add = (p) => { if (parts.length < 900) parts.push(p); };
-  const at = (t) => { if (t && t.getBoundingClientRect) { const r = t.getBoundingClientRect(); return { x: r.left + r.width / 2, y: r.top + r.height / 2, w: r.width, h: r.height }; } return Object.assign({ x: W / 2, y: H / 2, w: 200, h: 300 }, t || {}); };
-  // 느린 흐름장: 파티클이 바람에 실린 듯 살랑이게
-  const flow = (x, y) => [Math.sin(y * 0.011 + T * 0.6) * 0.8 + Math.cos(y * 0.027 - T * 0.4) * 0.4, Math.cos(x * 0.009 - T * 0.5) * 0.5];
-
-  const E = {
-    // 반짝이 가루: 천천히 나타나 살짝 떠오르다 사라짐 — 모든 효과의 바탕
-    dust(o, n, pal = RGB.light, spread = 0.8) { for (let i = 0; i < n; i++) add({ k: "mote", rgb: pick(pal), x: o.x + R(-o.w * spread, o.w * spread), y: o.y + R(-o.h * 0.7, o.h * 0.6), vx: R(-6, 6), vy: R(-18, -4), sz: R(0.5, 1.5), turb: 8, life: R(2.6, 4.6), delay: R(0, 1.4), ph: R(0, 6) }); },
-    // 샤르르: 카드 위를 대각선으로 쓸고 지나가는 반짝임의 물결
-    sweep(o, n, pal = RGB.light) { for (let i = 0; i < n; i++) { const u = i / n, x = o.x - o.w * 0.55 + u * o.w * 1.1 + R(-o.w * 0.12, o.w * 0.12), y = o.y + o.h * 0.5 - u * o.h + R(-o.h * 0.1, o.h * 0.1);
-      add({ k: Math.random() < 0.3 ? "twinkle" : "mote", rgb: pick(pal), x, y, vx: R(-4, 4), vy: R(-14, -4), sz: Math.random() < 0.3 ? R(5, 11) : R(0.6, 1.6), turb: 6, life: R(1.6, 2.8), delay: u * 0.9 + R(0, 0.12), ph: R(0, 6) }); } },
-    sparkle(o, n, pal = RGB.light) { for (let i = 0; i < n; i++) add({ k: "twinkle", rgb: pick(pal), x: o.x + R(-o.w * 0.75, o.w * 0.75), y: o.y + R(-o.h * 0.65, o.h * 0.65), vx: R(-3, 3), vy: R(-8, 2), sz: R(4, 12), life: R(1.6, 3), delay: R(0, 1.6), ph: R(0, 6) }); },
-    bokeh(o, n, pal = RGB.light) { for (let i = 0; i < n; i++) add({ k: "bokeh", rgb: pick(pal), x: o.x + R(-o.w, o.w), y: o.y + R(-o.h * 0.8, o.h * 0.8), vx: R(-4, 4), vy: R(-8, 2), sz: R(12, 34), life: R(2.6, 4.2), delay: R(0, 1.2) }); },
-    // 옅은 안개: 아주 낮은 알파로 피어오르는 빛 번짐
-    haze(o, n, rgb, a = 0.14, rise = -10) { for (let i = 0; i < n; i++) add({ k: "mist", rgb, v: (Math.random() * 4) | 0, x: o.x + R(-o.w * 0.55, o.w * 0.55), y: o.y + R(-o.h * 0.2, o.h * 0.45), vx: R(-8, 8), vy: R(rise * 1.5, rise * 0.5), sz: R(50, 100), grow: 0.8, rot: R(0, 6.28), spin: R(-0.15, 0.15), turb: 10, life: R(3, 4.6), delay: R(0, 1), a }); },
-    // 불: 터지는 불꽃 대신, 따스한 불씨가 천천히 떠올라 꺼져 간다
-    fire(o, n, pal = RGB.fire) { E.haze(o, n * 0.12, pal[0], 0.1, -16);
-      for (let i = 0; i < n * 0.6; i++) add({ k: "ember", rgb: pick(pal), x: o.x + R(-o.w * 0.45, o.w * 0.45), y: o.y + R(0, o.h * 0.5), vx: R(-8, 8), vy: R(-48, -18), sz: R(0.7, 1.7), turb: 22, life: R(2.4, 4), delay: R(0, 1.4), ph: R(0, 6) });
-      E.dust(o, n * 0.3, pal); },
-    // 물: 물방울이 천천히 떨어지며 반짝이고, 잔물결이 느리게 번진다
-    water(o, n) { E.haze(o, n * 0.12, "150,200,255", 0.12, -6);
-      for (let i = 0; i < n * 0.35; i++) add({ k: "drop", rgb: pick(RGB.water), x: o.x + R(-o.w * 0.5, o.w * 0.5), y: o.y + R(-o.h * 0.6, o.h * 0.1), vx: R(-3, 3), vy: R(14, 34), sz: R(0.8, 1.6), turb: 4, life: R(2, 3.4), delay: R(0, 1.4), ph: R(0, 6) });
-      for (let i = 0; i < 3; i++) add({ k: "ripple", rgb: pick(RGB.water), x: o.x + R(-o.w * 0.2, o.w * 0.2), y: o.y + o.h * R(0.38, 0.5), sz: 4, grow: R(60, 110), life: R(2.6, 3.4), delay: 0.3 + i * 0.7 });
-      E.bokeh(o, n * 0.15, RGB.water); },
-    // 공기: 실바람처럼 가느다란 빛줄기가 옆으로 흘러간다
-    air(o, n) { for (let i = 0; i < n * 0.25; i++) add({ k: "wisp", rgb: pick(RGB.air), v: (Math.random() * 4) | 0, x: o.x - o.w * R(0.3, 0.9), y: o.y + R(-o.h * 0.5, o.h * 0.5), vx: R(50, 95), vy: R(-6, 6), sz: R(28, 50), turb: 20, life: R(2.6, 3.8), delay: R(0, 1.2), a: 0.1 });
-      E.dust(o, n * 0.6, RGB.air); },
-    earth(o, n, pal = RGB.earth) { E.dust(o, n * 0.8, pal); E.bokeh(o, n * 0.2, pal); E.haze(o, n * 0.08, "190,160,110", 0.08, -4); },
-    wood(o, n) { E.earth(o, n, RGB.wood); E.petals(o, n * 0.1, 1); },
-    petals(o, n, v) { for (let i = 0; i < n; i++) add({ k: "petal", v: v ?? (Math.random() * 3) | 0, x: o.x + R(-o.w * 0.9, o.w * 0.9), y: o.y - o.h * R(0.4, 0.8), vx: R(6, 22), vy: R(14, 32), sz: R(6, 11), rot: R(0, 6.28), spin: R(-0.8, 0.8), flip: R(1, 2.4), turb: 18, life: R(3.4, 5), delay: R(0, 1.8) }); },
-    // 소용돌이: 빛 가루가 카드 둘레를 천천히 감돌며 모여든다
-    vortex(o, n, pal = RGB.arcane) { for (let i = 0; i < n; i++) add({ k: "orbit", rgb: pick(pal), cx: o.x, cy: o.y, r0: Math.max(o.w, o.h) * R(0.4, 0.75), ang: R(0, 6.28), w: R(0.35, 0.8) * (Math.random() < 0.5 ? 1 : -1), sz: R(0.6, 1.4), life: R(2.8, 4.2), delay: R(0, 1.2), x: o.x, y: o.y, ph: R(0, 6) }); },
-  };
-  function aura(t, kind = "light", dur = 3.2) { const o = at(t), pal = RGB[kind] || RGB.light; for (let k = 0; k < 2; k++) add({ k: "aura", rgb: pick(pal), t, x: o.x, y: o.y, sz: Math.max(o.w, o.h) * (0.62 + k * 0.14), life: dur, delay: k * 0.4, ph: R(0, 6) }); }
-  function godrays(t, kind = "light", dur = 3.2) { const o = at(t), pal = RGB[kind] || RGB.light; for (let i = 0; i < 9; i++) rays.push({ x: o.x, y: o.y, a: R(0, 6.283), w: R(0.02, 0.05), len: Math.max(W, H) * R(0.35, 0.7), rgb: pick(pal), life: dur * R(0.85, 1.1), t: 0, spin: R(-0.03, 0.03), al: R(0.05, 0.12) }); }
-  // 은은한 빛 번짐: 0.6초에 걸쳐 차오르고 2초 가까이 천천히 가라앉는다
-  function flash(t, rgb = "255,240,200", sz = 1, life = 2.4) { const o = at(t); blooms.push({ x: o.x, y: o.y, rgb, t: 0, life, r: Math.max(o.w, o.h) * 1.3 * Math.min(1.4, 0.7 + sz * 0.4), a: Math.min(0.3, 0.12 + sz * 0.08) }); }
-  const shake = () => {}; // 흔들림은 쓰지 않는다
-  function veil(t, on) { const o = at(t); vg.style.setProperty("--fx", o.x + "px"); vg.style.setProperty("--fy", o.y + "px"); vg.style.opacity = on ? 1 : 0; }
-
-  function frame(now) {
-    const dt = Math.min(0.05, (now - last) / 1000 || 0.016); last = now; T += dt;
-    ctx.clearRect(0, 0, W, H);
-    ctx.globalCompositeOperation = "lighter";
-    for (let i = blooms.length - 1; i >= 0; i--) { const f = blooms[i]; f.t += dt; const p = f.t / f.life; if (p >= 1) { blooms.splice(i, 1); continue; }
-      const env = p < 0.25 ? Math.sin((p / 0.25) * Math.PI / 2) : (1 - (p - 0.25) / 0.75) ** 1.6;
-      const g = ctx.createRadialGradient(f.x, f.y, 0, f.x, f.y, f.r * (0.8 + p * 0.3)); g.addColorStop(0, `rgba(${f.rgb},1)`); g.addColorStop(0.35, `rgba(${f.rgb},.35)`); g.addColorStop(1, `rgba(${f.rgb},0)`);
-      ctx.globalAlpha = env * f.a; ctx.fillStyle = g; ctx.fillRect(f.x - f.r * 1.2, f.y - f.r * 1.2, f.r * 2.4, f.r * 2.4); }
-    for (let i = rays.length - 1; i >= 0; i--) { const r = rays[i]; r.t += dt; const p = r.t / r.life; if (p >= 1) { rays.splice(i, 1); continue; }
-      r.a += r.spin * dt; ctx.save(); ctx.translate(r.x, r.y); ctx.rotate(r.a);
-      ctx.globalAlpha = Math.sin(Math.PI * p) ** 1.5 * r.al; const hw = r.len * r.w * 1.6; ctx.drawImage(raySpr(r.rgb), 0, -hw, r.len, hw * 2); ctx.restore(); }
-    for (let i = parts.length - 1; i >= 0; i--) { const p = parts[i];
-      if (p.delay > 0) { p.delay -= dt; continue; }
-      p.age = (p.age || 0) + dt; p.q = p.age / p.life; if (p.q >= 1) { parts.splice(i, 1); continue; }
-      if (p.k === "orbit") { p.ang += p.w * dt; const r = p.r0 * (1 - p.q * 0.45); p.x = p.cx + Math.cos(p.ang) * r; p.y = p.cy + Math.sin(p.ang) * r * 0.5 - p.q * 24; }
-      else if (p.vx !== undefined) { if (p.turb) { const [fx, fy] = flow(p.x, p.y); p.vx += fx * p.turb * dt; p.vy += fy * p.turb * dt; } p.vx *= 1 - 0.25 * dt; p.x += p.vx * dt; p.y += p.vy * dt; if (p.spin) p.rot += p.spin * dt; }
-      draw(p);
-    }
-    ctx.globalAlpha = 1; ctx.globalCompositeOperation = "source-over";
-    if (parts.length || rays.length || blooms.length) requestAnimationFrame(frame); else running = false;
-  }
-  // 부드러운 등장·퇴장: 앞 30%는 서서히 밝아지고 나머지는 천천히 스러진다
-  const env = (q) => q < 0.3 ? Math.sin((q / 0.3) * Math.PI / 2) : Math.max(0, 1 - (q - 0.3) / 0.7) ** 1.3;
-  function draw(p) {
-    const q = p.q, e = env(q);
-    switch (p.k) {
-      case "mist": case "wisp": { const s = p.sz * (1 + (p.grow || 0) * q); ctx.globalAlpha = Math.sin(Math.PI * q) * (p.a ?? 0.12); ctx.save(); ctx.translate(p.x, p.y); ctx.rotate(p.k === "wisp" ? Math.atan2(p.vy, p.vx) : p.rot); if (p.k === "wisp") ctx.scale(3, 0.35); ctx.drawImage(puff(p.rgb, p.v), -s, -s, s * 2, s * 2); ctx.restore(); break; }
-      case "ember": { ctx.globalAlpha = e * (0.55 + 0.45 * Math.sin(p.age * 4 + p.ph)); const s = p.sz * 5; ctx.drawImage(glow(p.rgb), p.x - s, p.y - s, s * 2, s * 2); break; }
-      case "drop": { ctx.globalAlpha = e * (0.6 + 0.4 * Math.sin(p.age * 6 + p.ph)); const s = p.sz * 4; ctx.drawImage(glow(p.rgb), p.x - s, p.y - s * 1.3, s * 2, s * 2.6); break; }
-      case "ripple": { const r = p.sz + p.grow * Math.sqrt(q); ctx.globalAlpha = Math.sin(Math.PI * q) * 0.28; for (const k of [1, 0.75]) { ctx.strokeStyle = `rgba(${p.rgb},${k === 1 ? 0.8 : 0.35})`; ctx.lineWidth = 0.9; ctx.beginPath(); ctx.ellipse(p.x, p.y, r * k, r * k * 0.26, 0, 0, 7); ctx.stroke(); } break; }
-      case "mote": { ctx.globalAlpha = e * (0.55 + 0.45 * Math.sin(p.age * 3 + p.ph)); const s = p.sz * 5; ctx.drawImage(glow(p.rgb), p.x - s, p.y - s, s * 2, s * 2); break; }
-      case "bokeh": { const s = p.sz; ctx.globalAlpha = Math.sin(Math.PI * q) * 0.35; ctx.drawImage(bokeh(p.rgb), p.x - s, p.y - s, s * 2, s * 2); break; }
-      case "twinkle": { const s = p.sz * (0.6 + 0.4 * Math.sin(p.age * 3.2 + p.ph)) * Math.sin(Math.PI * q); ctx.globalAlpha = 0.85; ctx.drawImage(twinkle(p.rgb), p.x - s * 2, p.y - s * 2, s * 4, s * 4); break; }
-      case "petal": { ctx.globalCompositeOperation = "source-over"; ctx.globalAlpha = e * 0.85; const s = p.sz; ctx.save(); ctx.translate(p.x, p.y); ctx.rotate(p.rot); ctx.scale(Math.cos(p.age * p.flip), 1); ctx.drawImage(petal(p.v), -s, -s, s * 2, s * 2); ctx.restore(); ctx.globalCompositeOperation = "lighter"; break; }
-      case "orbit": { ctx.globalAlpha = e * (0.6 + 0.4 * Math.sin(p.age * 3 + p.ph)); const s = p.sz * 5; ctx.drawImage(glow(p.rgb), p.x - s, p.y - s, s * 2, s * 2); break; }
-      case "aura": { if (p.t && p.t.getBoundingClientRect) { const o = at(p.t); p.x = o.x; p.y = o.y; }
-        const s = p.sz * (1 + 0.04 * Math.sin(p.age * 1.6 + p.ph)); ctx.globalAlpha = Math.sin(Math.PI * q) ** 1.4 * 0.32; ctx.save(); ctx.translate(p.x, p.y); ctx.scale(0.62, 0.86);
-        const g = ctx.createRadialGradient(0, 0, s * 0.38, 0, 0, s); g.addColorStop(0, `rgba(${p.rgb},0)`); g.addColorStop(0.5, `rgba(${p.rgb},.35)`); g.addColorStop(0.78, `rgba(${p.rgb},.1)`); g.addColorStop(1, `rgba(${p.rgb},0)`);
-        ctx.fillStyle = g; ctx.beginPath(); ctx.arc(0, 0, s, 0, 7); ctx.fill(); ctx.restore(); break; }
-    }
-  }
-  function kick() { if (!cv.isConnected) { document.body.append(vg, cv); fit(); addEventListener("resize", fit); } if (!running) { running = true; last = performance.now(); requestAnimationFrame(frame); } }
-
-  // 메이저 0~21 → 효과 (근거: 황금여명회 배속 / 그림의 핵심 현상)
   const MAJOR = ["air", "arcane", "moon", "bloom", "fire", "earth", "love", "water", "fire", "lantern", "arcane", "air", "water", "death", "water", "darkfire", "tower", "star", "moon", "sun", "light", "arcane"];
   const WHY = ["바보·공기", "마법사·수성", "여사제·달", "여황제·금성", "황제·양자리(불)", "교황·황소자리(흙)", "연인·쌍둥이자리", "전차·게자리(물)", "힘·사자자리(불)", "은둔자·등불", "운명의 수레바퀴·목성", "정의·천칭자리(공기)", "매달린 사람·물", "죽음·전갈자리", "절제·물을 섞음", "악마·염소자리", "탑·번개", "별·별빛", "달·물고기자리", "태양", "심판·나팔의 빛", "세계·토성"];
+  const PALOF = { bloom: "love", lantern: "fire", death: "shadow", darkfire: "hell", tower: "air" };
   const kindOf = (card, rev) => rev ? "shadow" : card.arcana === "major" ? MAJOR[card.id] || "light" : { wands: "fire", cups: "water", swords: "air", pentacles: "earth" }[card.suit] || "light";
-  const PALOF = { bloom: "love", lantern: "fire", death: "moon", darkfire: "hell", tower: "fire", arcane: "arcane", star: "star", moon: "moon", sun: "sun", water: "water", air: "air", earth: "earth", fire: "fire", wood: "wood", light: "light", love: "love", shadow: "shadow" };
-  const BLOOM = { light: "255,240,210", sun: "255,225,160", moon: "190,205,255", star: "210,228,255", tower: "235,235,255", death: "200,205,230", darkfire: "200,70,90", lantern: "255,200,130", arcane: "255,225,175", bloom: "255,205,215", love: "255,185,205", shadow: "150,115,255", fire: "255,190,120", water: "150,205,255", air: "220,232,255", earth: "240,215,150", wood: "180,235,180" };
-  const api = {
-    kindOf, WHY,
-    play(kind, t, power = 1) { if (RM) return; kick(); const o = at(t), n = Math.round(60 * power), pal = RGB[PALOF[kind]] || RGB.light;
-      flash(o, BLOOM[kind] || "255,240,210", power * (kind === "shadow" || kind === "death" ? 0.6 : 1));
-      switch (kind) {
-        case "light": godrays(o, "light"); aura(t, "light"); E.sweep(o, n * 0.5); E.dust(o, n * 0.5); E.bokeh(o, n * 0.15); break;
-        case "sun": godrays(o, "sun", 3.6); aura(t, "sun"); E.dust(o, n * 0.8, RGB.sun); E.bokeh(o, n * 0.2, RGB.sun); break;
-        case "moon": aura(t, "moon"); E.haze(o, n * 0.15, "150,165,230", 0.12, -5); E.sparkle(o, n * 0.25, RGB.moon); E.dust(o, n * 0.5, RGB.moon); break;
-        case "star": aura(t, "star"); E.sparkle(o, n * 0.6, RGB.star); E.dust(o, n * 0.6, RGB.star); break;
-        // 탑: 쾅 대신, 먼 하늘의 희미한 번개빛이 두 번 스치고 불씨가 내려앉는다
-        case "tower": setTimeout(() => flash(o, "235,235,255", power * 0.8, 1.4), 600); E.fire(o, n * 0.5); E.haze(o, n * 0.1, "90,80,110", 0.12, -6); break;
-        // 죽음: 어둠보다는 새벽 안개 속에 옅은 빛 알갱이가 조용히 떠오른다
-        case "death": aura(t, "moon"); E.haze(o, n * 0.18, "120,120,150", 0.12, -5); E.dust(o, n * 0.5, ["220,222,240", "200,205,230"]); break;
-        case "darkfire": aura(t, "shadow"); E.fire(o, n * 0.6, RGB.hell); E.haze(o, n * 0.1, "60,30,70", 0.14, -6); break;
-        case "lantern": aura(t, "fire"); E.dust(o, n * 0.8, RGB.fire, 0.5); E.sparkle(o, n * 0.12, RGB.fire); break;
-        case "arcane": aura(t, "arcane"); E.vortex(o, n * 0.8); E.sparkle(o, n * 0.2, RGB.arcane); break;
-        case "bloom": aura(t, "love"); E.petals(o, n * 0.25); E.dust(o, n * 0.5, RGB.wood); break;
-        case "love": aura(t, "love"); E.petals(o, n * 0.3); E.bokeh(o, n * 0.2, RGB.love); E.dust(o, n * 0.4, RGB.love); break;
-        case "shadow": aura(t, "shadow"); E.haze(o, n * 0.15, "70,50,130", 0.14, -5); E.dust(o, n * 0.5, RGB.shadow); break;
-        default: aura(t, PALOF[kind] || "light"); (E[kind] || E.dust)(o, n, pal);
-      } },
-    // 카드 공개: 주변이 살짝 흐려지고 → 빛이 스며들고 → 반짝임이 대각선으로 '샤르르' 쓸고 지나간 뒤 → 카드별 효과가 피어난다
-    reveal(card, rev, t, power = 1, multi = false) { if (RM) return; kick(); const k = kindOf(card, rev), o = at(t), pal = RGB[PALOF[k]] || RGB.light;
-      if (!multi) { veil(t, true); setTimeout(() => veil(t, false), 2600); } E.sweep(o, Math.round(26 + 16 * power), pal);
-      if (k !== "tower" && k !== "death" && k !== "shadow") godrays(t, PALOF[k] || "light", 2.6);
-      setTimeout(() => api.play(k, t, power), 450); },
-    ambient(kind, t, sec = 3) { if (RM) return; kick(); const end = performance.now() + sec * 1000; const tick = () => { if (performance.now() > end) return; const o = at(t); E.dust(o, 2, RGB[PALOF[kind]] || RGB.light); setTimeout(tick, 220); }; tick(); },
-    aura: (t, kind, d) => aura(t, PALOF[kind] || kind, d), godrays, flash, veil, kick, shake,
+  const palette = kind => RGB[PALOF[kind] || kind] || RGB.light;
+  let W = innerWidth, H = innerHeight, DPR = 1, raf = 0, last = 0;
+  let parts = [], emitters = [];
+  const layers = [], sprites = new Map();
+  const limit = () => motion.matches ? 12 : W < 600 ? 220 : 320;
+
+  function fit() {
+    W = Math.max(1, innerWidth); H = Math.max(1, innerHeight);
+    parts.length = Math.min(parts.length, limit());
+    // DPR 3~4 모바일의 전체 화면 fill-rate/메모리도 제한한다.
+    DPR = Math.min(devicePixelRatio || 1, 2, Math.sqrt(3000000 / (W * H)));
+    for (const { cv, ctx } of layers) {
+      cv.width = Math.round(W * DPR); cv.height = Math.round(H * DPR);
+      ctx.setTransform(DPR, 0, 0, DPR, 0, 0);
+    }
+  }
+  function layer(sheet = false) {
+    const id = sheet ? "fxSheet" : "fx";
+    let l = layers.find(item => item.cv.id === id);
+    if (!l) {
+      const cv = document.createElement("canvas"), ctx = cv.getContext("2d");
+      if (!ctx) return null;
+      cv.id = id; cv.setAttribute("aria-hidden", "true");
+      // 본문(.wrap:1) 위, 메뉴(:20) 아래. 상세 모달(:50)만 별도 캔버스.
+      cv.style.cssText = `position:fixed;inset:0;width:100%;height:100%;pointer-events:none;z-index:${sheet ? 51 : 19}`;
+      document.body.append(cv);
+      l = { cv, ctx }; layers.push(l); fit();
+    }
+    return l;
+  }
+  function source(t) {
+    // .slot에는 라벨이 포함된다. 뒤집히는 .inner 대신 고정된 .ph 기준.
+    if (t && t.matches && t.matches(".slot")) return t.querySelector(".ph") || t;
+    return t;
+  }
+  function at(t) {
+    if (t && t.getBoundingClientRect) {
+      const r = t.getBoundingClientRect();
+      return { x: r.left + r.width / 2, y: r.top + r.height / 2, w: r.width, h: r.height };
+    }
+    const o = t || {};
+    return { x: finite(o.x, W / 2), y: finite(o.y, H / 2), w: Math.max(1, finite(o.w, 200)), h: Math.max(1, finite(o.h, 300)) };
+  }
+  function setup(t) {
+    if (document.hidden) return null;
+    t = source(t);
+    const o = at(t);
+    if (o.w < 1 || o.h < 1 || (t && t.isConnected === false)) return null;
+    const l = layer(!!(t && t.closest && t.closest(".overlay")));
+    return l ? { t, o, l, scale: clamp(o.w / 180, 0.45, 1.15) } : null;
+  }
+  function kick() {
+    if (!raf && (parts.length || emitters.length) && !document.hidden) {
+      last = performance.now(); raf = requestAnimationFrame(frame);
+    }
+  }
+  function add(s, p) {
+    if (parts.length >= limit()) return;
+    parts.push({
+      t: s.t, l: s.l, age: 0, delay: 0, dx: 0, dy: 0, vx: 0, vy: 0, drag: 0.55,
+      amp: R(3, 8) * s.scale, freq: R(1.4, 2.3), ph: R(0, Math.PI * 2),
+      wind: R(0.6, 2), life: R(1.8, 3), alpha: 0.65, ...p,
+      // 모션 감소는 모든 진입점에서 정적인 작은 가루 몇 개만 남긴다.
+      still: motion.matches,
+    });
+  }
+  function sprite(k, rgb = "255,255,255") {
+    const key = k + rgb;
+    if (sprites.has(key)) return sprites.get(key);
+    const c = document.createElement("canvas"); c.width = c.height = k === "mist" ? 96 : 32;
+    const g = c.getContext("2d"), s = c.width, m = s / 2;
+    if (k === "mist") {
+      // 불규칙한 조각들을 캐시. 외곽이 닫힌 타원/테두리는 만들지 않는다.
+      for (let i = 0; i < 14; i++) {
+        const x = R(18, 78), y = R(29, 67), r = R(9, 22);
+        const gr = g.createRadialGradient(x, y, 0, x, y, r);
+        gr.addColorStop(0, `rgba(${rgb},.24)`); gr.addColorStop(1, `rgba(${rgb},0)`);
+        g.fillStyle = gr; g.fillRect(x - r, y - r, r * 2, r * 2);
+      }
+    } else if (k === "petal") {
+      const gr = g.createLinearGradient(10, 4, 22, 29);
+      gr.addColorStop(0, "#f8e1df"); gr.addColorStop(1, `rgba(${rgb},.7)`); g.fillStyle = gr;
+      g.beginPath(); g.moveTo(13, 29);
+      g.bezierCurveTo(-1, 16, 9, 1, 20, 5); g.bezierCurveTo(31, 11, 22, 24, 13, 29); g.fill();
+    } else if (k === "twinkle") {
+      // 아주 작은 4각 별. 긴 광선/8각 렌즈 플레어 없음.
+      g.fillStyle = `rgb(${rgb})`; g.beginPath(); g.moveTo(m, 2);
+      for (const [x, y] of [[18, 14], [30, 16], [18, 18], [16, 30], [14, 18], [2, 16], [14, 14]]) g.lineTo(x, y);
+      g.closePath(); g.fill(); g.fillStyle = "#fff8e9"; g.fillRect(15, 15, 2, 2);
+    } else {
+      const gr = g.createRadialGradient(m, m, 0, m, m, m);
+      gr.addColorStop(0, "rgba(255,249,235,.95)");
+      gr.addColorStop(0.22, `rgba(${rgb},.65)`); gr.addColorStop(0.55, `rgba(${rgb},.12)`);
+      gr.addColorStop(1, `rgba(${rgb},0)`); g.fillStyle = gr; g.fillRect(0, 0, s, s);
+    }
+    if (sprites.size >= 80) sprites.delete(sprites.keys().next().value);
+    sprites.set(key, c); return c;
+  }
+
+  const E = {
+    dust(s, n, pal, mode = "fall", delay = 0, alpha = 0.64, life = null) {
+      for (let i = 0; i < n; i++) {
+        // 종류와 크기를 반드시 한 번의 판정으로 묶는다 (review ①).
+        const isStar = !motion.matches && mode !== "ember" && Math.random() < 0.15;
+        const rising = mode === "rise" || mode === "ember", low = mode === "low";
+        add(s, { k: isStar ? "twinkle" : mode === "ember" ? "ember" : "mote", rgb: pick(pal),
+          x: R(-0.48, 0.48) * s.o.w,
+          y: (low ? R(0.22, 0.5) : rising ? R(0.12, 0.5) : R(-0.59, -0.12)) * s.o.h,
+          vx: R(-3, 3), vy: low ? R(-2, 3) : (rising ? -1 : 1) * s.o.h * R(0.18, 0.31),
+          sz: (isStar ? R(1.6, 2.7) : R(0.55, 1.05)) * s.scale,
+          delay: delay + R(0, 0.65), alpha, drag: rising ? 0.65 : 0.48,
+          life: life === null ? R(1.8, 3) : clamp(finite(life, 2.4), 1.5, 3),
+        });
+      }
+    },
+    trail(s, n, pal) {
+      const w = s.o.w * 0.98, h = s.o.h * 0.98, perimeter = 2 * (w + h);
+      for (let i = 0; i < n; i++) {
+        let d = ((i + 0.5) / n) * perimeter, x, y;
+        // 상→우→하→좌 한 바퀴. 드문드문 점만 흘리고 윤곽선은 그리지 않는다.
+        if (d < w) { x = -w / 2 + d; y = -h / 2; }
+        else if ((d -= w) < h) { x = w / 2; y = -h / 2 + d; }
+        else if ((d -= h) < w) { x = w / 2 - d; y = h / 2; }
+        else { d -= w; x = -w / 2; y = h / 2 - d; }
+        const isStar = Math.random() < 0.18;
+        add(s, { k: isStar ? "twinkle" : "mote", rgb: pick(pal),
+          x: x + R(-3, 3) * s.scale, y: y + R(-3, 3) * s.scale,
+          vx: R(-4, 4), vy: R(5, 13),
+          sz: (isStar ? R(1.5, 2.4) : R(0.5, 0.9)) * s.scale,
+          life: R(1.5, 2.2), delay: i / n * 0.85 + R(0, 0.05), alpha: 0.5,
+        });
+      }
+    },
+    drops(s, n, pal, delay) {
+      for (let i = 0; i < n; i++) add(s, { k: "drop", rgb: pick(pal),
+        x: R(-0.33, 0.33) * s.o.w, y: R(-0.5, -0.12) * s.o.h,
+        vx: R(-2, 2), vy: s.o.h * R(0.22, 0.36), drag: 0.3,
+        sz: R(0.7, 1.15) * s.scale, amp: R(1.5, 3) * s.scale,
+        delay: delay + i * 0.09 + R(0, 0.1), life: R(1.8, 2.7), alpha: 0.58,
+      });
+    },
+    mist(s, n, rgb, alpha = 0.2, delay = 0) {
+      if (motion.matches) return;
+      for (let i = 0; i < n; i++) add(s, { k: "mist", rgb,
+        x: R(-0.35, 0.35) * s.o.w, y: R(0.3, 0.48) * s.o.h,
+        vx: R(-5, 5), vy: R(-1.5, 0), amp: 3 * s.scale,
+        sz: s.o.w * R(0.44, 0.7), height: s.o.h * R(0.08, 0.14),
+        life: R(2.5, 3), delay: delay + i * 0.12, alpha,
+      });
+    },
+    petals(s, n, delay) {
+      for (let i = 0; i < n; i++) add(s, { k: "petal", rgb: pick(RGB.love),
+        x: R(-0.46, 0.38) * s.o.w, y: R(-0.55, -0.28) * s.o.h,
+        vx: R(2, 8), vy: s.o.h * R(0.18, 0.26), amp: R(7, 13) * s.scale,
+        sz: R(3.5, 5.8) * s.scale, rot: R(-1, 1), spin: R(-0.7, 0.7),
+        life: R(2.5, 3), delay: delay + R(0, 0.7), alpha: 0.62,
+      });
+    },
+    air(s, n, delay) {
+      for (let i = 0; i < n; i++) add(s, { k: "wisp", rgb: pick(RGB.air),
+        x: R(-0.48, -0.12) * s.o.w, y: R(-0.4, 0.35) * s.o.h,
+        vx: s.o.w * R(0.2, 0.32), vy: R(1, 7), amp: R(4, 8) * s.scale,
+        sz: R(3, 6) * s.scale, life: R(1.7, 2.6), delay: delay + R(0, 0.6), alpha: 0.32,
+      });
+    },
   };
-  return api;
+
+  function perform(kind, s, power, delay = 0, multi = false) {
+    const p = strength(power); if (!p) return;
+    const pal = palette(kind), n = Math.max(1, Math.round((motion.matches ? 3 : 28) * p * (multi ? 0.6 : 1)));
+    if (motion.matches) { E.dust(s, Math.min(4, n), pal, "low", 0, 0.35); return; }
+    switch (kind) {
+      case "water": case "star":
+        E.drops(s, Math.max(2, Math.round(n * 0.28)), pal, delay);
+        E.dust(s, Math.round(n * 0.62), pal, "fall", delay, 0.54); break;
+      case "tower": {
+        const h = Math.min(s.o.h * 0.5, 160);
+        add(s, { k: "bolt", rgb: "205,218,239", x: R(-0.1, 0.1) * s.o.w, y: -s.o.h * 0.49,
+          sz: h, life: 0.3, delay: delay + 0.06, alpha: 0.48,
+          pts: [[0, 0], [R(-0.04, 0.04), 0.23], [0.025, 0.43], [-0.025, 0.66], [0.01, 1]],
+        });
+        E.dust(s, Math.round(n * 0.65), ["210,202,183", "197,204,217"], "fall", delay + 0.16, 0.48); break;
+      }
+      case "death": case "shadow":
+        E.mist(s, multi ? 2 : 3, kind === "death" ? "31,28,43" : "38,28,56", 0.36, delay);
+        E.dust(s, Math.max(3, Math.round(n * 0.3)), RGB.shadow, "low", delay, 0.34); break;
+      case "moon":
+        E.mist(s, 2, "111,123,155", 0.13, delay);
+        E.dust(s, Math.round(n * 0.65), pal, "fall", delay, 0.48); break;
+      case "love": case "bloom":
+        E.petals(s, Math.max(2, Math.round(n * 0.22)), delay);
+        E.dust(s, Math.round(n * 0.55), kind === "bloom" ? RGB.wood : RGB.love, "fall", delay, 0.5); break;
+      case "sun": case "fire": case "darkfire": case "lantern":
+        // 작은 상승 가루/불씨만으로 따뜻함을 표현. 공통 섬광/광선 없음.
+        E.dust(s, n, pal, kind === "sun" ? "rise" : "ember", delay, kind === "darkfire" ? 0.45 : 0.65);
+        if (kind === "darkfire") E.mist(s, 2, "40,24,37", 0.24, delay);
+        break;
+      case "air":
+        E.air(s, Math.max(2, Math.round(n * 0.25)), delay);
+        E.dust(s, Math.round(n * 0.5), pal, "fall", delay, 0.48); break;
+      case "wood":
+        E.petals(s, Math.max(1, Math.round(n * 0.1)), delay);
+        E.dust(s, Math.round(n * 0.7), pal, "fall", delay, 0.52); break;
+      default:
+        // 펜타클은 금가루 하강, 마법사는 약한 바람만 (궤도/원형 배치 없음).
+        E.dust(s, n, pal, "fall", delay);
+    }
+  }
+
+  // 공개 API는 유지하되 넓은 오라/방사광/섬광은 작은 가루로 대체.
+  function aura(t, kind = "light", dur = 3.2) {
+    const s = setup(t); if (!s) return;
+    const n = motion.matches ? 2 : 6, pal = palette(kind);
+    for (let i = 0; i < n; i++) add(s, { k: "mote", rgb: pick(pal),
+      x: s.o.w * R(0.42, 0.53) * (i % 2 ? 1 : -1), y: s.o.h * R(-0.42, 0.4),
+      sz: R(0.6, 0.95) * s.scale, vy: R(4, 10),
+      life: clamp(finite(dur, 2.6), 1.5, 3), alpha: 0.42, delay: i * 0.06,
+    });
+    kick();
+  }
+  function godrays(t, kind = "light", dur = 3.2) { aura(t, kind, dur); }
+  function flash(t, rgb = "255,240,200", sz = 1, life = 2.4) {
+    const p = strength(sz), s = p && setup(t); if (!s) return;
+    E.dust(s, motion.matches ? 2 : Math.round(5 * p), [rgb], "fall", 0, 0.48, life); kick();
+  }
+  const shake = () => {};
+  const veil = (t, on) => {}; // 전체 화면 베일/블러 제거. API 호환만 유지.
+
+  function draw(ctx, p) {
+    const q = p.age / p.life;
+    // 15%까지 부드럽게 등장, 나머지 85%는 길게 사라진다.
+    const e = q < 0.15 ? Math.sin(q / 0.15 * Math.PI / 2) : ((1 - q) / 0.85) ** 1.5;
+    const flicker = 0.62 + 0.38 * (0.5 + 0.5 * Math.sin(p.age * 4.3 + p.ph)) ** 3;
+    ctx.globalAlpha = e * p.alpha * (p.k === "mist" || p.still ? 1 : flicker);
+    const x = p.px, y = p.py, s = p.sz;
+    switch (p.k) {
+      case "mist": {
+        const grow = 1 + q * 0.16;
+        ctx.drawImage(sprite("mist", p.rgb), x - s * grow, y - p.height / 2, s * 2 * grow, p.height); break;
+      }
+      case "bolt":
+        ctx.globalAlpha = Math.sin(Math.PI * q) * p.alpha;
+        ctx.strokeStyle = `rgb(${p.rgb})`; ctx.lineWidth = 0.75; ctx.lineJoin = "round";
+        ctx.beginPath(); p.pts.forEach(([a, b], i) => ctx[i ? "lineTo" : "moveTo"](x + a * s, y + b * s)); ctx.stroke(); break;
+      case "wisp": {
+        const a = Math.atan2(p.vy, p.vx), dx = Math.cos(a) * s, dy = Math.sin(a) * s;
+        ctx.strokeStyle = `rgb(${p.rgb})`; ctx.lineWidth = 0.65; ctx.lineCap = "round";
+        ctx.beginPath(); ctx.moveTo(x - dx, y - dy);
+        ctx.quadraticCurveTo(x - dx * 0.45, y - dy * 0.45 - s * 0.36, x, y); ctx.stroke();
+        ctx.drawImage(sprite("mote", p.rgb), x - 1.5, y - 1.5, 3, 3); break;
+      }
+      case "petal":
+        ctx.save(); ctx.translate(x, y); ctx.rotate(p.rot + p.age * p.spin);
+        ctx.scale(0.35 + 0.65 * Math.abs(Math.cos(p.age * 2 + p.ph)), 1);
+        ctx.drawImage(sprite("petal", p.rgb), -s, -s, s * 2, s * 2); ctx.restore(); break;
+      case "drop":
+        // 작은 물방울과 2~3px 꼬리. 착지 파문 없음.
+        ctx.drawImage(sprite("mote", p.rgb), x - s * 1.25, y - s * 2.6, s * 2.5, s * 4.2); break;
+      case "ember":
+        ctx.drawImage(sprite("mote", p.rgb), x - s * 1.4, y - s * 2.2, s * 2.8, s * 4.4); break;
+      case "twinkle": {
+        const radius = s * (0.65 + 0.35 * Math.sin(p.age * 3 + p.ph) ** 2);
+        ctx.drawImage(sprite("twinkle", p.rgb), x - radius, y - radius, radius * 2, radius * 2); break;
+      }
+      default:
+        // sz는 코어 반경. 과거처럼 최대 11px를 다시 5배로 키우지 않는다.
+        ctx.drawImage(sprite("mote", p.rgb), x - s * 2.2, y - s * 2.2, s * 4.4, s * 4.4);
+    }
+  }
+  function frame(now) {
+    raf = 0;
+    const dt = Math.min(0.05, Math.max(0, (now - last) / 1000)); last = now;
+    const rects = new Map();
+    const position = t => { if (!rects.has(t)) rects.set(t, at(t)); return rects.get(t); };
+    let count = 0;
+    for (const em of emitters) {
+      em.left -= dt; em.next -= dt;
+      if (em.left <= 0 || (em.t && em.t.isConnected === false)) continue;
+      if (em.next <= 0) {
+        const o = position(em.t);
+        if (o.w > 0 && o.h > 0) E.dust({ ...em.s, o }, motion.matches ? 1 : 2, palette(em.kind), "fall", 0, 0.42);
+        em.next = motion.matches ? 1.2 : 0.5;
+      }
+      emitters[count++] = em;
+    }
+    emitters.length = count; count = 0;
+    for (const p of parts) {
+      if (p.t && p.t.isConnected === false) continue;
+      const o = position(p.t);
+      if (o.w < 1 || o.h < 1) continue;
+      if (p.delay > 0) { p.delay -= dt; parts[count++] = p; continue; }
+      p.age += dt; if (p.age >= p.life) continue;
+      const speed = p.still ? 0 : 1;
+      p.vx *= Math.exp(-p.drag * dt); p.vy *= Math.exp(-p.drag * dt);
+      p.dx += p.vx * dt * speed; p.dy += p.vy * dt * speed;
+      const phase = p.ph + p.age * p.freq;
+      const sway = (Math.sin(phase) - Math.sin(p.ph)) * p.amp * speed;
+      p.px = o.x + p.x + p.dx + sway + p.wind * p.age * speed;
+      p.py = o.y + p.y + p.dy + (Math.cos(phase * 0.7) - Math.cos(p.ph * 0.7)) * p.amp * 0.3 * speed;
+      parts[count++] = p;
+    }
+    parts.length = count;
+    const nav = document.querySelector("nav.tabs"), nr = nav && nav.getBoundingClientRect();
+    for (const { ctx, cv } of layers) {
+      ctx.clearRect(0, 0, W, H); ctx.save(); ctx.globalCompositeOperation = "source-over";
+      // 반투명 메뉴 뒤로도 가루가 비치지 않게 제외. 상단 메뉴도 대응.
+      if (nr && nr.width > 0 && nr.height > 0) {
+        ctx.beginPath(); ctx.rect(0, 0, W, H); ctx.rect(nr.left, nr.top, nr.width, nr.height); ctx.clip("evenodd");
+      }
+      // 안개는 후경. 가산 합성은 어느 패스에서도 사용하지 않는다.
+      for (let pass = 0; pass < 2; pass++) for (const p of parts) {
+        if (p.l.cv !== cv || p.delay > 0 || !p.age || (p.k === "mist") !== (pass === 0)) continue;
+        draw(ctx, p);
+      }
+      ctx.restore(); ctx.globalAlpha = 1;
+    }
+    if (parts.length || emitters.length) raf = requestAnimationFrame(frame);
+  }
+
+  addEventListener("resize", fit);
+  document.addEventListener("visibilitychange", () => {
+    if (!document.hidden) return;
+    if (raf) cancelAnimationFrame(raf); raf = 0; parts = []; emitters = [];
+    for (const { ctx } of layers) ctx.clearRect(0, 0, W, H);
+  });
+  motion.addEventListener("change", () => {
+    if (!motion.matches) return;
+    parts = parts.filter(p => p.k === "mote" || p.k === "twinkle").slice(-12);
+    for (const p of parts) {
+      const o = at(p.t);
+      if (Number.isFinite(p.px)) { p.x = p.px - o.x; p.y = p.py - o.y; }
+      p.dx = p.dy = 0; p.k = "mote"; p.sz = Math.min(p.sz, 1);
+      p.still = true; p.alpha = Math.min(p.alpha, 0.35);
+    }
+    emitters = [];
+  });
+
+  return {
+    kindOf, WHY,
+    play(kind, t, power = 1) {
+      if (!strength(power)) return;
+      const s = setup(t); if (!s) return;
+      perform(kind, s, power); kick();
+    },
+    reveal(card, rev, t, power = 1, multi = false) {
+      const p = strength(power); if (!p) return;
+      const s = setup(t); if (!s) return;
+      const kind = kindOf(card, rev), pal = palette(kind);
+      // 테두리를 한번 스침 + 상단 가루 + 곧바로 고유 형상.
+      // 모션 감소에서는 정적인 작은 가루 3~4개만.
+      if (!motion.matches) {
+        E.trail(s, Math.round((multi ? 14 : 24) * Math.min(p, 1)), pal);
+        if (!["death", "shadow"].includes(kind)) E.dust(s, multi ? 5 : 8, RGB.light, "fall", 0.06, 0.46);
+      }
+      perform(kind, s, p, 0.12, multi); kick();
+    },
+    ambient(kind, t, sec = 3) {
+      const s = setup(t); if (!s || emitters.length >= 12) return;
+      const duration = clamp(finite(sec, 3), 0, 30); if (!duration) return;
+      emitters.push({ s, t: s.t, kind, left: duration, next: 0 }); kick();
+    },
+    aura, godrays, flash, veil, kick, shake,
+  };
 })();
 
 </script>
