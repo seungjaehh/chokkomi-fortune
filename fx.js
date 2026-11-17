@@ -1,4 +1,4 @@
-// FX v4 — 샤르륵: 작은 가루, 느린 바람, 긴 잔광. 링/광구/방사광 없음.
+// FX v5 — 샤르륵: sifting stardust, soft additive light, no geometric overlays.
 const FX = (() => {
   const motion = matchMedia("(prefers-reduced-motion: reduce)");
   const R = (a, b) => a + Math.random() * (b - a);
@@ -6,6 +6,7 @@ const FX = (() => {
   const clamp = (v, a, b) => Math.max(a, Math.min(b, v));
   const finite = (v, fallback) => Number.isFinite(v) ? v : fallback;
   const strength = p => clamp(finite(p, 1), 0, 1.5);
+  const smooth = v => { const x = clamp(v, 0, 1); return x * x * (3 - 2 * x); };
   const RGB = {
     light: ["247,223,166", "230,235,245", "255,244,216"],
     fire: ["249,191,108", "239,160,91", "255,224,169"],
@@ -29,7 +30,7 @@ const FX = (() => {
   let W = innerWidth, H = innerHeight, DPR = 1, raf = 0, last = 0;
   let parts = [], emitters = [];
   const layers = [], sprites = new Map();
-  const limit = () => motion.matches ? 12 : W < 600 ? 220 : 320;
+  const limit = () => motion.matches ? 12 : W < 600 ? 432 : 720;
 
   function fit() {
     W = Math.max(1, innerWidth); H = Math.max(1, innerHeight);
@@ -86,7 +87,7 @@ const FX = (() => {
     parts.push({
       t: s.t, l: s.l, age: 0, delay: 0, dx: 0, dy: 0, vx: 0, vy: 0, drag: 0.55,
       amp: R(3, 8) * s.scale, freq: R(1.4, 2.3), ph: R(0, Math.PI * 2),
-      wind: R(0.6, 2), life: R(1.8, 3), alpha: 0.65, ...p,
+      wind: R(0.6, 2), life: R(1.8, 2.55), alpha: 0.65, fadeIn: R(0.22, 0.36), ...p,
       // 모션 감소는 모든 진입점에서 정적인 작은 가루 몇 개만 남긴다.
       still: motion.matches,
     });
@@ -109,15 +110,13 @@ const FX = (() => {
       gr.addColorStop(0, "#f8e1df"); gr.addColorStop(1, `rgba(${rgb},.7)`); g.fillStyle = gr;
       g.beginPath(); g.moveTo(13, 29);
       g.bezierCurveTo(-1, 16, 9, 1, 20, 5); g.bezierCurveTo(31, 11, 22, 24, 13, 29); g.fill();
-    } else if (k === "twinkle") {
-      // 아주 작은 4각 별. 긴 광선/8각 렌즈 플레어 없음.
-      g.fillStyle = `rgb(${rgb})`; g.beginPath(); g.moveTo(m, 2);
-      for (const [x, y] of [[18, 14], [30, 16], [18, 18], [16, 30], [14, 18], [2, 16], [14, 14]]) g.lineTo(x, y);
-      g.closePath(); g.fill(); g.fillStyle = "#fff8e9"; g.fillRect(15, 15, 2, 2);
     } else {
       const gr = g.createRadialGradient(m, m, 0, m, m, m);
-      gr.addColorStop(0, "rgba(255,249,235,.95)");
-      gr.addColorStop(0.22, `rgba(${rgb},.65)`); gr.addColorStop(0.55, `rgba(${rgb},.12)`);
+      const bokeh = k === "bokeh";
+      gr.addColorStop(0, bokeh ? `rgba(${rgb},.55)` : "rgba(255,250,239,1)");
+      gr.addColorStop(0.2, `rgba(${rgb},${bokeh ? .42 : .95})`);
+      gr.addColorStop(0.34, `rgba(${rgb},${bokeh ? .28 : .48})`);
+      gr.addColorStop(0.6, `rgba(${rgb},.10)`);
       gr.addColorStop(1, `rgba(${rgb},0)`); g.fillStyle = gr; g.fillRect(0, 0, s, s);
     }
     if (sprites.size >= 80) sprites.delete(sprites.keys().next().value);
@@ -125,6 +124,41 @@ const FX = (() => {
   }
 
   const E = {
+    shimmer(s, power, kind, multi = false, reversed = false, delay = 0) {
+      const mobile = W < 600 ? 0.6 : 1;
+      const n = motion.matches ? Math.min(6, Math.ceil(5 * power)) :
+        Math.round(clamp(204 * Math.sqrt(power), 120, 260) * mobile * (multi ? 0.72 : 1));
+      const accent = palette(kind);
+      const pal = reversed ? ["180,200,229", "207,218,238", "164,180,213"] : RGB.light;
+      for (let i = 0; i < n; i++) {
+        let x = R(-0.5, 0.5) * s.o.w, y = R(-0.5, 0.5) * s.o.h;
+        // Random edge/surface samples, never an evenly spaced perimeter.
+        const edge = Math.random() < 0.66;
+        let side = 0;
+        if (edge) {
+          if (Math.random() < 0.72) {
+            side = Math.random() < 0.5 ? -1 : 1;
+            x = side * (s.o.w * 0.5 + R(-9, 13) * s.scale);
+          } else y = (Math.random() < 0.5 ? -1 : 1) * s.o.h * 0.5 + R(-10, 12) * s.scale;
+          x += R(-6, 6) * s.scale; y += R(-8, 8) * s.scale;
+        }
+        const deep = !motion.matches && Math.random() < 0.045;
+        const wave = clamp(0.5 - y / s.o.h, 0, 1);
+        const wait = motion.matches ? 0 : delay + 0.58 * wave + R(0, 0.10);
+        add(s, { k: deep ? "bokeh" : "mote", shimmer: true,
+          rgb: !reversed && Math.random() < 0.23 ? pick(accent) : pick(pal), x, y,
+          vx: (side ? side * R(14, 32) : x / s.o.w * R(18, 42)) * s.scale * (reversed ? 0.65 : 1),
+          vy: (reversed ? R(8, 19) : R(-30, -12)) * s.scale,
+          sz: deep ? R(3.2, 5.8) * s.scale : clamp(R(0.65, 1.85) * Math.sqrt(s.scale), 0.6, 2.2),
+          amp: R(3, 9) * s.scale, freq: R(1.3, 2.7), wind: R(-1.5, 1.5),
+          curl: R(2, 6) * s.scale, tw: R(3.3, 7.2), drag: reversed ? 0.48 : 0.32,
+          delay: wait,
+          // Shared soft landing: later sweep samples do not linger past 3.3s.
+          life: motion.matches ? 1.4 : R(3.13, 3.30) - wait,
+          alpha: (deep ? R(0.11, 0.19) : R(0.66, 0.94)) * (reversed ? 0.72 : 1),
+        });
+      }
+    },
     dust(s, n, pal, mode = "fall", delay = 0, alpha = 0.64, life = null) {
       for (let i = 0; i < n; i++) {
         // 종류와 크기를 반드시 한 번의 판정으로 묶는다 (review ①).
@@ -136,7 +170,7 @@ const FX = (() => {
           vx: R(-3, 3), vy: low ? R(-2, 3) : (rising ? -1 : 1) * s.o.h * R(0.18, 0.31),
           sz: (isStar ? R(1.6, 2.7) : R(0.55, 1.05)) * s.scale,
           delay: delay + R(0, 0.65), alpha, drag: rising ? 0.65 : 0.48,
-          life: life === null ? R(1.8, 3) : clamp(finite(life, 2.4), 1.5, 3),
+          life: life === null ? R(1.8, 2.55) : clamp(finite(life, 2.4), 1.5, 3),
         });
       }
     },
@@ -172,7 +206,7 @@ const FX = (() => {
         x: R(-0.35, 0.35) * s.o.w, y: R(0.3, 0.48) * s.o.h,
         vx: R(-5, 5), vy: R(-1.5, 0), amp: 3 * s.scale,
         sz: s.o.w * R(0.44, 0.7), height: s.o.h * R(0.08, 0.14),
-        life: R(2.5, 3), delay: delay + i * 0.12, alpha,
+        life: R(2.2, 2.5), delay: delay + i * 0.12, alpha,
       });
     },
     petals(s, n, delay) {
@@ -180,7 +214,7 @@ const FX = (() => {
         x: R(-0.46, 0.38) * s.o.w, y: R(-0.55, -0.28) * s.o.h,
         vx: R(2, 8), vy: s.o.h * R(0.18, 0.26), amp: R(7, 13) * s.scale,
         sz: R(3.5, 5.8) * s.scale, rot: R(-1, 1), spin: R(-0.7, 0.7),
-        life: R(2.5, 3), delay: delay + R(0, 0.7), alpha: 0.62,
+        life: R(2.2, 2.55), delay: delay + R(0, 0.6), alpha: 0.48,
       });
     },
     air(s, n, delay) {
@@ -192,18 +226,19 @@ const FX = (() => {
     },
   };
 
-  function perform(kind, s, power, delay = 0, multi = false) {
+  function perform(kind, s, power, delay = 0, multi = false, reversed = false) {
     const p = strength(power); if (!p) return;
-    const pal = palette(kind), n = Math.max(1, Math.round((motion.matches ? 3 : 28) * p * (multi ? 0.6 : 1)));
-    if (motion.matches) { E.dust(s, Math.min(4, n), pal, "low", 0, 0.35); return; }
+    E.shimmer(s, p, kind, multi, reversed, delay);
+    if (motion.matches) return;
+    const pal = palette(kind), n = Math.max(1, Math.round(12 * p * (multi ? 0.6 : 1)));
     switch (kind) {
       case "water": case "star":
         E.drops(s, Math.max(2, Math.round(n * 0.28)), pal, delay);
         E.dust(s, Math.round(n * 0.62), pal, "fall", delay, 0.54); break;
       case "tower": {
-        const h = Math.min(s.o.h * 0.5, 160);
+        const h = Math.min(s.o.h * 0.18, 48);
         add(s, { k: "bolt", rgb: "205,218,239", x: R(-0.1, 0.1) * s.o.w, y: -s.o.h * 0.49,
-          sz: h, life: 0.3, delay: delay + 0.06, alpha: 0.48,
+          sz: h, life: 0.85, delay: delay + 0.18, alpha: 0.20,
           pts: [[0, 0], [R(-0.04, 0.04), 0.23], [0.025, 0.43], [-0.025, 0.66], [0.01, 1]],
         });
         E.dust(s, Math.round(n * 0.65), ["210,202,183", "197,204,217"], "fall", delay + 0.16, 0.48); break;
@@ -255,9 +290,10 @@ const FX = (() => {
 
   function draw(ctx, p) {
     const q = p.age / p.life;
-    // 15%까지 부드럽게 등장, 나머지 85%는 길게 사라진다.
-    const e = q < 0.15 ? Math.sin(q / 0.15 * Math.PI / 2) : ((1 - q) / 0.85) ** 1.5;
-    const flicker = 0.62 + 0.38 * (0.5 + 0.5 * Math.sin(p.age * 4.3 + p.ph)) ** 3;
+    // A smooth 220–360ms arrival, followed by a long, continuous dissolve.
+    const hold = p.shimmer ? 0.44 : 0.29;
+    const e = smooth(p.age / p.fadeIn) * (1 - smooth((q - hold) / (1 - hold)));
+    const flicker = 0.48 + 0.52 * (0.5 + 0.5 * Math.sin(p.age * (p.tw || 4.3) + p.ph)) ** 2;
     ctx.globalAlpha = e * p.alpha * (p.k === "mist" || p.still ? 1 : flicker);
     const x = p.px, y = p.py, s = p.sz;
     switch (p.k) {
@@ -270,11 +306,7 @@ const FX = (() => {
         ctx.strokeStyle = `rgb(${p.rgb})`; ctx.lineWidth = 0.75; ctx.lineJoin = "round";
         ctx.beginPath(); p.pts.forEach(([a, b], i) => ctx[i ? "lineTo" : "moveTo"](x + a * s, y + b * s)); ctx.stroke(); break;
       case "wisp": {
-        const a = Math.atan2(p.vy, p.vx), dx = Math.cos(a) * s, dy = Math.sin(a) * s;
-        ctx.strokeStyle = `rgb(${p.rgb})`; ctx.lineWidth = 0.65; ctx.lineCap = "round";
-        ctx.beginPath(); ctx.moveTo(x - dx, y - dy);
-        ctx.quadraticCurveTo(x - dx * 0.45, y - dy * 0.45 - s * 0.36, x, y); ctx.stroke();
-        ctx.drawImage(sprite("mote", p.rgb), x - 1.5, y - 1.5, 3, 3); break;
+        ctx.drawImage(sprite("bokeh", p.rgb), x - s, y - s, s * 2, s * 2); break;
       }
       case "petal":
         ctx.save(); ctx.translate(x, y); ctx.rotate(p.rot + p.age * p.spin);
@@ -287,16 +319,18 @@ const FX = (() => {
         ctx.drawImage(sprite("mote", p.rgb), x - s * 1.4, y - s * 2.2, s * 2.8, s * 4.4); break;
       case "twinkle": {
         const radius = s * (0.65 + 0.35 * Math.sin(p.age * 3 + p.ph) ** 2);
-        ctx.drawImage(sprite("twinkle", p.rgb), x - radius, y - radius, radius * 2, radius * 2); break;
+        ctx.drawImage(sprite("mote", p.rgb), x - radius * 2.6, y - radius * 2.6, radius * 5.2, radius * 5.2); break;
       }
+      case "bokeh":
+        ctx.drawImage(sprite("bokeh", p.rgb), x - s * 2, y - s * 2, s * 4, s * 4); break;
       default:
-        // sz는 코어 반경. 과거처럼 최대 11px를 다시 5배로 키우지 않는다.
-        ctx.drawImage(sprite("mote", p.rgb), x - s * 2.2, y - s * 2.2, s * 4.4, s * 4.4);
+        // Fine bright cores with feathered light extending a few CSS pixels.
+        ctx.drawImage(sprite("mote", p.rgb), x - s * 3.4, y - s * 3.4, s * 6.8, s * 6.8);
     }
   }
   function frame(now) {
     raf = 0;
-    const dt = Math.min(0.05, Math.max(0, (now - last) / 1000)); last = now;
+    const dt = Math.max(0, (now - last) / 1000); last = now;
     const rects = new Map();
     const position = t => { if (!rects.has(t)) rects.set(t, at(t)); return rects.get(t); };
     let count = 0;
@@ -315,11 +349,21 @@ const FX = (() => {
       if (p.t && p.t.isConnected === false) continue;
       const o = position(p.t);
       if (o.w < 1 || o.h < 1) continue;
-      if (p.delay > 0) { p.delay -= dt; parts[count++] = p; continue; }
-      p.age += dt; if (p.age >= p.life) continue;
+      let step = dt;
+      if (p.delay > 0) {
+        const waiting = Math.min(p.delay, step); p.delay -= waiting; step -= waiting;
+        if (!step) { parts[count++] = p; continue; }
+      }
+      p.age += step; if (p.age >= p.life) continue;
+      step = Math.min(step, 0.05); // Clamp physics only; lifetimes follow wall time.
       const speed = p.still ? 0 : 1;
-      p.vx *= Math.exp(-p.drag * dt); p.vy *= Math.exp(-p.drag * dt);
-      p.dx += p.vx * dt * speed; p.dy += p.vy * dt * speed;
+      // Two slow, independent flow frequencies bend the dust without a shared orbit.
+      if (p.shimmer && speed) {
+        p.vx += Math.sin(p.ph + p.age * 1.7) * p.curl * step;
+        p.vy += Math.cos(p.ph * 1.3 + p.age * 1.2) * p.curl * 0.5 * step;
+      }
+      p.vx *= Math.exp(-p.drag * step); p.vy *= Math.exp(-p.drag * step);
+      p.dx += p.vx * step * speed; p.dy += p.vy * step * speed;
       const phase = p.ph + p.age * p.freq;
       const sway = (Math.sin(phase) - Math.sin(p.ph)) * p.amp * speed;
       p.px = o.x + p.x + p.dx + sway + p.wind * p.age * speed;
@@ -334,9 +378,10 @@ const FX = (() => {
       if (nr && nr.width > 0 && nr.height > 0) {
         ctx.beginPath(); ctx.rect(0, 0, W, H); ctx.rect(nr.left, nr.top, nr.width, nr.height); ctx.clip("evenodd");
       }
-      // 안개는 후경. 가산 합성은 어느 패스에서도 사용하지 않는다.
+      // Mist remains soft; dust and its cached glow use additive light.
       for (let pass = 0; pass < 2; pass++) for (const p of parts) {
         if (p.l.cv !== cv || p.delay > 0 || !p.age || (p.k === "mist") !== (pass === 0)) continue;
+        ctx.globalCompositeOperation = pass === 0 || p.k === "petal" ? "source-over" : "lighter";
         draw(ctx, p);
       }
       ctx.restore(); ctx.globalAlpha = 1;
@@ -372,14 +417,8 @@ const FX = (() => {
     reveal(card, rev, t, power = 1, multi = false) {
       const p = strength(power); if (!p) return;
       const s = setup(t); if (!s) return;
-      const kind = kindOf(card, rev), pal = palette(kind);
-      // 테두리를 한번 스침 + 상단 가루 + 곧바로 고유 형상.
-      // 모션 감소에서는 정적인 작은 가루 3~4개만.
-      if (!motion.matches) {
-        E.trail(s, Math.round((multi ? 14 : 24) * Math.min(p, 1)), pal);
-        if (!["death", "shadow"].includes(kind)) E.dust(s, multi ? 5 : 8, RGB.light, "fall", 0.06, 0.46);
-      }
-      perform(kind, s, p, 0.12, multi); kick();
+      const kind = kindOf(card, rev);
+      perform(kind, s, p, 0, multi, !!rev); kick();
     },
     ambient(kind, t, sec = 3) {
       const s = setup(t); if (!s || emitters.length >= 12) return;

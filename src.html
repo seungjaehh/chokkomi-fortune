@@ -16,7 +16,7 @@
 }
 *{box-sizing:border-box}
 html,body{margin:0;background:var(--bg);color:var(--text)}
-body{font-family:"Noto Sans KR",system-ui,sans-serif;line-height:1.6;min-height:100vh;overflow-x:hidden;-webkit-tap-highlight-color:transparent}
+body{font-family:"Noto Sans KR",system-ui,sans-serif;line-height:1.6;word-break:keep-all;overflow-wrap:break-word;min-height:100vh;overflow-x:hidden;-webkit-tap-highlight-color:transparent}
 .bgimg{position:fixed;inset:-4%;z-index:0;pointer-events:none;background:url(cards/bg.webp) center/cover no-repeat;opacity:.9;animation:bgdrift 90s ease-in-out infinite alternate}
 @keyframes bgdrift{from{transform:scale(1) translate(0,0)}to{transform:scale(1.06) translate(-1.2%,-.8%)}}
 @media (prefers-reduced-motion:reduce){.bgimg{animation:none}}
@@ -33,6 +33,9 @@ header.top{display:flex;align-items:center;justify-content:space-between;gap:12p
 .brand small{display:block;font-family:Cinzel,serif;font-size:.62rem;letter-spacing:.32em;color:var(--gold);margin-top:-4px}
 .me-btn{display:flex;align-items:center;gap:8px;border:1px solid var(--line);background:var(--panel);color:var(--text);padding:8px 14px;border-radius:999px;font:inherit;font-size:.88rem;cursor:pointer;backdrop-filter:blur(8px)}
 .me-btn:hover{border-color:var(--gold)}
+.me-btn #meLabel{white-space:nowrap}.brand small{white-space:nowrap}.stars{white-space:nowrap}
+@media (max-width:400px){.brand b{font-size:1.1rem}.brand small{font-size:.54rem;letter-spacing:.24em}.brand .mark{width:32px;height:32px}.me-btn{padding:7px 11px;font-size:.8rem;gap:6px}}
+.lp{margin-top:6px}
 nav.tabs{position:fixed;left:0;right:0;bottom:0;z-index:20;display:flex;justify-content:center;padding:6px max(8px,env(safe-area-inset-left)) calc(6px + env(safe-area-inset-bottom));background:rgba(12,10,32,.88);backdrop-filter:blur(14px);border-top:1px solid var(--line)}
 nav.tabs .in{display:flex;width:100%;max-width:560px;justify-content:space-between}
 nav.tabs button{flex:1;background:none;border:0;color:var(--muted);font:inherit;font-size:.72rem;display:flex;flex-direction:column;align-items:center;gap:2px;padding:6px 2px;cursor:pointer;border-radius:12px;position:relative}
@@ -125,7 +128,10 @@ select:focus,input:focus{border-color:var(--gold);box-shadow:0 0 0 3px rgba(232,
 .slot .lbl{font-size:.74rem;color:var(--muted);text-align:center;line-height:1.25;min-height:2.5em}
 .slot.done .lbl{color:var(--gold2)}
 .slots.celtic{grid-template-columns:repeat(4,minmax(0,var(--sw)));grid-template-areas:". c3 . s10" "c5 c1 c6 s9" ". c4 . s8" ". . . s7";}
-.fan{position:relative;margin-top:18px;touch-action:manipulation}
+.fan{position:relative;margin-top:18px;touch-action:pan-y;user-select:none;-webkit-user-select:none;outline:none;overflow:hidden}
+.fan.wheel .fc{transition:filter .5s ease,box-shadow .5s ease}
+.fan.wheel .fc.armed{filter:brightness(1.25);box-shadow:0 14px 30px rgba(0,0,0,.6),0 0 26px rgba(232,195,114,.55),0 0 0 2px rgba(232,195,114,.7)}
+.fan.wheel .fc.focus{filter:brightness(1.15);box-shadow:0 10px 24px rgba(0,0,0,.6),0 0 18px rgba(232,195,114,.28)}
 .fan .fc{position:absolute;left:50%;bottom:8px;width:var(--cw);margin-left:calc(var(--cw) / -2);aspect-ratio:300/514;cursor:pointer;border-radius:8%/4.7%;background:url(cards/back.webp) center/cover;box-shadow:0 6px 16px rgba(0,0,0,.55);border:1px solid rgba(232,195,114,.35);will-change:transform;transition:filter .45s ease}
 @media (hover:hover){.fan .fc:hover{filter:brightness(1.2)}}
 .fan-hint{text-align:center;color:var(--muted);font-size:.86rem;margin-top:10px;min-height:1.4em;line-height:1.4;padding:0 8px;transition:opacity .5s ease}
@@ -151,8 +157,8 @@ select:focus,input:focus{border-color:var(--gold);box-shadow:0 0 0 3px rgba(232,
 .pcol{text-align:center}
 .pcol .ph2{font-size:.75rem;color:var(--muted)}
 .tile{border-radius:14px;padding:8px 2px 6px;margin:4px 0;border:1px solid rgba(255,255,255,.08);position:relative}
-.tile .hj{font-family:"Gowun Batang",serif;font-size:clamp(1.6rem,7vw,2.4rem);line-height:1.1;font-weight:700}
-.tile .kr{font-size:.72rem;opacity:.85}
+.tile .hj{font-family:"Gowun Batang",serif;font-size:clamp(1.6rem,7vw,2.4rem);line-height:1.3;font-weight:700;display:block}
+.tile .kr{font-size:.72rem;opacity:.85;display:block;margin-top:3px;line-height:1.3}
 .tile.unknown{border:1.5px dashed rgba(255,255,255,.18);background:transparent;color:var(--muted)}
 .god{font-size:.72rem;color:var(--lav)}
 .god.me{color:var(--gold2);font-weight:700}
@@ -192,7 +198,7 @@ select:focus,input:focus{border-color:var(--gold);box-shadow:0 0 0 3px rgba(232,
 .kv{display:grid;grid-template-columns:auto 1fr;gap:4px 14px;font-size:.9rem;margin-top:10px}
 .kv dt{color:var(--muted)}
 .kv dd{margin:0}
-.lp{font-family:Cinzel,serif;font-size:3.2rem;color:var(--gold2);line-height:1;text-shadow:0 0 20px rgba(232,195,114,.5)}
+.lp{font-family:Cinzel,serif;font-size:3.2rem;color:var(--gold2);line-height:1.15;padding-top:6px;text-shadow:0 0 20px rgba(232,195,114,.5)}
 /* sheet & modal */
 .overlay{position:fixed;inset:0;z-index:50;background:rgba(5,4,14,.72);backdrop-filter:blur(6px);display:none;align-items:flex-end;justify-content:center}
 .overlay.on{display:flex}
@@ -409,7 +415,7 @@ function renderToday(el) {
     <p class="lead">하루 한 장, 나에게 온 카드를 뒤집어 보세요. 같은 날엔 언제 봐도 같은 카드예요.</p>
     <div class="panel hero">
       <div class="daily-card card3d" id="dailyCard"><div class="inner"><img class="back" src="cards/back.webp" alt="카드 뒷면"><img class="face ${rev ? "rev" : ""}" src="${IMG(card.id)}" alt="${esc(card.ko)}"></div>${opened ? "" : '<div class="hint">✦ 눌러서 뒤집기 ✦</div>'}</div>
-      <div id="dailyInfo" style="${opened ? "" : "opacity:0"}">
+      <div id="dailyInfo" style="${opened ? "" : "opacity:0;height:0;overflow:hidden"}">
         <div class="eyebrow">${esc(card.en.toUpperCase())}</div>
         <h2 style="margin:4px 0 4px;font-size:1.6rem">${esc(card.ko)} ${rev ? '<span class="chip bad">역방향</span>' : '<span class="chip good">정방향</span>'}</h2>
         <div class="row">${(rev ? card.rev_kw : card.up_kw).map((k) => `<span class="chip gold">${esc(k)}</span>`).join("")}</div>
@@ -436,7 +442,7 @@ function renderToday(el) {
     window.gsap && gsap.killTweensOf(dc); G.to(dc, { y: 0, duration: 0.6, ease: "sine.out" });
     const tl = G.timeline();
     tl.to(inner, { scale: 1.04, duration: 0.6, ease: "sine.inOut" }).to(inner, { rotationY: 180, duration: 1.4, ease: "sine.inOut" }).to(inner, { scale: 1, duration: 0.8, ease: "sine.out" })
-      .call(() => { dc.classList.add("glow"); FX.reveal(card, rev, dc, 1.1); }, null, 1.45).to(info, { opacity: 1, duration: 1.2, ease: "sine.out" }, 2.0).call(fillStars, null, 2.3);
+      .call(() => { dc.classList.add("glow"); FX.reveal(card, rev, dc, 1.1); }, null, 1.45).to(info, { height: "auto", duration: 1.1, ease: "sine.inOut", clearProps: "height,overflow" }, 1.8).to(info, { opacity: 1, duration: 1.2, ease: "sine.out" }, 2.1).call(fillStars, null, 2.3);
   };
 }
 function burst(target) { FX.play("light", target, 0.8); }
@@ -523,45 +529,69 @@ function startSpread(key) {
   box.innerHTML = `<div class="table" id="tbl"><div class="q">${tarot.q ? "“" + esc(tarot.q) + "”" : s.ic + " " + s.name}</div>
     <div class="slots ${key === "celtic" ? "celtic" : ""}" style="--cols:${cols};--sw:${sw}px">${s.pos.map((p, i) => `<div class="slot" style="${key === "celtic" ? `grid-area:${i < 6 ? "c" : "s"}${i + 1}` : ""}"><div class="ph">${i + 1}</div><div class="lbl">${p}</div></div>`).join("")}</div>
     <div class="fan" id="fan"></div><div class="fan-hint" id="fanHint">카드를 섞는 중…</div></div><div id="tRead"></div>`;
-  if (key === "celtic") { const c2 = $$(".slot", box)[1]; c2.style.gridArea = "c1"; c2.style.transform = "rotate(90deg) scale(.82)"; c2.style.zIndex = 2; $(".lbl", c2).style.display = "none"; }
+  if (key === "celtic") { const c2 = $$(".slot", box)[1]; c2.style.gridArea = "c1"; c2.style.alignSelf = "start"; c2.style.transform = "rotate(90deg) scale(.82)"; c2.style.zIndex = 2; $(".lbl", c2).style.display = "none"; }
   box.scrollIntoView({ behavior: REDUCED ? "auto" : "smooth", block: "start" });
   const fan = $("#fan"); layFan(fan, s);
 }
-// 부채꼴 배치: 화면 폭을 재서 카드가 가장자리·안내 문구를 넘지 않게 계산한다.
-// 줄마다 같은 중심점을 공유하는 동심원 부채라서 줄끼리 엇갈려 겹치지 않는다.
+// 카드 바퀴: 78장을 한 줄 원 위에 올려 두고, 좌우로 밀어 돌리며 고른다.
+// 한 번에 보이는 카드는 몇 장뿐이라 카드마다 손가락으로 누를 만큼 넓게 드러난다.
 function layFan(fan, s) {
-  const W = fan.clientWidth, mobile = W < 520, ROWS = mobile ? 3 : 2, ROW = Math.ceil(78 / ROWS);
-  const cw = Math.round(Math.max(38, Math.min(70, W / (mobile ? 8.2 : 11)))), h = cw * 514 / 300;
-  const A = (mobile ? 34 : 44) * Math.PI / 180, sinA = Math.sin(A), cosA = Math.cos(A);
-  const lift = h * (mobile ? 0.42 : 0.5);                  // 줄 사이 간격
-  const top = (ROWS - 1) * lift;                           // 맨 뒷줄이 올라간 높이
-  // 뒷줄 바깥 위 모서리가 폭 안에 들어오도록 중심점 거리 R을 구한다
-  const R = Math.max(h * 0.8, (W / 2 - 8 - (cw / 2) * cosA) / sinA - h - top);
-  const drop = R * (1 - cosA) + (cw / 2) * sinA;           // 앞줄 바깥 카드가 아래로 처지는 양
-  const base = Math.ceil(drop) + 6;
-  fan.style.height = `${Math.ceil(base + top + h + 18)}px`;
-  fan.style.setProperty("--cw", cw + "px");
-  const rowOf = (i) => Math.floor(i / ROW), colOf = (i) => i % ROW, nRow = (r) => Math.min(ROW, 78 - r * ROW);
-  const angle = (i) => { const r = rowOf(i), n = nRow(r); return (-A + (2 * A * colOf(i)) / Math.max(1, n - 1)) * 180 / Math.PI; };
+  const W = fan.clientWidth, mobile = W < 520;
+  const cw = Math.round(Math.max(56, Math.min(96, W / (mobile ? 4.4 : 8)))), h = cw * 514 / 300;
+  const A = (mobile ? 40 : 46) * Math.PI / 180, sinA = Math.sin(A), cosA = Math.cos(A);
+  const R = Math.max(h * 0.9, (W / 2 - 10 - (cw / 2) * cosA) / sinA - h);   // 가장자리 카드가 폭 안에 들어오는 반지름
+  const show = cw * (mobile ? 0.46 : 0.5);                                   // 카드끼리 드러나는 폭(위쪽 기준)
+  const step = show / (R + h);                                               // 카드 한 장당 각도(rad)
+  const LIFT = Math.round(h * 0.12), base = Math.ceil(R * (1 - cosA) + (cw / 2) * sinA) + 6;
+  fan.style.height = `${Math.ceil(base + h + LIFT * 1.9 + 16)}px`;
+  fan.style.setProperty("--cw", cw + "px"); fan.classList.add("wheel");
+  const N = tarot.pool.length, deg = 180 / Math.PI;
   const cards = tarot.pool.map((_, i) => { const d = document.createElement("div"); d.className = "fc"; d.dataset.i = i;
-    const up = (ROWS - 1 - rowOf(i)) * lift;
-    d.style.bottom = `${base + up}px`; d.style.transformOrigin = `50% ${((h + R + up) / h) * 100}%`; fan.appendChild(d); return d; });
-  // 섞기(카드가 살짝 좌우로 흘렀다 모이기) → 가운데부터 펼치기
-  G.set(cards, { rotation: 0, x: 0, y: 0, opacity: 0 });
-  const tl = G.timeline();
-  tl.to(cards, { opacity: 1, duration: 0.5, ease: "sine.out" });
-  for (let k = 0; k < 1; k++) tl.to(cards, { x: (i) => ((i + k) % 2 ? 1 : -1) * (cw * 0.35 + (i % 7) * 1.5), y: (i) => -((i * 37) % 9), duration: 0.5, ease: "sine.inOut", stagger: { each: 0.003, from: "random" } })
-    .to(cards, { x: 0, y: 0, duration: 0.42, ease: "sine.inOut", stagger: { each: 0.003, from: "random" } });
-  tl.to(cards, { rotation: (i) => angle(i), duration: REDUCED ? 0.01 : 1.25, ease: "power3.out", stagger: { each: 0.006, from: "center" } }, "+=0.05")
-    .call(() => hint(`78장을 모두 펼쳤어요. 끌리는 카드 ${s.n}장을 골라 주세요 (0/${s.n})`));
-  const hover = matchMedia("(hover:hover)").matches;
-  cards.forEach((c) => {
-    if (hover) {
-      c.addEventListener("mouseenter", () => !c._picked && G.to(c, { y: -12, duration: 0.45, ease: "sine.out", overwrite: "auto" }));
-      c.addEventListener("mouseleave", () => !c._picked && G.to(c, { y: 0, duration: 0.6, ease: "sine.out", overwrite: "auto" }));
-    }
-    c.onclick = () => pick(c);
-  });
+    d.style.bottom = `${base}px`; d.style.transformOrigin = `50% ${((h + R) / h) * 100}%`; fan.appendChild(d); return d; });
+  const st = { off: Math.floor(N / 2), k: 0, arm: 0 }; let armed = null;                               // off: 가운데 오는 카드 번호(소수), k: 펼침 정도 0→1
+  // 고른 카드는 바퀴에서 빠지고, 남은 카드들이 부드럽게 자리를 메운다(c._pos: 바퀴 위 자리 번호)
+  let live = cards.slice(); cards.forEach((c, i) => (c._p = { v: i }));
+  const wrap = (x) => { const M = live.length; return ((x % M) + M + M / 2) % M - M / 2; };
+  function render() {
+    for (let i = 0; i < N; i++) { const c = cards[i]; if (c._picked) continue; const d = wrap(c._p.v - st.off), a = d * step * st.k;
+      const edge = Math.abs(a) - A, vis = edge < -step ? 1 : edge > step ? 0 : (step - edge) / (2 * step);
+      const near = Math.max(0, 1 - Math.abs(d)), op = vis * (st.k < 1 ? Math.min(1, st.op ?? 1) : 1);
+      G.set(c, { rotation: a * deg, y: -LIFT * near * near * (3 - 2 * near) * st.k - (c === armed ? LIFT * 0.9 * st.arm : 0), opacity: op, zIndex: Math.round(500 - Math.abs(d) * 2 + (d > 0 ? 0 : 1)) });
+      c.style.pointerEvents = op > 0.5 ? "auto" : "none"; c.classList.toggle("focus", near > 0.5 && st.k === 1); }
+  }
+  fan._wheel = { st, render };
+  st.op = 0; render();
+  // 섞기 → 가운데에서 바퀴처럼 펼치기
+  const tl = G.timeline({ onUpdate: render });
+  tl.to(st, { op: 1, duration: 0.5, ease: "sine.out" })
+    .to(cards, { x: (i) => (i % 2 ? 1 : -1) * (cw * 0.3 + (i % 5) * 2), duration: 0.45, ease: "sine.inOut", stagger: { each: 0.002, from: "random" } })
+    .to(cards, { x: 0, duration: 0.4, ease: "sine.inOut", stagger: { each: 0.002, from: "random" } })
+    .to(st, { k: 1, off: st.off - 6, duration: REDUCED ? 0.01 : 1.4, ease: "power3.out" }, "+=0.05")
+    .call(() => hint(`좌우로 밀어 넘기고, 끌리는 카드를 눌러요 (0/${s.n})`));
+  // 드래그·스와이프(관성 포함), 마우스 휠, 방향키
+  const pxPerCard = show; let drag = null, moved = false, dragEnd = 0, spin = null;
+  window._fanAbort && window._fanAbort.abort(); const ac = (window._fanAbort = new AbortController()), sig = { signal: ac.signal };
+  const picked = () => tarot.picks.length;
+  const disarm = () => { if (!armed) return; armed.classList.remove("armed"); G.to(st, { arm: 0, duration: 0.45, ease: "sine.out", onUpdate: render, onComplete: () => { armed = null; render(); } }); hint(`좌우로 밀어 넘기고, 끌리는 카드를 눌러요 (${picked()}/${s.n})`); };
+  const arm = (c) => { armed && armed.classList.remove("armed"); armed = c; c.classList.add("armed"); st.arm = 0; G.to(st, { arm: 1, duration: 0.55, ease: "sine.out", onUpdate: render }); hint("이 카드가 맞나요? 한 번 더 누르면 골라요"); };
+  // 첫 탭: 그 카드를 가운데로 데려와 살짝 들어 올림 → 두 번째 탭에 확정(잘못 누름 방지)
+  const choose = (c) => { if (st.k < 1 || c._picked) return; const d = wrap(c._p.v - st.off);
+    if (armed === c) { armed = null; st.arm = 0; c.classList.remove("armed"); pick(c); return; }
+    if (Math.abs(d) >= 0.5) settle(st.off + d, true); arm(c); };
+  const settle = (to, keep) => { keep || disarm(); spin && spin.kill(); spin = G.to(st, { off: Math.round(to), duration: REDUCED ? 0.01 : 0.9, ease: "power3.out", onUpdate: render }); };
+  fan.addEventListener("pointerdown", (e) => { if (st.k < 1) return; drag = { x: e.clientX, off: st.off, t: performance.now(), v: 0, lx: e.clientX }; moved = false; });
+  addEventListener("pointermove", (e) => { if (!drag) return; const dx = e.clientX - drag.x; if (!moved && Math.abs(dx) > 6) { moved = true; spin && spin.kill(); drag.off = st.off; drag.x = e.clientX; disarm(); }
+    const now = performance.now(), dt = Math.max(1, now - drag.t); drag.v = 0.8 * drag.v + 0.2 * ((e.clientX - drag.lx) / dt); drag.t = now; drag.lx = e.clientX;
+    st.off = drag.off - dx / pxPerCard; render(); }, sig);
+  addEventListener("pointerup", () => { if (!drag) return; const v = drag.v; drag = null; if (moved) { dragEnd = performance.now(); settle(st.off - (v * 260) / pxPerCard); } moved = false; }, sig);
+  addEventListener("pointercancel", () => { if (drag) { drag = null; settle(st.off); } }, sig);
+  fan.addEventListener("wheel", (e) => { if (st.k < 1) return; const d = Math.abs(e.deltaX) > Math.abs(e.deltaY) ? e.deltaX : e.deltaY; e.preventDefault(); settle((spin && spin.isActive() ? spin.vars.off : st.off) + Math.sign(d) * Math.min(4, Math.max(1, Math.abs(d) / 60))); }, { passive: false });
+  fan.tabIndex = 0; fan.addEventListener("keydown", (e) => { if (e.key === "ArrowLeft") settle(st.off - 1); else if (e.key === "ArrowRight") settle(st.off + 1); else if (e.key === "Enter") { const c = live.find((x) => Math.abs(wrap(x._p.v - st.off)) < 0.5); c && choose(c); } });
+  fan._onPick = (el) => { el.classList.remove("focus"); el.style.pointerEvents = "none"; const at = el._p.v; live = live.filter((c) => c !== el); const M = live.length;
+    st.off = ((st.off % (M + 1)) + M + 1) % (M + 1); if (st.off > at) st.off -= 1;                  // 기준 자리도 함께 당긴다
+    live.forEach((c, j) => { if (c._p.v !== j) G.to(c._p, { v: j, duration: REDUCED ? 0.01 : 0.7, ease: "power2.inOut", onUpdate: render }); });
+    st.off = ((Math.round(st.off) % M) + M) % M; render(); };
+  cards.forEach((c) => { c.onclick = () => { if (performance.now() - dragEnd < 120) return; choose(c); }; });
 }
 function hint(t) { const el = $("#fanHint"); if (!el) return; G.to(el, { opacity: 0, duration: 0.25, ease: "sine.in", onComplete: () => { el.textContent = t; G.to(el, { opacity: 1, duration: 0.45, ease: "sine.out" }); } }); }
 function pick(el) {
@@ -574,7 +604,7 @@ function pick(el) {
   // 회전된 카드의 실제 중심에서 출발해, 살짝 떠올랐다가 자리로 내려앉는다
   const cx = a.left + a.width / 2, cy = a.top + a.height / 2, tx = b.left + b.width / 2, ty = b.top + b.height / 2;
   G.set(fly, { left: cx - w0 / 2, top: cy - h0 / 2, width: w0, height: h0, rotation: rot });
-  G.to(el, { opacity: 0, duration: 0.3, ease: "sine.out" });
+  G.to(el, { opacity: 0, duration: 0.3, ease: "sine.out" }); $("#fan")._onPick && $("#fan")._onPick(el);
   const [card, rev] = tarot.picks[idx];
   const T = REDUCED ? 0.01 : 0.85, arc = Math.min(60, Math.abs(cy - ty) * 0.25 + 24);
   const tl = G.timeline({ onComplete: () => {
@@ -585,7 +615,7 @@ function pick(el) {
   tl.to(fly, { left: tx - b.width / 2, width: b.width, height: b.height, rotation: 0, duration: T, ease: "power2.inOut" }, 0)
     .to(fly, { top: Math.min(cy, ty) - b.height / 2 - arc, duration: T * 0.45, ease: "sine.out" }, 0)
     .to(fly, { top: ty - b.height / 2, duration: T * 0.55, ease: "sine.inOut" }, T * 0.45);
-  hint(tarot.picks.length < s.n ? `끌리는 카드 ${s.n}장을 골라 주세요 (${tarot.picks.length}/${s.n})` : "카드를 펼치는 중…");
+  hint(tarot.picks.length < s.n ? `좋아요. 다음 카드를 골라 주세요 (${tarot.picks.length}/${s.n})` : "카드를 펼치는 중…");
 }
 function reveal() {
   const s = SPREADS[tarot.spread]; const fan = $("#fan");
@@ -757,7 +787,7 @@ function renderStars(el) {
     <p class="lead">태어난 순간 태양이 있던 자리(황경 ${sj.lon.toFixed(1)}°)로 별자리를 정해요. 경계일에 태어나도 정확해요.</p>
     <div class="panel"><div class="sign"><div class="glyph" id="glyph">${S[1]}</div><div><div class="eyebrow">나의 별자리</div><h2 style="margin:2px 0 0;font-size:1.5rem">${S[0]}</h2><span class="muted small">${S[2]}</span></div></div>
       <dl class="kv"><dt>원소</dt><dd>${S[3]}</dd><dt>수호성</dt><dd>${S[4]}</dd><dt>성향</dt><dd>${S[5]}</dd><dt>연애</dt><dd>${S[6]}</dd></dl>
-      <div class="lucky"><div style="flex:2"><small>요즘 태양 흐름 · 지금 태양 ${curSign[1]} ${curSign[0]} ${(nowLon % 30).toFixed(0)}°</small><b style="font-size:1rem">☀️ ${aspName}</b><small style="color:var(--text);font-size:.85rem">${aspText}</small></div><div><small>흐름 세기</small><b class="stars">${[1, 2, 3, 4, 5].map((n) => `<i class="${n <= sc ? "on" : ""}">★</i>`).join("")}</b></div></div>
+      <div class="lucky"><div style="flex:2 1 220px"><small>요즘 태양 흐름 · 지금 태양 ${curSign[1]} ${curSign[0]} ${(nowLon % 30).toFixed(0)}°</small><b style="font-size:1rem">☀️ ${aspName}</b><small style="color:var(--text);font-size:.85rem">${aspText}</small></div><div><small>흐름 세기</small><b class="stars">${[1, 2, 3, 4, 5].map((n) => `<i class="${n <= sc ? "on" : ""}">★</i>`).join("")}</b></div></div>
       <p class="basis">근거 · 별자리: 태어난 시각의 태양 황경(트로피컬 황도대, 30°씩 12궁) · 태양 흐름: 오늘 태양과 출생 태양 사이 각도를 점성술의 5대 애스펙트(오브 ±8°)로 판정</p></div>
     <div class="grid2">
       <div class="panel"><div class="eyebrow">나의 띠</div><h2 style="margin-top:4px">${SJ.ZODIAC_EMOJI[sj.year.b]} ${SJ.ZODIAC[sj.year.b]}띠 · ${SJ.ptext(sj.year)}년</h2><p style="margin:0">${ZODIAC_TEXT[sj.year.b]}</p>
