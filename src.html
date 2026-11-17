@@ -1,0 +1,783 @@
+<meta charset="utf-8">
+<title>쪼꼬미 운세</title>
+<meta name="claude:viewport-fit-sides" content="cover">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@500;700&family=Gowun+Batang:wght@400;700&family=Noto+Sans+KR:wght@400;500;700&display=swap" rel="stylesheet">
+<style>
+:root{
+  color-scheme: dark;
+  --bg:#0a0918; --bg2:#141130; --panel:rgba(28,24,62,.62); --panel-solid:#1b1840; --line:rgba(232,195,114,.22);
+  --gold:#e8c372; --gold2:#f6e2a8; --text:#efeaff; --muted:#a9a2cc; --lav:#b9a6ff; --rose:#ff8fb1;
+  --wood:#5fd38d; --fire:#ff6f6f; --earth:#e3b45c; --metal:#d7dbe6; --water:#5aa9ff;
+  --good:#7be0a8; --bad:#ff8f8f;
+  --radius:18px; --gutter:max(16px, env(safe-area-inset-left)); --gutter-r:max(16px, env(safe-area-inset-right));
+  --navh:64px;
+}
+*{box-sizing:border-box}
+html,body{margin:0;background:var(--bg);color:var(--text)}
+body{font-family:"Noto Sans KR",system-ui,sans-serif;line-height:1.6;min-height:100vh;overflow-x:hidden;-webkit-tap-highlight-color:transparent}
+.bgimg{position:fixed;inset:-4%;z-index:0;pointer-events:none;background:url(cards/bg.webp) center/cover no-repeat;opacity:.9;animation:bgdrift 90s ease-in-out infinite alternate}
+@keyframes bgdrift{from{transform:scale(1) translate(0,0)}to{transform:scale(1.06) translate(-1.2%,-.8%)}}
+@media (prefers-reduced-motion:reduce){.bgimg{animation:none}}
+#sky{position:fixed;inset:0;width:100%;height:100%;z-index:0;pointer-events:none}
+.nebula{position:fixed;inset:-20%;z-index:0;pointer-events:none;background:
+  radial-gradient(40% 30% at 20% 15%, rgba(123,92,255,.22), transparent 70%),
+  radial-gradient(35% 30% at 85% 30%, rgba(255,143,177,.12), transparent 70%),
+  radial-gradient(50% 40% at 50% 100%, rgba(232,195,114,.10), transparent 70%)}
+.wrap{position:relative;z-index:1;max-width:920px;margin:0 auto;padding:0 var(--gutter-r) calc(var(--navh) + 40px) var(--gutter)}
+header.top{display:flex;align-items:center;justify-content:space-between;gap:12px;padding:18px 0 8px}
+.brand{display:flex;align-items:center;gap:10px}
+.brand .mark{width:38px;height:38px;border-radius:50%;display:grid;place-items:center;background:radial-gradient(circle at 35% 35%,#fff6d8,#e8c372 45%,#8a6a2a);box-shadow:0 0 24px rgba(232,195,114,.55)}
+.brand b{font-family:"Gowun Batang",serif;font-size:1.25rem;letter-spacing:.02em}
+.brand small{display:block;font-family:Cinzel,serif;font-size:.62rem;letter-spacing:.32em;color:var(--gold);margin-top:-4px}
+.me-btn{display:flex;align-items:center;gap:8px;border:1px solid var(--line);background:var(--panel);color:var(--text);padding:8px 14px;border-radius:999px;font:inherit;font-size:.88rem;cursor:pointer;backdrop-filter:blur(8px)}
+.me-btn:hover{border-color:var(--gold)}
+nav.tabs{position:fixed;left:0;right:0;bottom:0;z-index:20;display:flex;justify-content:center;padding:6px max(8px,env(safe-area-inset-left)) calc(6px + env(safe-area-inset-bottom));background:rgba(12,10,32,.88);backdrop-filter:blur(14px);border-top:1px solid var(--line)}
+nav.tabs .in{display:flex;width:100%;max-width:560px;justify-content:space-between}
+nav.tabs button{flex:1;background:none;border:0;color:var(--muted);font:inherit;font-size:.72rem;display:flex;flex-direction:column;align-items:center;gap:2px;padding:6px 2px;cursor:pointer;border-radius:12px;position:relative}
+nav.tabs button .i{font-size:1.3rem;line-height:1.1;filter:grayscale(.5);transition:transform .45s cubic-bezier(.22,.61,.36,1), filter .45s ease}
+nav.tabs button.on{color:var(--gold2)}
+nav.tabs button.on .i{filter:none;transform:translateY(-2px) scale(1.12)}
+nav.tabs button.on::after{content:"";position:absolute;top:0;width:24px;height:3px;border-radius:3px;background:var(--gold);box-shadow:0 0 10px var(--gold)}
+@media (min-width:760px){
+  nav.tabs{position:sticky;top:0;bottom:auto;border-top:0;border-bottom:1px solid var(--line);background:rgba(12,10,32,.7)}
+  nav.tabs button{flex-direction:row;justify-content:center;font-size:.92rem;gap:8px;padding:10px}
+  nav.tabs button.on::after{top:auto;bottom:-6px}
+  .wrap{padding-bottom:60px}
+}
+section.page{display:none;padding-top:10px}
+section.page.on{display:block}
+h1,h2,h3{font-family:"Gowun Batang",serif;font-weight:700;margin:0}
+h1{font-size:clamp(1.6rem,5vw,2.3rem);line-height:1.25}
+h2{font-size:1.25rem;margin-bottom:10px}
+h3{font-size:1.05rem}
+.eyebrow{font-family:Cinzel,serif;font-size:.7rem;letter-spacing:.3em;color:var(--gold)}
+.lead{color:var(--muted);margin:6px 0 0}
+.panel{background:var(--panel);border:1px solid var(--line);border-radius:var(--radius);padding:18px;backdrop-filter:blur(10px);margin-top:16px}
+.grid2{display:grid;gap:16px;grid-template-columns:1fr}
+@media (min-width:760px){.grid2{grid-template-columns:1fr 1fr}}
+.btn{appearance:none;border:0;cursor:pointer;font:inherit;font-weight:700;border-radius:999px;padding:12px 22px;color:#2a1d05;background:linear-gradient(135deg,#fff1c4,#e8c372 45%,#c99a3e);box-shadow:0 6px 24px rgba(232,195,114,.35), inset 0 1px 0 rgba(255,255,255,.6);transition:transform .4s cubic-bezier(.22,.61,.36,1), box-shadow .5s ease}
+.btn:hover{transform:translateY(-1px);box-shadow:0 10px 30px rgba(232,195,114,.5)}
+.btn:active{transform:scale(.97)}
+.btn.ghost{background:transparent;color:var(--gold2);border:1px solid var(--line);box-shadow:none}
+.btn.ghost:hover{border-color:var(--gold)}
+.btn.sm{padding:8px 14px;font-size:.85rem}
+.row{display:flex;gap:10px;flex-wrap:wrap;align-items:center}
+.chip{display:inline-flex;align-items:center;gap:4px;padding:3px 10px;border-radius:999px;font-size:.78rem;background:rgba(185,166,255,.14);color:var(--lav);border:1px solid rgba(185,166,255,.25)}
+.chip.gold{background:rgba(232,195,114,.12);color:var(--gold2);border-color:var(--line)}
+.chip.good{background:rgba(123,224,168,.12);color:var(--good);border-color:rgba(123,224,168,.3)}
+.chip.bad{background:rgba(255,143,143,.12);color:var(--bad);border-color:rgba(255,143,143,.3)}
+.muted{color:var(--muted)}
+.small{font-size:.86rem}
+b.hl{color:var(--gold2)}
+/* form */
+label.f{display:block;font-size:.8rem;color:var(--muted);margin-bottom:4px}
+.field{flex:1;min-width:0}
+select,input[type=text],input[type=time]{width:100%;font:inherit;color:var(--text);background:rgba(10,9,24,.6);border:1px solid var(--line);border-radius:12px;padding:11px 12px;outline:none;appearance:none;-webkit-appearance:none}
+input[type=time]{color-scheme:dark;min-height:46px}
+select{background-image:linear-gradient(45deg,transparent 50%,var(--gold) 50%),linear-gradient(135deg,var(--gold) 50%,transparent 50%);background-position:calc(100% - 16px) 50%,calc(100% - 11px) 50%;background-size:5px 5px;background-repeat:no-repeat;padding-right:28px}
+select option{background:#1b1840}
+select:focus,input:focus{border-color:var(--gold);box-shadow:0 0 0 3px rgba(232,195,114,.15)}
+.seg{display:flex;border:1px solid var(--line);border-radius:12px;overflow:hidden}
+.seg button{flex:1;background:transparent;border:0;color:var(--muted);font:inherit;padding:10px;cursor:pointer}
+.seg button.on{background:rgba(232,195,114,.18);color:var(--gold2);font-weight:700}
+.fgrid{display:grid;gap:12px;grid-template-columns:repeat(3,1fr)}
+.fgrid .full{grid-column:1/-1}
+/* flip card */
+.card3d{perspective:1000px}
+.card3d .inner{position:relative;width:100%;aspect-ratio:300/514;transform-style:preserve-3d}
+.card3d img{position:absolute;inset:0;width:100%;height:100%;border-radius:8%/4.7%;backface-visibility:hidden;-webkit-backface-visibility:hidden;box-shadow:0 10px 30px rgba(0,0,0,.5)}
+.card3d .face{transform:rotateY(180deg)}
+.card3d .face.rev{transform:rotateY(180deg) rotate(180deg)}
+#dailyCard{transition:filter 1.8s ease}
+.glow{filter:drop-shadow(0 0 18px rgba(232,195,114,.45))}
+/* today */
+.hero{display:grid;gap:20px;align-items:center;grid-template-columns:1fr}
+@media (min-width:760px){.hero{grid-template-columns:260px 1fr}}
+.daily-card{width:min(220px,58vw);margin:6px auto 0;cursor:pointer;position:relative}
+.daily-card .hint{position:absolute;left:0;right:0;bottom:-30px;text-align:center;font-size:.85rem;color:var(--gold2);animation:pulse 1.8s ease-in-out infinite}
+@keyframes pulse{50%{opacity:.35}}
+.stars-row{display:grid;grid-template-columns:auto 1fr;gap:6px 12px;align-items:center;margin-top:10px}
+.stars{letter-spacing:2px;color:rgba(255,255,255,.18);font-size:1.05rem}
+.stars i{font-style:normal;display:inline-block}
+.stars i.on{color:var(--gold);text-shadow:0 0 8px rgba(232,195,114,.7)}
+.lucky{display:flex;gap:10px;flex-wrap:wrap;margin-top:14px}
+.lucky div{flex:1;min-width:120px;padding:10px 12px;border-radius:14px;background:rgba(10,9,24,.5);border:1px solid var(--line)}
+.lucky small{display:block;color:var(--muted);font-size:.75rem}
+.lucky b{font-size:1.1rem}
+.cta{display:flex;gap:14px;align-items:center;justify-content:space-between;flex-wrap:wrap}
+/* tarot */
+.spreads{display:grid;gap:12px;grid-template-columns:repeat(2,1fr);margin-top:16px}
+@media (min-width:760px){.spreads{grid-template-columns:repeat(4,1fr)}}
+.spread{cursor:pointer;text-align:left;font:inherit;color:var(--text);background:var(--panel);border:1px solid var(--line);border-radius:var(--radius);padding:16px;transition:transform .45s cubic-bezier(.22,.61,.36,1),border-color .45s ease, box-shadow .5s ease;position:relative;overflow:hidden}
+.spread:hover{transform:translateY(-3px);border-color:var(--gold);box-shadow:0 10px 30px rgba(123,92,255,.25)}
+.spread .ic{font-size:1.7rem}
+.spread b{display:block;font-family:"Gowun Batang",serif;font-size:1.05rem;margin:6px 0 2px}
+.spread span{font-size:.8rem;color:var(--muted)}
+.spread .n{position:absolute;right:12px;top:10px;font-family:Cinzel,serif;color:var(--gold);font-size:.75rem}
+.table{position:relative;margin-top:16px;border-radius:24px;padding:18px 12px 14px;background:radial-gradient(120% 90% at 50% 0%, rgba(123,92,255,.22), rgba(20,17,48,.85) 60%);border:1px solid var(--line);overflow:hidden}
+.table .q{text-align:center;font-family:"Gowun Batang",serif;color:var(--gold2);min-height:1.5em}
+.slots{display:grid;gap:10px;justify-content:center;margin:12px auto 0;grid-template-columns:repeat(var(--cols),minmax(0,var(--sw)))}
+.slot{display:flex;flex-direction:column;align-items:center;gap:4px}
+.slot .ph{width:100%;aspect-ratio:300/514;border-radius:8%/4.7%;border:1.5px dashed rgba(232,195,114,.35);display:grid;place-items:center;color:rgba(232,195,114,.5);font-family:Cinzel,serif;font-size:.8rem;position:relative}
+.slot .ph .card3d{position:absolute;inset:0}
+.slot .lbl{font-size:.74rem;color:var(--muted);text-align:center;line-height:1.25;min-height:2.5em}
+.slot.done .lbl{color:var(--gold2)}
+.slots.celtic{grid-template-columns:repeat(4,minmax(0,var(--sw)));grid-template-areas:". c3 . s10" "c5 c1 c6 s9" ". c4 . s8" ". . . s7";}
+.fan{position:relative;margin-top:18px;touch-action:manipulation}
+.fan .fc{position:absolute;left:50%;bottom:8px;width:var(--cw);margin-left:calc(var(--cw) / -2);aspect-ratio:300/514;cursor:pointer;border-radius:8%/4.7%;background:url(cards/back.webp) center/cover;box-shadow:0 6px 16px rgba(0,0,0,.55);border:1px solid rgba(232,195,114,.35);will-change:transform;transition:filter .45s ease}
+@media (hover:hover){.fan .fc:hover{filter:brightness(1.2)}}
+.fan-hint{text-align:center;color:var(--muted);font-size:.86rem;margin-top:10px;min-height:1.4em;line-height:1.4;padding:0 8px;transition:opacity .5s ease}
+.reading{margin-top:18px;display:grid;gap:12px}
+.rcard{display:grid;grid-template-columns:72px 1fr;gap:14px;padding:14px;border-radius:16px;background:rgba(10,9,24,.55);border:1px solid var(--line)}
+.rcard img{width:72px;border-radius:6px;cursor:zoom-in}
+.rcard img.rev{transform:rotate(180deg)}
+.rcard .pos{font-size:.75rem;color:var(--gold);font-family:Cinzel,"Noto Sans KR",serif;letter-spacing:.08em}
+.rcard h3{margin:2px 0 6px}
+.rcard p{margin:6px 0 0;font-size:.93rem}
+.topic{margin:8px 0 0!important;padding:8px 10px;border-radius:10px;background:rgba(232,195,114,.08);border:1px solid var(--line);font-size:.88rem}
+.topic .stars{font-size:.85rem}
+.rcard .adv{color:var(--gold2);font-size:.88rem}
+.verdict{text-align:center;padding:16px;border-radius:16px;background:linear-gradient(135deg,rgba(232,195,114,.18),rgba(123,92,255,.18));border:1px solid var(--line)}
+.verdict b{display:block;font-family:"Gowun Batang",serif;font-size:2rem;color:var(--gold2)}
+.dict-filter{display:flex;gap:6px;flex-wrap:wrap;margin:12px 0}
+.dict{display:grid;gap:10px;grid-template-columns:repeat(auto-fill,minmax(78px,1fr))}
+.dict button{background:none;border:0;padding:0;cursor:pointer;color:var(--text);font:inherit;font-size:.72rem;text-align:center}
+.dict img{width:100%;border-radius:6px;display:block;margin-bottom:3px;transition:transform .45s cubic-bezier(.22,.61,.36,1)}
+.dict button:hover img{transform:translateY(-3px) scale(1.03)}
+/* saju */
+.pillars{display:grid;grid-template-columns:repeat(4,1fr);gap:8px;margin-top:14px}
+.pcol{text-align:center}
+.pcol .ph2{font-size:.75rem;color:var(--muted)}
+.tile{border-radius:14px;padding:8px 2px 6px;margin:4px 0;border:1px solid rgba(255,255,255,.08);position:relative}
+.tile .hj{font-family:"Gowun Batang",serif;font-size:clamp(1.6rem,7vw,2.4rem);line-height:1.1;font-weight:700}
+.tile .kr{font-size:.72rem;opacity:.85}
+.tile.unknown{border:1.5px dashed rgba(255,255,255,.18);background:transparent;color:var(--muted)}
+.god{font-size:.72rem;color:var(--lav)}
+.god.me{color:var(--gold2);font-weight:700}
+.e0{background:linear-gradient(160deg,rgba(95,211,141,.32),rgba(95,211,141,.08));color:#c9f5da}
+.e1{background:linear-gradient(160deg,rgba(255,111,111,.32),rgba(255,111,111,.08));color:#ffd6d6}
+.e2{background:linear-gradient(160deg,rgba(227,180,92,.34),rgba(227,180,92,.08));color:#ffe9bf}
+.e3{background:linear-gradient(160deg,rgba(215,219,230,.30),rgba(215,219,230,.06));color:#f4f6fb}
+.e4{background:linear-gradient(160deg,rgba(90,169,255,.32),rgba(90,169,255,.08));color:#d4e8ff}
+.bars{display:grid;gap:9px;margin-top:6px}
+.bar{display:grid;grid-template-columns:52px 1fr 28px;gap:10px;align-items:center;font-size:.88rem}
+.bar .track{height:12px;border-radius:99px;background:rgba(255,255,255,.07);overflow:hidden}
+.bar .fill{height:100%;width:0;border-radius:99px}
+.meter{position:relative;height:14px;border-radius:99px;background:linear-gradient(90deg,#5aa9ff,#7be0a8 50%,#ff8f6f);margin:16px 0 6px}
+.meter .knob{position:absolute;top:50%;left:0;width:22px;height:22px;margin:-11px 0 0 -11px;border-radius:50%;background:#fff;box-shadow:0 0 0 4px rgba(255,255,255,.2),0 0 16px rgba(255,255,255,.6)}
+.meter-l{display:flex;justify-content:space-between;font-size:.72rem;color:var(--muted)}
+.godg{display:grid;gap:10px}
+.godg div{padding:10px 12px;border-radius:12px;background:rgba(10,9,24,.45);border:1px solid rgba(255,255,255,.06);font-size:.88rem}
+.empty{text-align:center;padding:34px 18px}
+.empty .big{font-size:2.6rem}
+/* love */
+.ring{position:relative;width:200px;height:200px;margin:4px auto}
+.ring svg{width:100%;height:100%;transform:rotate(-90deg)}
+.ring .num{position:absolute;inset:0;display:grid;place-items:center;text-align:center}
+.ring .num b{font-family:Cinzel,serif;font-size:3rem;line-height:1;color:var(--gold2)}
+.items{display:grid;gap:8px;margin-top:10px}
+.item{display:grid;grid-template-columns:1fr auto;gap:2px 10px;padding:10px 12px;border-radius:12px;background:rgba(10,9,24,.45);border:1px solid rgba(255,255,255,.06)}
+.item .t{font-weight:700;font-size:.9rem}
+.item .d{grid-column:1/-1;font-size:.86rem;color:var(--muted)}
+.pyr{display:grid;gap:6px;justify-items:center;margin-top:10px}
+.pyr .r{display:flex;gap:6px}
+.pyr span{width:30px;height:30px;border-radius:50%;display:grid;place-items:center;font-family:Cinzel,serif;font-weight:700;font-size:.9rem;background:rgba(255,143,177,.14);border:1px solid rgba(255,143,177,.3)}
+.pyr .letters span{background:rgba(232,195,114,.14);border-color:var(--line);font-family:"Gowun Batang",serif}
+.pyr .last span{background:linear-gradient(135deg,#ff8fb1,#e8c372);color:#2a1020;border:0}
+/* stars page */
+.sign{display:grid;grid-template-columns:auto 1fr;gap:16px;align-items:center}
+.glyph{width:86px;height:86px;border-radius:50%;display:grid;place-items:center;font-size:2.8rem;background:radial-gradient(circle,rgba(232,195,114,.25),rgba(123,92,255,.12) 60%,transparent 70%);border:1px solid var(--line);color:var(--gold2);font-family:"Segoe UI Symbol","Noto Sans Symbols",serif}
+.kv{display:grid;grid-template-columns:auto 1fr;gap:4px 14px;font-size:.9rem;margin-top:10px}
+.kv dt{color:var(--muted)}
+.kv dd{margin:0}
+.lp{font-family:Cinzel,serif;font-size:3.2rem;color:var(--gold2);line-height:1;text-shadow:0 0 20px rgba(232,195,114,.5)}
+/* sheet & modal */
+.overlay{position:fixed;inset:0;z-index:50;background:rgba(5,4,14,.72);backdrop-filter:blur(6px);display:none;align-items:flex-end;justify-content:center}
+.overlay.on{display:flex}
+@media (min-width:640px){.overlay{align-items:center}}
+.sheet{width:100%;max-width:520px;max-height:92vh;overflow:auto;background:linear-gradient(180deg,#221d4f,#14112f);border:1px solid var(--line);border-radius:24px 24px 0 0;padding:22px var(--gutter-r) calc(22px + env(safe-area-inset-bottom)) var(--gutter)}
+@media (min-width:640px){.sheet{border-radius:24px}}
+.sheet .close{float:right;background:none;border:0;color:var(--muted);font-size:1.4rem;cursor:pointer}
+.cardview{max-width:760px;width:100%}
+.cardview .in{display:grid;gap:18px;grid-template-columns:1fr}
+@media (min-width:640px){.cardview .in{grid-template-columns:240px 1fr}}
+.cardview img{width:min(240px,60vw);margin:0 auto;display:block;border-radius:12px;box-shadow:0 20px 50px rgba(0,0,0,.6)}
+.toast{position:fixed;left:50%;bottom:calc(var(--navh) + 20px);transform:translateX(-50%);z-index:60;background:var(--panel-solid);border:1px solid var(--gold);color:var(--gold2);padding:10px 18px;border-radius:999px;font-size:.88rem;opacity:0;pointer-events:none;transition:opacity .5s ease}
+.toast.on{opacity:1}
+.fly{position:fixed;z-index:40;pointer-events:none;will-change:transform,left,top;border-radius:8%/4.7%;background:url(cards/back.webp) center/cover;box-shadow:0 14px 30px rgba(0,0,0,.6)}
+.basis{margin:12px 0 0;font-size:.74rem;color:var(--muted);border-top:1px dashed rgba(232,195,114,.18);padding-top:8px;line-height:1.5}
+.basis::before{content:"📜 "}
+footer{margin-top:30px;text-align:center;font-size:.78rem;color:var(--muted)}
+@media (prefers-reduced-motion: reduce){*{animation:none!important;transition:none!important}}
+</style>
+
+<div class="bgimg"></div><canvas id="sky"></canvas><div class="nebula"></div>
+<div class="wrap">
+  <header class="top">
+    <div class="brand"><div class="mark">✦</div><div><b>쪼꼬미 운세</b><small>CHOKKOMI FORTUNE</small></div></div>
+    <button class="me-btn" id="meBtn">🌙 <span id="meLabel">내 정보 입력</span></button>
+  </header>
+</div>
+<nav class="tabs"><div class="in">
+  <button data-tab="today"><span class="i">🌅</span>오늘</button>
+  <button data-tab="tarot"><span class="i">🃏</span>타로</button>
+  <button data-tab="saju"><span class="i">🀄</span>사주</button>
+  <button data-tab="love"><span class="i">💞</span>궁합</button>
+  <button data-tab="stars"><span class="i">✨</span>별자리</button>
+</div></nav>
+<div class="wrap">
+  <section class="page" id="p-today"></section>
+  <section class="page" id="p-tarot"></section>
+  <section class="page" id="p-saju"></section>
+  <section class="page" id="p-love"></section>
+  <section class="page" id="p-stars"></section>
+  <footer>사주는 진태양시·절기(태양 황경)로, 별자리는 실제 태양 위치로 계산해요 · 타로 78장 해석은 직접 쓴 글이에요<br>재미로 봐 주세요 ✦ 입력한 정보는 이 기기에만 저장돼요</footer>
+</div>
+
+<div class="overlay" id="sheetOv"><div class="sheet" id="sheet"></div></div>
+<div class="overlay" id="cardOv"><div class="sheet cardview" id="cardSheet"></div></div>
+<div class="toast" id="toast"></div>
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/gsap.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/canvas-confetti@1.9.3/dist/confetti.browser.min.js"></script>
+<script>
+__ENGINE__
+</script>
+<script>
+__FX__
+</script>
+<script>
+const DECK = __DECK__;
+</script>
+<script>
+(() => {
+"use strict";
+// ---------- 기본 도구
+const $ = (s, r = document) => r.querySelector(s);
+const $$ = (s, r = document) => [...r.querySelectorAll(s)];
+const REDUCED = matchMedia("(prefers-reduced-motion: reduce)").matches;
+const G = window.gsap || (() => { // GSAP 이 못 불러와지면 끝 상태로 바로 적용
+  const apply = (t, v) => { const els = typeof t === "string" ? $$(t) : t instanceof Element ? [t] : [...t];
+    els.forEach((e) => { for (const k in v) { if (["duration", "delay", "ease", "stagger", "onComplete", "onUpdate", "repeat", "yoyo"].includes(k)) continue;
+      if (k === "opacity") e.style.opacity = v[k]; else if (k === "width") e.style.width = typeof v[k] === "number" ? v[k] + "px" : v[k]; else if (k === "rotationY") e.style.transform = `rotateY(${v[k]}deg)`; else if (k === "left" || k === "top") e.style[k] = v[k] + "px"; } }); v.onComplete && v.onComplete(); };
+  const g = { to: (t, v) => apply(t, v), set: (t, v) => apply(t, v), fromTo: (t, a, b) => apply(t, b), from: () => {}, timeline: () => { const tl = { to: (t, v) => (apply(t, v), tl), fromTo: (t, a, b) => (apply(t, b), tl), from: () => tl, add: () => tl, call: (f) => (f(), tl) }; return tl; } };
+  return g; })();
+if (REDUCED && window.gsap) gsap.globalTimeline.timeScale(8);
+const esc = (s) => String(s ?? "").replace(/[&<>"']/g, (c) => ({ "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;", "'": "&#39;" }[c]));
+const store = { get(k, d) { try { const v = localStorage.getItem("chokkomi:" + k); return v ? JSON.parse(v) : d; } catch { return d; } },
+  set(k, v) { try { localStorage.setItem("chokkomi:" + k, JSON.stringify(v)); } catch {} } };
+function hash(str) { let h1 = 0xdeadbeef, h2 = 0x41c6ce57; for (let i = 0; i < str.length; i++) { const ch = str.charCodeAt(i); h1 = Math.imul(h1 ^ ch, 2654435761); h2 = Math.imul(h2 ^ ch, 1597334677); }
+  h1 = Math.imul(h1 ^ (h1 >>> 16), 2246822507) ^ Math.imul(h2 ^ (h2 >>> 13), 3266489909); h2 = Math.imul(h2 ^ (h2 >>> 16), 2246822507) ^ Math.imul(h1 ^ (h1 >>> 13), 3266489909); return [h1 >>> 0, h2 >>> 0]; }
+const rnd = () => { const a = new Uint32Array(1); crypto.getRandomValues(a); return a[0] / 2 ** 32; };
+function sample(arr, n) { const a = arr.slice(); for (let i = a.length - 1; i > 0; i--) { const j = Math.floor(rnd() * (i + 1)); [a[i], a[j]] = [a[j], a[i]]; } return a.slice(0, n); }
+function toast(msg) { const t = $("#toast"); t.textContent = msg; t.classList.add("on"); clearTimeout(t._h); t._h = setTimeout(() => t.classList.remove("on"), 2200); }
+const IMG = (id) => `cards/${id}.webp`;
+const CARDS = DECK.cards, SUITS = DECK.suits;
+const cardName = (c, r) => `${c.ko}${r ? " (역방향)" : ""}`;
+const ELC = ["var(--wood)", "var(--fire)", "var(--earth)", "var(--metal)", "var(--water)"];
+const WEEK = "일월화수목금토";
+
+// ---------- 별 하늘 배경
+(function sky() {
+  const cv = $("#sky"), cx = cv.getContext("2d"); let W, H, stars = [], shoot = null, last = 0;
+  function size() { const d = Math.min(devicePixelRatio || 1, 2); W = cv.width = innerWidth * d; H = cv.height = innerHeight * d;
+    const n = Math.min(260, Math.floor((innerWidth * innerHeight) / 5200));
+    stars = Array.from({ length: n }, () => ({ x: Math.random() * W, y: Math.random() * H, r: (Math.random() * 1.3 + 0.3) * d, p: Math.random() * 6.28, s: 0.6 + Math.random() * 1.6, g: Math.random() < 0.12 })); }
+  function frame(t) {
+    cx.clearRect(0, 0, W, H);
+    for (const s of stars) { const a = REDUCED ? 0.7 : 0.35 + 0.65 * Math.abs(Math.sin(s.p + t / 1000 * s.s * 0.6));
+      cx.globalAlpha = a; cx.fillStyle = s.g ? "#f6e2a8" : "#e6e0ff"; cx.beginPath(); cx.arc(s.x, s.y, s.r, 0, 6.283); cx.fill(); }
+    if (!REDUCED) {
+      if (!shoot && t - last > 5200 + Math.random() * 4000) { last = t; shoot = { x: Math.random() * W * 0.7 + W * 0.2, y: Math.random() * H * 0.3, l: 0 }; }
+      if (shoot) { shoot.l += 0.025; const k = shoot.l, x = shoot.x - k * W * 0.35, y = shoot.y + k * W * 0.18;
+        const gr = cx.createLinearGradient(x, y, x + 90, y - 46); gr.addColorStop(0, "rgba(255,240,200,.9)"); gr.addColorStop(1, "rgba(255,240,200,0)");
+        cx.globalAlpha = 1 - k; cx.strokeStyle = gr; cx.lineWidth = 2; cx.beginPath(); cx.moveTo(x, y); cx.lineTo(x + 90, y - 46); cx.stroke(); if (k >= 1) shoot = null; }
+      requestAnimationFrame(frame);
+    }
+    cx.globalAlpha = 1;
+  }
+  size(); addEventListener("resize", size); requestAnimationFrame(frame);
+  if (REDUCED) addEventListener("resize", () => requestAnimationFrame(frame));
+})();
+
+// ---------- 내 정보
+// 시진 경계는 진태양시 홀수 정각 = 한국 표준시로 ○시 32분. [이름, 표준시 범위, 진태양시 대표 시각(분)]
+const SIJIN = (() => { const clock = (m) => { const h = Math.floor(m / 60) % 24, p = h < 6 ? "새벽" : h < 12 ? "오전" : h < 18 ? "오후" : "밤"; return `${p} ${h % 12 || 12}:${String(m % 60).padStart(2, "0")}`; };
+  const out = [["자시 (밤)", "밤 11:32~자정", 23 * 60 + 14], ["자시 (새벽)", "자정~새벽 1:31", 14]];
+  for (let i = 1; i < 12; i++) { const s = (2 * i - 1) * 60 + 32; out.push([`${SJ.BR[i]}시`, `${clock(s)}~${clock(s + 119)}`, 2 * i * 60]); } return out; })();
+let me = store.get("me", null);
+// 정확한 시각(p.t)이 있으면 그대로, 시진만 고르면 그 시진 한가운데 진태양시를 그날의 실제 시차(서머타임 포함)로 벽시계 시각으로 바꿔 계산
+function sajuOf(p) { if (!p) return null;
+  if (p.t) { const [h, mi] = p.t.split(":").map(Number); return SJ.compute(p.y, p.mo, p.d, h, mi, p.gender || null); }
+  if (!(p.sijin >= 0)) return SJ.compute(p.y, p.mo, p.d, null, 0, p.gender || null);
+  const m = SIJIN[p.sijin][2] + SJ.tzAt(p.y, p.mo, p.d) - 508; return SJ.compute(p.y, p.mo, p.d, Math.floor(m / 60), m % 60, p.gender || null); }
+function birthText(p) { return `${p.y}년 ${p.mo}월 ${p.d}일${p.t ? " " + p.t : p.sijin >= 0 ? " " + SIJIN[p.sijin][0] : ""}${p.gender ? " · " + p.gender : ""}`; }
+function birthFields(prefix, p, allowUnknownYear) {
+  const ys = []; const now = SJ.kstNow().y;
+  for (let y = now; y >= 1930; y--) ys.push(`<option value="${y}" ${p && p.y === y ? "selected" : ""}>${y}년</option>`);
+  const unknown = allowUnknownYear ? `<option value="" ${!p ? "selected" : ""}>모름</option>` : "";
+  const defY = p ? "" : (allowUnknownYear ? "" : "selected");
+  const ms = Array.from({ length: 12 }, (_, i) => `<option value="${i + 1}" ${p && p.mo === i + 1 ? "selected" : ""}>${i + 1}월</option>`).join("");
+  const ds = Array.from({ length: 31 }, (_, i) => `<option value="${i + 1}" ${p && p.d === i + 1 ? "selected" : ""}>${i + 1}일</option>`).join("");
+  const sj = [`<option value="-1">모름</option>`].concat(SIJIN.map((s, i) => `<option value="${i}" ${p && p.sijin === i ? "selected" : ""}>${s[0]} · ${s[1]}</option>`)).join("");
+  return `<div class="fgrid">
+    <div><label class="f">태어난 해</label><select id="${prefix}Y">${unknown}${ys.join("").replace(`value="2000" `, `value="2000" ${defY} `)}</select></div>
+    <div><label class="f">월 (양력)</label><select id="${prefix}M">${ms}</select></div>
+    <div><label class="f">일</label><select id="${prefix}D">${ds}</select></div>
+    <div class="full"><label class="f">태어난 시간 (몰라도 돼요)</label><select id="${prefix}H">${sj}</select>
+      <label class="f" style="margin-top:8px">정확한 출생 시각을 알면 (선택 · 이게 우선이에요)</label><input type="time" id="${prefix}T" value="${p && p.t ? p.t : ""}">
+      <p class="muted small" style="margin:6px 0 0">시진 범위는 지금 쓰는 한국 표준시 기준이에요. 서머타임(1948~60년 여름, 1987~88년 여름)이나 1954~61년에 태어났다면 출생 시각을 직접 넣어 주세요 — 그때 쓰던 시계에 맞춰 자동으로 보정해요.</p></div>
+    <div class="full"><label class="f">성별 (궁합의 배우자 별에 써요)</label><div class="seg" id="${prefix}G">
+      <button type="button" data-v="여" class="${p && p.gender === "여" ? "on" : ""}">여성</button><button type="button" data-v="남" class="${p && p.gender === "남" ? "on" : ""}">남성</button><button type="button" data-v="" class="${!p || !p.gender ? "on" : ""}">선택 안 함</button></div></div></div>`;
+}
+function bindSeg(id) { $$(`#${id} button`).forEach((b) => b.onclick = () => { $$(`#${id} button`).forEach((x) => x.classList.toggle("on", x === b)); }); }
+function readBirth(prefix) {
+  const y = +$(`#${prefix}Y`).value || null, mo = +$(`#${prefix}M`).value, d = +$(`#${prefix}D`).value;
+  const sijin = +$(`#${prefix}H`).value, gender = $(`#${prefix}G button.on`)?.dataset.v || "", t = $(`#${prefix}T`)?.value || "";
+  if (!y) return [null, null];
+  const dt = new Date(Date.UTC(y, mo - 1, d)); if (dt.getUTCMonth() !== mo - 1) return [null, `${y}년 ${mo}월에는 ${d}일이 없어요`];
+  return [{ y, mo, d, sijin, gender, ...(t ? { t } : {}) }, null];
+}
+function openMe() {
+  $("#sheet").innerHTML = `<button class="close" aria-label="닫기">✕</button><div class="eyebrow">내 정보</div><h2 style="margin-top:4px">🌙 내 정보</h2>
+    <p class="muted small" style="margin-top:0">한 번만 넣으면 오늘의 운세·사주·궁합·별자리에 모두 쓰여요. 이 기기에만 저장돼요.</p>
+    <label class="f">이름 (궁합·이름 풀이에 써요, 선택)</label><input type="text" id="meName" maxlength="12" placeholder="예: 김민준" value="${esc(me?.name || "")}">
+    <div style="height:12px"></div>${birthFields("me", me, false)}
+    <p id="meErr" class="small" style="color:var(--bad);min-height:1.2em"></p>
+    <div class="row" style="justify-content:space-between"><button class="btn ghost sm" id="meClear" ${me ? "" : "hidden"}>정보 지우기</button><button class="btn" id="meSave">저장하고 보기 ✦</button></div>`;
+  bindSeg("meG"); $("#sheet .close").onclick = () => closeOv("sheetOv");
+  $("#meSave").onclick = () => { const [b, err] = readBirth("me"); if (err) { $("#meErr").textContent = err; return; }
+    me = { ...b, name: $("#meName").value.trim().slice(0, 12) }; store.set("me", me); closeOv("sheetOv"); refreshMe(); toast("저장했어요 ✦"); };
+  $("#meClear").onclick = () => { me = null; store.set("me", null); closeOv("sheetOv"); refreshMe(); };
+  openOv("sheetOv");
+}
+function openOv(id) { const o = $("#" + id); o.classList.add("on"); G.fromTo(o.firstElementChild, { y: 24, opacity: 0 }, { y: 0, opacity: 1, duration: 0.6, ease: "power2.out" }); }
+function closeOv(id) { $("#" + id).classList.remove("on"); }
+$$(".overlay").forEach((o) => o.addEventListener("click", (e) => { if (e.target === o) o.classList.remove("on"); }));
+addEventListener("keydown", (e) => { if (e.key === "Escape") $$(".overlay.on").forEach((o) => o.classList.remove("on")); });
+$("#meBtn").onclick = openMe;
+function refreshMe() { $("#meLabel").textContent = me ? `${me.name || "나"} · ${me.y}.${me.mo}.${me.d}` : "내 정보 입력"; rendered.clear(); show(current, true); }
+const needMe = (what) => `<div class="panel empty"><div class="big">🌙</div><h2>${what}</h2><p class="muted">생년월일만 고르면 바로 볼 수 있어요. 태어난 시간은 몰라도 돼요.</p><button class="btn" data-open-me>내 정보 넣기</button></div>`;
+document.addEventListener("click", (e) => { if (e.target.closest("[data-open-me]")) openMe(); const g = e.target.closest("[data-go]"); if (g) go(g.dataset.go); });
+
+// ---------- 카드 크게 보기
+function cardView(c, r) {
+  const s = c.suit ? SUITS[c.suit] : null;
+  $("#cardSheet").innerHTML = `<button class="close" aria-label="닫기">✕</button><div class="in">
+    <div><img src="${IMG(c.id)}" alt="${esc(c.ko)}" style="${r ? "transform:rotate(180deg)" : ""}"></div>
+    <div><div class="eyebrow">${esc(c.en.toUpperCase())}</div><h2 style="margin-top:4px">${esc(c.ko)} ${r ? '<span class="chip bad">역방향</span>' : ""}</h2>
+    <div class="row" style="margin:6px 0 10px">${s ? `<span class="chip">${s[1]} ${s[0]} · ${s[3]}</span>` : '<span class="chip gold">메이저 아르카나</span>'}<span class="chip gold">상징색 ${esc(c.color)}</span></div>
+    <h3>⬆ 정방향 <span class="muted small">${c.up_kw.join(" · ")}</span></h3><p style="margin:4px 0 12px">${esc(c.up)}</p>
+    <h3>⬇ 역방향 <span class="muted small">${c.rev_kw.join(" · ")}</span></h3><p style="margin:4px 0 12px">${esc(c.rev)}</p>
+    <p class="rcard adv" style="display:block;margin:0">💡 ${esc(c.advice)}</p>
+    <p class="muted small" style="margin-top:10px">✨ 효과 근거: ${esc(c.arcana === "major" ? FX.WHY[c.id] : { wands: "완드 = 불 원소", cups: "컵 = 물 원소", swords: "소드 = 공기 원소", pentacles: "펜타클 = 흙 원소" }[c.suit])}${r ? " · 역방향은 그림자 효과" : ""}</p></div></div>`;
+  $("#cardSheet .close").onclick = () => closeOv("cardOv"); openOv("cardOv");
+  setTimeout(() => { const im = $("#cardSheet img"); if (im) { FX.aura(im, FX.kindOf(c, r), 2.6); FX.play(FX.kindOf(c, r), im, 0.5); } }, 300);
+}
+
+// ---------- 오늘
+const AREAS = [["💗", "연애"], ["📚", "일·공부"], ["💰", "금전"], ["🍀", "건강"]];
+const DAILY_GOD = DECK.dailyGod;
+function todayKey() { const t = SJ.kstNow(); return `${t.y}-${String(t.mo).padStart(2, "0")}-${String(t.d).padStart(2, "0")}`; }
+function whoKey() { if (me) return `${me.name}|${me.y}-${me.mo}-${me.d}`; let id = store.get("device", null); if (!id) { id = String(Math.floor(rnd() * 1e12)); store.set("device", id); } return id; }
+function dailyDraw() { const [h1, h2] = hash(`daily|${whoKey()}|${todayKey()}`); return { card: CARDS[h1 % 78], rev: (h2 >>> 16) % 2 === 0, h2 }; }
+function stars(card, rev, seed) { return card.tone.map((tone, i) => { const base = rev ? -tone * 0.6 : tone; const j = ((seed >>> (i * 8)) % 3) - 1; return Math.max(1, Math.min(5, Math.round(3 + base + j * 0.6))); }); }
+// 수비학 개인 일수 (Personal Day): 생월+생일+올해 → 개인 년수, +이번 달 → 월수, +오늘 → 일수. 생일 없으면 날짜만 더한 우주 일수.
+const red = (n) => { while (n > 9) n = String(n).split("").reduce((a, b) => a + +b, 0); return n; };
+const DAY_NUM = { 1: "새로 시작하기 좋은 날", 2: "협력과 기다림의 날", 3: "표현하고 어울리는 날", 4: "차근차근 다지는 날", 5: "변화와 이동의 날", 6: "가족·관계를 챙기는 날", 7: "혼자 생각하고 쉬는 날", 8: "일과 돈을 다루는 날", 9: "마무리하고 비우는 날" };
+function dayNumber(t) { if (me) { const py = red(red(me.mo) + red(me.d) + red(t.y)); return [red(red(py + red(t.mo)) + red(t.d)), "개인 일수"]; }
+  return [red(red(t.y) + red(t.mo) + red(t.d)), "오늘의 수"]; }
+// 오방색: 목 청 · 화 적 · 토 황 · 금 백 · 수 흑
+const OBANG = ["청록", "빨강", "노랑", "흰색", "검정·남색"];
+function dayColor(tp) { const sj = sajuOf(me); if (sj) { const ec = SJ.elements(sj); const lo = ec.indexOf(Math.min(...ec)); return [OBANG[lo], `내 사주에 가장 약한 ${SJ.EL[lo]} 기운의 오방색`]; }
+  const e = SJ.SE[tp.s]; return [OBANG[e], `오늘 일진 천간(${SJ.STEMS[tp.s]}) ${SJ.EL[e]} 기운의 오방색`]; }
+function renderToday(el) {
+  const t = SJ.kstNow(), tp = SJ.todayPillar(), wd = WEEK[new Date(Date.UTC(t.y, t.mo - 1, t.d)).getUTCDay()];
+  const { card, rev, h2 } = dailyDraw(); const st = stars(card, rev, h2); const [num, numLbl] = dayNumber(t); const [col, colWhy] = dayColor(tp);
+  const opened = store.get("opened", "") === todayKey() + whoKey();
+  let personal = "";
+  const sj = sajuOf(me);
+  if (sj) { const god = SJ.tenGod(sj.day.s, SJ.SE[tp.s], tp.s % 2 === 0); const rels = SJ.branchRelations(tp.b, sj.day.b);
+    personal = `<div class="panel"><div class="eyebrow">오늘의 일진</div><h2 style="margin-top:4px">오늘은 나에게 <b class="hl">${god}</b>의 날</h2>
+      <p style="margin:0">${esc(DAILY_GOD[god])}</p>${rels.map(([n, d, x]) => `<p class="small" style="margin:8px 0 0"><span class="chip ${d > 0 ? "good" : "bad"}">${n}</span> 오늘의 ${SJ.BR[tp.b]}와 내 일지 ${SJ.BR[sj.day.b]}: ${esc(x)}</p>`).join("")}
+      <p class="muted small" style="margin:10px 0 0">오늘 일진 ${SJ.ptext(tp)}(${SJ.phanja(tp)})의 천간이 내 일간 ${SJ.STEMS[sj.day.s]}(${SJ.EL[SJ.SE[sj.day.s]]})과 어떤 관계인지(십신)로 봐요.</p></div>`; }
+  else personal = `<div class="panel cta"><div><h3>🀄 나만의 일진도 볼래요?</h3><p class="muted small" style="margin:2px 0 0">생일을 넣으면 오늘이 나에게 어떤 날인지 사주로 풀어 줘요.</p></div><button class="btn sm" data-open-me>내 정보 넣기</button></div>`;
+  el.innerHTML = `<div class="eyebrow" style="margin-top:8px">${t.y}. ${t.mo}. ${t.d} (${wd}) · ${SJ.ptext(tp)}일 ${SJ.phanja(tp)}</div>
+    <h1 style="margin-top:6px">${me?.name ? esc(me.name) + "님의 " : ""}오늘의 운세</h1>
+    <p class="lead">하루 한 장, 나에게 온 카드를 뒤집어 보세요. 같은 날엔 언제 봐도 같은 카드예요.</p>
+    <div class="panel hero">
+      <div class="daily-card card3d" id="dailyCard"><div class="inner"><img class="back" src="cards/back.webp" alt="카드 뒷면"><img class="face ${rev ? "rev" : ""}" src="${IMG(card.id)}" alt="${esc(card.ko)}"></div>${opened ? "" : '<div class="hint">✦ 눌러서 뒤집기 ✦</div>'}</div>
+      <div id="dailyInfo" style="${opened ? "" : "opacity:0"}">
+        <div class="eyebrow">${esc(card.en.toUpperCase())}</div>
+        <h2 style="margin:4px 0 4px;font-size:1.6rem">${esc(card.ko)} ${rev ? '<span class="chip bad">역방향</span>' : '<span class="chip good">정방향</span>'}</h2>
+        <div class="row">${(rev ? card.rev_kw : card.up_kw).map((k) => `<span class="chip gold">${esc(k)}</span>`).join("")}</div>
+        <p>${esc(rev ? card.rev : card.up)}</p>
+        <div class="stars-row">${AREAS.map(([e, n], i) => `<span class="small">${e} ${n}</span><span class="stars" data-n="${st[i]}">${"<i>★</i>".repeat(5)}</span>`).join("")}</div>
+        <div class="lucky"><div><small>오늘의 색</small><b>🎨 ${col}</b><small>${colWhy}</small></div><div><small>${numLbl} (수비학)</small><b>🔢 ${num}</b><small>${DAY_NUM[num]}</small></div></div>
+        <p class="adv" style="color:var(--gold2);margin-bottom:0">💡 ${esc(card.advice)}</p>
+        <p class="basis">근거 · 카드: 78장 라이더-웨이트 덱에서 하루 한 장(정/역방향 포함) · 별점: 그 카드의 전통 의미를 분야별로 점수로 옮긴 것 · ${numLbl}: ${me ? "생월+생일+올해+이번 달+오늘" : "오늘 날짜"}의 숫자를 한 자리가 될 때까지 더함</p>
+        <div class="row" style="margin-top:14px"><button class="btn sm" data-go="tarot">🃏 질문하고 카드 더 뽑기</button><button class="btn ghost sm" id="dailyBig">카드 크게 보기</button></div>
+      </div>
+    </div>${personal}
+    <div class="spreads" style="grid-template-columns:repeat(auto-fit,minmax(150px,1fr))">
+      <button class="spread" data-go="saju"><span class="ic">🀄</span><b>사주팔자</b><span>오행·일간 성향·올해 운</span></button>
+      <button class="spread" data-go="love"><span class="ic">💞</span><b>연애 궁합</b><span>사주 + 이름 궁합</span></button>
+      <button class="spread" data-go="stars"><span class="ic">✨</span><b>별자리 · 띠 · 숫자</b><span>오늘의 별자리 한마디</span></button>
+    </div>`;
+  const dc = $("#dailyCard"), inner = $(".inner", dc), info = $("#dailyInfo");
+  const fillStars = () => $$(".stars", el).forEach((s, k) => $$("i", s).forEach((i, n) => { if (n < +s.dataset.n) { G.fromTo(i, { scale: 0.6, opacity: 0, filter: "blur(4px)" }, { scale: 1, opacity: 1, filter: "blur(0px)", duration: 0.8, delay: 0.2 + k * 0.15 + n * 0.09, ease: "sine.out" }); i.classList.add("on"); } }));
+  $("#dailyBig").onclick = () => cardView(card, rev);
+  if (opened) { G.set(inner, { rotationY: 180 }); fillStars(); dc.onclick = () => cardView(card, rev); return; }
+  G.to(dc, { y: -8, duration: 1.6, yoyo: true, repeat: -1, ease: "sine.inOut" });
+  dc.onclick = () => {
+    if (dc._done) return cardView(card, rev); dc._done = true; store.set("opened", todayKey() + whoKey()); $(".hint", dc)?.remove();
+    window.gsap && gsap.killTweensOf(dc); G.to(dc, { y: 0, duration: 0.6, ease: "sine.out" });
+    const tl = G.timeline();
+    tl.to(inner, { scale: 1.04, duration: 0.6, ease: "sine.inOut" }).to(inner, { rotationY: 180, duration: 1.4, ease: "sine.inOut" }).to(inner, { scale: 1, duration: 0.8, ease: "sine.out" })
+      .call(() => { dc.classList.add("glow"); FX.reveal(card, rev, dc, 1.1); }, null, 1.45).to(info, { opacity: 1, duration: 1.2, ease: "sine.out" }, 2.0).call(fillStars, null, 2.3);
+  };
+}
+function burst(target) { FX.play("light", target, 0.8); }
+function burstOld(target, colors) {
+  if (!window.confetti || REDUCED) return; const r = target.getBoundingClientRect();
+  confetti({ particleCount: 60, spread: 70, startVelocity: 28, scalar: 0.8, ticks: 140, shapes: ["star"], colors, origin: { x: (r.left + r.width / 2) / innerWidth, y: (r.top + r.height / 2) / innerHeight } });
+}
+
+// ---------- 타로
+const SPREADS = {
+  one: { ic: "🌟", name: "원카드 · 예/아니오", desc: "궁금한 한 가지에 바로 답", pos: ["답"], n: 1 },
+  three: { ic: "🃏", name: "과거 · 현재 · 미래", desc: "가장 많이 보는 3장 흐름", pos: ["과거", "현재", "미래"], n: 3 },
+  love: { ic: "💞", name: "연애 4장", desc: "내 마음·그 사람 마음·관계", pos: ["나의 마음", "그 사람의 마음", "지금 관계", "다가올 흐름"], n: 4 },
+  celtic: { ic: "✡️", name: "켈틱 크로스", desc: "10장으로 깊게 보는 정통 배열", n: 10,
+    pos: ["현재 상황", "도움·장애", "의식·목표", "기반·근원", "지나간 일", "가까운 미래", "나의 태도", "주변 환경", "희망과 두려움", "최종 결과"] },
+};
+const tarot = { spread: null, q: "", pool: [], picks: [] };
+function energy(c, r) { return (c.tone.reduce((a, b) => a + b, 0) / 4) * (r ? -0.6 : 1); }
+function overall(draws) {
+  const L = []; const majors = draws.filter(([c]) => c.arcana === "major").length;
+  if (majors >= Math.max(2, Math.ceil(draws.length * 0.5))) L.push("메이저 카드가 많이 나왔어요. 지금 고민은 일상의 작은 일이 아니라 <b>인생의 큰 흐름</b>과 닿아 있어요.");
+  else if (majors === 0) L.push("모두 마이너 카드예요. 큰 운명보다는 <b>내 선택과 행동으로 충분히 바꿀 수 있는</b> 일이에요.");
+  const cnt = {}; draws.forEach(([c]) => c.suit && (cnt[c.suit] = (cnt[c.suit] || 0) + 1));
+  const top = Object.entries(cnt).sort((a, b) => b[1] - a[1])[0];
+  if (top && top[1] >= 2) { const s = SUITS[top[0]]; L.push(`${s[1]} ${s[0]}${(s[0].charCodeAt(s[0].length - 1) - 0xac00) % 28 ? "이" : "가"} ${top[1]}장 — 이번 일의 중심은 <b>${s[3]}</b>이에요.`); }
+  const rv = draws.filter(([, r]) => r).length;
+  if (rv === draws.length && draws.length > 1) L.push("전부 역방향이에요. 일이 막힌 게 아니라 <b>안쪽에서 정리할 게 남았다</b>는 신호예요. 서두르지 말아요.");
+  else if (rv >= Math.max(2, Math.ceil(draws.length / 2))) L.push("역방향이 많아요. 바깥보다 <b>내 마음속 걸림돌</b>을 먼저 풀면 흐름이 바뀌어요.");
+  else if (rv === 0) L.push("모두 정방향이에요. 기운이 막힘없이 흐르고 있어요.");
+  if (draws.length > 1) { const f = energy(...draws[0]), l = energy(...draws[draws.length - 1]);
+    if (l - f >= 0.75) L.push("처음보다 마지막 카드가 훨씬 밝아요. <b>좋아지는 흐름</b>이에요 🌅");
+    else if (f - l >= 0.75) L.push("마지막 카드가 경고를 보내요. 지금 방향을 한 번 점검하면 충분히 피할 수 있어요.");
+    else L.push("처음과 끝의 기운이 비슷해요. 지금의 선택이 흐름을 정해요."); }
+  return L;
+}
+// 질문 주제: 단어로 분류 → 카드의 분야별 성향(tone: 연애·일·금전·건강)으로 읽음
+const TOPICS = [["연애", "💗", /연애|사랑|좋아하|짝사랑|그\s?사람|그\s?애|남친|여친|남자\s?친구|여자\s?친구|썸|고백|재회|결혼|이별|헤어|연락|애인|소개팅|커플|궁합|그\s?사람\s?마음|속마음|좋아하는\s?마음/],
+  ["일·공부", "📚", /직장|이직|취업|취직|회사|시험|공부|합격|면접|학교|승진|사업|프로젝트|업무|알바|진로|입시|자격증|창업|퇴사|일이|일은|일운|성적|대학/],
+  ["금전", "💰", /돈|금전|재물|재정|투자|주식|코인|월급|로또|빚|대출|부동산|수입|지출|용돈|연봉|매출/],
+  ["건강", "🍀", /건강|몸|아프|병원|질병|다이어트|운동|수술|컨디션|수면|체력|살 빼|살빼/]];
+const jo = (w, a, b) => w + ((w.charCodeAt(w.length - 1) - 0xac00) % 28 ? a : b);
+const SUIT_TOPIC = { cups: [0], wands: [1], pentacles: [2, 3], swords: [] };
+function topicOf(q) { if (!q) return -1; let best = -1, bn = 0; TOPICS.forEach(([, , re], i) => { const n = (q.match(new RegExp(re, "g")) || []).length; if (n > bn) { bn = n; best = i; } }); return best; }
+const lvl = (c, r, t) => (r ? -c.tone[t] * 0.6 : c.tone[t]);
+function topicLine(c, r, t) { const v = lvl(c, r, t), [name] = TOPICS[t];
+  const ph = v >= 1.5 ? `${name}에 아주 좋은 신호예요` : v >= 0.5 ? `${name} 쪽으로 좋게 기울어요` : v > -0.5 ? `${name}에는 중립적인 카드예요 — 다른 카드와 함께 봐요` : v > -1.5 ? `${name}에는 조심하라는 신호예요` : `${name}에는 강한 경고예요. 조언을 꼭 챙겨요`;
+  const direct = c.suit && SUIT_TOPIC[c.suit].includes(t) ? ` (${jo(SUITS[c.suit][0], "은", "는")} 바로 ${jo(SUITS[c.suit][3], "을", "를")} 다루는 수트라 더 직접적이에요)` : "";
+  const st = Math.max(1, Math.min(5, Math.round(3 + v))); return `<p class="topic">${TOPICS[t][1]} <b>질문 관점</b> <span class="stars">${[1, 2, 3, 4, 5].map((n) => `<i class="${n <= st ? "on" : ""}">★</i>`).join("")}</span> ${ph}${direct}</p>`; }
+function renderTarot(el) {
+  el.innerHTML = `<div class="eyebrow" style="margin-top:8px">타로 리딩</div><h1 style="margin-top:6px">타로 카드 뽑기</h1>
+    <p class="lead">마음속으로 질문을 떠올리고 배열을 고르세요. 78장을 섞어 펼치면 끌리는 카드를 직접 골라요.</p>
+    <div class="panel"><label class="f">질문 (안 적어도 돼요)</label><input type="text" id="tq" maxlength="80" placeholder="예: 이번 달 연애운은? · 이직해도 될까? · 그 사람 마음은?"></div>
+    <div class="spreads">${Object.entries(SPREADS).map(([k, s]) => `<button class="spread" data-spread="${k}"><span class="n">${s.n}장</span><span class="ic">${s.ic}</span><b>${s.name}</b><span>${s.desc}</span></button>`).join("")}</div>
+    <div id="tTable"></div>
+    <div class="panel"><div class="row" style="justify-content:space-between"><div><h2 style="margin:0">📖 타로 도감</h2><p class="muted small" style="margin:0">78장 카드 뜻을 그림과 함께 찾아봐요</p></div><button class="btn ghost sm" id="dictToggle">펼치기</button></div><div id="dictBox" hidden></div>
+    <p class="basis">근거 · 덱: 라이더-웨이트-스미스(1909) 구성 그대로 메이저 22장 + 마이너 56장(완드·컵·소드·펜타클 각 14장). 그림만 새로 그렸어요 · 뽑기: 78장 전부를 무작위로 섞어 펼치고, 카드마다 1/2 확률로 역방향 · 뜻: 라이더-웨이트 덱의 표준 해석(웨이트 『타로 그림 열쇠』(1910) 원전 + 오늘날 리더들이 공통으로 쓰는 정/역방향 의미) · 배열: 켈틱 크로스는 웨이트가 소개한 10장 배열(4번은 원전대로 일의 기반·근원)</p></div>`;
+  $$("[data-spread]", el).forEach((b) => b.onclick = () => startSpread(b.dataset.spread));
+  $("#dictToggle").onclick = () => { const box = $("#dictBox"); box.hidden = !box.hidden; $("#dictToggle").textContent = box.hidden ? "펼치기" : "접기"; if (!box.hidden && !box.innerHTML) renderDict(box, "all"); };
+}
+function renderDict(box, f) {
+  const F = [["all", "전체"], ["major", "메이저"], ["wands", "🔥 완드"], ["cups", "💧 컵"], ["swords", "⚔️ 소드"], ["pentacles", "🪙 펜타클"]];
+  const list = CARDS.filter((c) => f === "all" || (f === "major" ? c.arcana === "major" : c.suit === f));
+  box.innerHTML = `<div class="dict-filter">${F.map(([k, n]) => `<button class="chip ${k === f ? "gold" : ""}" data-f="${k}" style="cursor:pointer">${n}</button>`).join("")}</div>
+    <div class="dict">${list.map((c) => `<button data-c="${c.id}"><img loading="lazy" src="${IMG(c.id)}" alt="">${esc(c.ko)}</button>`).join("")}</div>`;
+  $$("[data-f]", box).forEach((b) => b.onclick = () => renderDict(box, b.dataset.f));
+  $$("[data-c]", box).forEach((b) => b.onclick = () => cardView(CARDS[+b.dataset.c], false));
+  G.from($$(".dict button", box), { opacity: 0, y: 8, duration: 0.6, ease: "sine.out", stagger: 0.008 });
+}
+function slotLayout(key, n) {
+  const w = Math.min(880, innerWidth - 32);
+  // 켈틱 크로스는 4줄이라 휴대폰에서는 화면 높이에 맞춰 줄여야 아래 부채꼴까지 한눈에 들어온다
+  if (key === "celtic") return { cols: 4, sw: Math.min(92, Math.floor((w - 60) / 4), Math.max(56, Math.floor(((innerHeight - 330) / 4 - 40) / 1.713))) };
+  return { cols: n, sw: Math.min(n === 1 ? 150 : 130, Math.floor((w - 40 - (n - 1) * 10) / n)) };
+}
+function startSpread(key) {
+  const s = SPREADS[key]; tarot.spread = key; tarot.q = $("#tq").value.trim(); tarot.picks = [];
+  tarot.pool = sample(CARDS, 78).map((c) => [c, rnd() < 1 / 2]); // 78장 전부 피셔-예이츠로 섞고, 카드마다 반반 확률로 뒤집힘
+  const box = $("#tTable"); const { cols, sw } = slotLayout(key, s.n);
+  box.innerHTML = `<div class="table" id="tbl"><div class="q">${tarot.q ? "“" + esc(tarot.q) + "”" : s.ic + " " + s.name}</div>
+    <div class="slots ${key === "celtic" ? "celtic" : ""}" style="--cols:${cols};--sw:${sw}px">${s.pos.map((p, i) => `<div class="slot" style="${key === "celtic" ? `grid-area:${i < 6 ? "c" : "s"}${i + 1}` : ""}"><div class="ph">${i + 1}</div><div class="lbl">${p}</div></div>`).join("")}</div>
+    <div class="fan" id="fan"></div><div class="fan-hint" id="fanHint">카드를 섞는 중…</div></div><div id="tRead"></div>`;
+  if (key === "celtic") { const c2 = $$(".slot", box)[1]; c2.style.gridArea = "c1"; c2.style.transform = "rotate(90deg) scale(.82)"; c2.style.zIndex = 2; $(".lbl", c2).style.display = "none"; }
+  box.scrollIntoView({ behavior: REDUCED ? "auto" : "smooth", block: "start" });
+  const fan = $("#fan"); layFan(fan, s);
+}
+// 부채꼴 배치: 화면 폭을 재서 카드가 가장자리·안내 문구를 넘지 않게 계산한다.
+// 줄마다 같은 중심점을 공유하는 동심원 부채라서 줄끼리 엇갈려 겹치지 않는다.
+function layFan(fan, s) {
+  const W = fan.clientWidth, mobile = W < 520, ROWS = mobile ? 3 : 2, ROW = Math.ceil(78 / ROWS);
+  const cw = Math.round(Math.max(38, Math.min(70, W / (mobile ? 8.2 : 11)))), h = cw * 514 / 300;
+  const A = (mobile ? 34 : 44) * Math.PI / 180, sinA = Math.sin(A), cosA = Math.cos(A);
+  const lift = h * (mobile ? 0.42 : 0.5);                  // 줄 사이 간격
+  const top = (ROWS - 1) * lift;                           // 맨 뒷줄이 올라간 높이
+  // 뒷줄 바깥 위 모서리가 폭 안에 들어오도록 중심점 거리 R을 구한다
+  const R = Math.max(h * 0.8, (W / 2 - 8 - (cw / 2) * cosA) / sinA - h - top);
+  const drop = R * (1 - cosA) + (cw / 2) * sinA;           // 앞줄 바깥 카드가 아래로 처지는 양
+  const base = Math.ceil(drop) + 6;
+  fan.style.height = `${Math.ceil(base + top + h + 18)}px`;
+  fan.style.setProperty("--cw", cw + "px");
+  const rowOf = (i) => Math.floor(i / ROW), colOf = (i) => i % ROW, nRow = (r) => Math.min(ROW, 78 - r * ROW);
+  const angle = (i) => { const r = rowOf(i), n = nRow(r); return (-A + (2 * A * colOf(i)) / Math.max(1, n - 1)) * 180 / Math.PI; };
+  const cards = tarot.pool.map((_, i) => { const d = document.createElement("div"); d.className = "fc"; d.dataset.i = i;
+    const up = (ROWS - 1 - rowOf(i)) * lift;
+    d.style.bottom = `${base + up}px`; d.style.transformOrigin = `50% ${((h + R + up) / h) * 100}%`; fan.appendChild(d); return d; });
+  // 섞기(카드가 살짝 좌우로 흘렀다 모이기) → 가운데부터 펼치기
+  G.set(cards, { rotation: 0, x: 0, y: 0, opacity: 0 });
+  const tl = G.timeline();
+  tl.to(cards, { opacity: 1, duration: 0.5, ease: "sine.out" });
+  for (let k = 0; k < 1; k++) tl.to(cards, { x: (i) => ((i + k) % 2 ? 1 : -1) * (cw * 0.35 + (i % 7) * 1.5), y: (i) => -((i * 37) % 9), duration: 0.5, ease: "sine.inOut", stagger: { each: 0.003, from: "random" } })
+    .to(cards, { x: 0, y: 0, duration: 0.42, ease: "sine.inOut", stagger: { each: 0.003, from: "random" } });
+  tl.to(cards, { rotation: (i) => angle(i), duration: REDUCED ? 0.01 : 1.25, ease: "power3.out", stagger: { each: 0.006, from: "center" } }, "+=0.05")
+    .call(() => hint(`78장을 모두 펼쳤어요. 끌리는 카드 ${s.n}장을 골라 주세요 (0/${s.n})`));
+  const hover = matchMedia("(hover:hover)").matches;
+  cards.forEach((c) => {
+    if (hover) {
+      c.addEventListener("mouseenter", () => !c._picked && G.to(c, { y: -12, duration: 0.45, ease: "sine.out", overwrite: "auto" }));
+      c.addEventListener("mouseleave", () => !c._picked && G.to(c, { y: 0, duration: 0.6, ease: "sine.out", overwrite: "auto" }));
+    }
+    c.onclick = () => pick(c);
+  });
+}
+function hint(t) { const el = $("#fanHint"); if (!el) return; G.to(el, { opacity: 0, duration: 0.25, ease: "sine.in", onComplete: () => { el.textContent = t; G.to(el, { opacity: 1, duration: 0.45, ease: "sine.out" }); } }); }
+function pick(el) {
+  const s = SPREADS[tarot.spread]; if (el._picked || tarot.picks.length >= s.n) return;
+  el._picked = true; const idx = tarot.picks.length; tarot.picks.push(tarot.pool[+el.dataset.i]);
+  const slot = $$("#tbl .slot")[idx], ph = $(".ph", slot);
+  const a = el.getBoundingClientRect(), b = ph.getBoundingClientRect();
+  const fly = document.createElement("div"); fly.className = "fly"; document.body.appendChild(fly);
+  const rot = +G.getProperty(el, "rotation") || 0, w0 = el.offsetWidth, h0 = el.offsetHeight;
+  // 회전된 카드의 실제 중심에서 출발해, 살짝 떠올랐다가 자리로 내려앉는다
+  const cx = a.left + a.width / 2, cy = a.top + a.height / 2, tx = b.left + b.width / 2, ty = b.top + b.height / 2;
+  G.set(fly, { left: cx - w0 / 2, top: cy - h0 / 2, width: w0, height: h0, rotation: rot });
+  G.to(el, { opacity: 0, duration: 0.3, ease: "sine.out" });
+  const [card, rev] = tarot.picks[idx];
+  const T = REDUCED ? 0.01 : 0.85, arc = Math.min(60, Math.abs(cy - ty) * 0.25 + 24);
+  const tl = G.timeline({ onComplete: () => {
+    fly.remove(); ph.innerHTML = `<div class="card3d"><div class="inner"><img class="back" src="cards/back.webp" alt=""><img class="face ${rev ? "rev" : ""}" src="${IMG(card.id)}" alt=""></div></div>`;
+    slot.classList.add("done"); G.fromTo(ph, { scale: 1.035 }, { scale: 1, duration: 0.6, ease: "sine.out" });
+    if (tarot.picks.length === s.n) reveal();
+  } });
+  tl.to(fly, { left: tx - b.width / 2, width: b.width, height: b.height, rotation: 0, duration: T, ease: "power2.inOut" }, 0)
+    .to(fly, { top: Math.min(cy, ty) - b.height / 2 - arc, duration: T * 0.45, ease: "sine.out" }, 0)
+    .to(fly, { top: ty - b.height / 2, duration: T * 0.55, ease: "sine.inOut" }, T * 0.45);
+  hint(tarot.picks.length < s.n ? `끌리는 카드 ${s.n}장을 골라 주세요 (${tarot.picks.length}/${s.n})` : "카드를 펼치는 중…");
+}
+function reveal() {
+  const s = SPREADS[tarot.spread]; const fan = $("#fan");
+  G.to($$(".fc", fan), { opacity: 0, y: 18, duration: 0.7, ease: "sine.in", stagger: { each: 0.004, from: "edges" }, onComplete: () => {
+    G.to(fan, { height: 0, marginTop: 0, duration: 0.6, ease: "sine.inOut", onComplete: () => { fan.style.display = "none"; } }); } });
+  hint("");
+  const inners = $$("#tbl .slot .inner");
+  const tl = G.timeline({ delay: 0.5 });
+  const gap = s.n > 4 ? 0.55 : 0.9;
+  inners.forEach((inn, i) => { tl.to(inn, { rotationY: 180, duration: 1.2, ease: "sine.inOut" }, i * gap).call(() => FX.reveal(...tarot.picks[i], inn.closest(".ph"), s.n > 4 ? 0.4 : 0.8, s.n > 1), null, i * gap + 0.75); });
+  tl.call(() => showReading(), null, "+=0.6");
+  $$("#tbl .slot").forEach((sl, i) => sl.onclick = () => cardView(...tarot.picks[i]));
+}
+function showReading() {
+  const s = SPREADS[tarot.spread], d = tarot.picks, box = $("#tRead"), t = topicOf(tarot.q);
+  let head = "";
+  if (tarot.q) { const avg = t >= 0 ? d.reduce((a, [c, r]) => a + lvl(c, r, t), 0) / d.length : 0;
+    head += `<div class="panel" style="margin-top:0"><div class="eyebrow">나의 질문</div><h2 style="margin:4px 0 6px">“${esc(tarot.q)}”</h2>${t >= 0
+      ? `<p style="margin:0"><span class="chip gold">${TOPICS[t][1]} ${TOPICS[t][0]} 질문으로 읽었어요</span> 뽑힌 카드들의 ${TOPICS[t][0]} 기운은 <b class="hl">${avg >= 0.75 ? "밝은 편" : avg >= 0 ? "보통" : avg > -0.75 ? "약간 흐린 편" : "어두운 편"}</b>이에요.${t === 0 && tarot.spread !== "love" ? ' <span class="muted small">연애 질문은 💞 연애 4장 배열로도 보면 좋아요.</span>' : ""}</p>`
+      : `<p class="muted small" style="margin:0">특정 분야 단어가 없어 카드의 전체 의미로 읽었어요. “연애·이직·돈·건강” 같은 말을 넣으면 그 분야로 좁혀 읽어요.</p>`}
+      <p class="basis">질문은 카드 뽑기에 영향을 주지 않아요(실제 타로도 무작위로 뽑고 질문에 맞춰 해석해요). 질문의 주제어를 찾아, 카드마다 전통 의미 중 그 분야 성향으로 읽어요. 역방향은 그 성향이 약해지거나 뒤집힌 것으로 봐요.</p></div>`; }
+  if (tarot.spread === "one") { const [c0, r0] = d[0], base = t >= 0 ? c0.tone[t] * 0.6 + energy(c0, false) * 0.4 : energy(c0, false);
+    const [ans, txt] = r0 ? (base >= 0.5 ? ["조건부 🌓", "좋은 카드가 거꾸로 나왔어요. 바라는 일이 늦어지거나 조건이 붙어요. 서두르지 말아요."] : ["아니오 🌑", "지금은 기운이 막혀 있어요. 서두르지 말고 때를 기다려요."])
+      : base >= 0.5 ? ["예 🌕", "카드가 밝은 기운이에요. 원하는 쪽으로 움직여도 좋아요."] : base <= -0.25 ? ["아니오 🌑", "카드가 어두운 기운이에요. 지금은 밀어붙이지 않는 게 좋아요."] : ["조건부 🌓", "될 수도, 안 될 수도 있어요. 아래 조언대로 움직이면 좋은 쪽으로 기울어요."];
+    head += `<div class="verdict"><span class="eyebrow">카드의 대답</span><b>${ans}</b><span class="small">${txt}</span><p class="basis" style="text-align:left">예/아니오: 원카드 리딩의 일반 규칙대로 밝은 뜻의 정방향은 예, 어두운 뜻이면 아니오, 밝은 카드의 역방향은 늦어짐(조건부), 어두운 카드의 역방향은 아니오, 뜻이 중간이면 조건부로 봐요</p></div>`; }
+  const L = overall(d);
+  box.innerHTML = `<div class="reading">${head}${d.map(([c, r], i) => `<div class="rcard"><img src="${IMG(c.id)}" class="${r ? "rev" : ""}" data-i="${i}" alt="${esc(c.ko)}">
+      <div><div class="pos">${i + 1}. ${s.pos[i]}</div><h3>${esc(cardName(c, r))} <span class="muted small">${esc(c.en)}</span></h3>
+      <div class="row">${(r ? c.rev_kw : c.up_kw).map((k) => `<span class="chip">${esc(k)}</span>`).join("")}</div>
+      <p>${esc(r ? c.rev : c.up)}</p>${t >= 0 ? topicLine(c, r, t) : ""}<p class="adv">💡 ${esc(c.advice)}</p></div></div>`).join("")}
+    ${L.length ? `<div class="panel" style="margin-top:0"><h2>🔮 전체 흐름</h2>${L.map((x) => `<p style="margin:6px 0">${x}</p>`).join("")}</div>` : ""}
+    <div class="row" style="justify-content:center"><button class="btn" id="again">✦ 다시 뽑기</button><button class="btn ghost" id="otherSpread">다른 배열 고르기</button></div></div>`;
+  $$(".rcard img", box).forEach((im) => im.onclick = () => cardView(...d[+im.dataset.i]));
+  $("#again").onclick = () => startSpread(tarot.spread);
+  $("#otherSpread").onclick = () => $(".spreads").scrollIntoView({ behavior: "smooth", block: "center" });
+  G.from($$(".reading > *", box), { opacity: 0, y: 12, filter: "blur(6px)", duration: 1, stagger: 0.12, ease: "sine.out", clearProps: "filter" });
+}
+
+// ---------- 사주
+const YEAR_GOD = {
+  비견: "독립과 자기 주도의 해. 함께할 동료가 늘고 내 힘으로 밀고 나가요. 고집 때문에 생기는 경쟁만 조심해요.",
+  겁재: "경쟁과 변동의 해. 승부욕이 성과로 이어지지만 큰 지출·보증·동업은 한 번 더 따져요.",
+  식신: "재능을 펼치고 즐기는 해. 꾸준히 만들고 표현하면 결과와 여유가 따라와요.",
+  상관: "변화와 도전의 해. 새 아이디어로 틀을 깨기 좋지만 말과 규칙 앞에서는 조심해요.",
+  편재: "활동 무대가 넓어지는 해. 기회와 돈의 흐름이 커지니 과감하되 한곳에 몰지 말아요.",
+  정재: "차곡차곡 쌓는 해. 성실함이 재물과 안정으로 돌아와요. 저축·정리에 좋아요.",
+  편관: "책임과 압박이 커지는 해. 버티면 한 단계 성장해요. 무리하지 말고 건강부터 챙겨요.",
+  정관: "인정받고 자리 잡는 해. 승진·합격·계약처럼 공식적인 일이 잘 풀려요.",
+  편인: "배움과 전환의 해. 새 분야 공부·자격에 좋고 생각이 많아질 수 있어요. 혼자만의 시간이 약이에요.",
+  정인: "도움을 받는 해. 윗사람·문서·학업운이 좋고 마음이 안정돼요.",
+};
+const tile = (s, isStem, cls = "") => { const e = isStem ? SJ.SE[s] : SJ.BE[s];
+  return `<div class="tile e${e} ${cls}"><div class="hj">${isStem ? SJ.STEMS_H[s] : SJ.BR_H[s]}</div><div class="kr">${isStem ? SJ.STEMS[s] : SJ.BR[s]} · ${SJ.EL[e]}</div></div>`; };
+function renderSaju(el) {
+  const sj = sajuOf(me); if (!sj) { el.innerHTML = `<div class="eyebrow" style="margin-top:8px">사주팔자</div><h1 style="margin-top:6px">사주팔자</h1>` + needMe("생일을 알려 주면 사주를 펼쳐 볼게요"); return; }
+  setTimeout(() => { const t = $(".pcol .god.me", el); if (t) FX.play(["wood", "fire", "earth", "light", "water"][SJ.SE[sj.day.s]], t.parentElement, 0.9); }, 450);
+  const ds = sj.day.s, cols = [["시주", sj.hour], ["일주", sj.day], ["월주", sj.month], ["년주", sj.year]];
+  const godOf = (p, stem) => stem ? (p === sj.day ? "나 (일간)" : SJ.tenGod(ds, SJ.SE[p.s], p.s % 2 === 0)) : SJ.tenGod(ds, SJ.BE[p.b], SJ.BY[p.b]);
+  const ec = SJ.elements(sj), [slabel, ratio] = SJ.strength(sj), gods = SJ.gods(sj), dm = DECK.dayMaster[SJ.STEMS[ds]];
+  const groups = {}; for (const [g, n] of Object.entries(gods)) groups[SJ.GROUP[g]] = (groups[SJ.GROUP[g]] || 0) + n;
+  const total = ec.reduce((a, b) => a + b, 0), maxE = ec.indexOf(Math.max(...ec)), miss = ec.map((c, i) => (c === 0 ? SJ.EL[i] : null)).filter(Boolean);
+  const yp = SJ.yearPillarNow(), ygod = SJ.tenGod(ds, SJ.SE[yp.p.s], yp.p.s % 2 === 0), yrels = SJ.branchRelations(sj.year.b, yp.p.b).filter((r) => r[0] !== "같은 글자");
+  const order = ["비겁", "식상", "재성", "관성", "인성"];
+  el.innerHTML = `<div class="eyebrow" style="margin-top:8px">사주팔자 · 四柱八字</div><h1 style="margin-top:6px">${me.name ? esc(me.name) + "님의 " : ""}사주팔자</h1>
+    <p class="lead">${birthText(me)} · ${SJ.ZODIAC_EMOJI[sj.year.b]} ${SJ.ptext(sj.year)}년 ${SJ.ZODIAC[sj.year.b]}띠 <button class="btn ghost sm" data-open-me style="margin-left:6px">고치기</button></p>${sj.jieNear ? `<p class="small" style="color:var(--gold);margin:6px 0 0">⚠️ 이날은 절기가 바뀌는 날이라 태어난 시각에 따라 월주(띠가 바뀌는 입춘이면 년주도)가 달라져요. 출생 시각을 넣으면 정확해져요.</p>` : ""}
+    <div class="panel"><div class="pillars">${cols.map(([n, p]) => `<div class="pcol"><div class="ph2">${n}</div>${p ? `<div class="god ${p === sj.day ? "me" : ""}">${godOf(p, true)}</div>${tile(p.s, true)}${tile(p.b, false)}<div class="god">${godOf(p, false)}</div>`
+      : `<div class="god">&nbsp;</div><div class="tile unknown"><div class="hj">?</div><div class="kr">모름</div></div><div class="tile unknown"><div class="hj">?</div><div class="kr">모름</div></div><div class="god">&nbsp;</div>`}</div>`).join("")}</div>
+      <p class="muted small" style="margin:12px 0 0">절기(태양 황경)로 년·월을, 진태양시(서울 −32분)로 시를 정했어요. ${sj.hour ? "" : "태어난 시를 넣으면 시주까지 8글자가 채워져요."}</p></div>
+    <div class="grid2">
+      <div class="panel"><div class="eyebrow">나를 나타내는 기운 (일간)</div><h2 style="margin-top:4px">나를 뜻하는 글자 · ${SJ.STEMS[ds]}${SJ.STEMS_H[ds]}</h2><h3 style="color:var(--gold2)">${dm[0]}</h3><p style="margin:6px 0 0">${esc(dm[1])}</p></div>
+      <div class="panel"><div class="eyebrow">오행 분포</div><h2 style="margin-top:4px">오행 분포</h2>
+        <div class="bars">${ec.map((c, i) => `<div class="bar"><span>${SJ.EL_H[i]} ${SJ.EL[i]}</span><div class="track"><div class="fill" data-w="${(c / total) * 100}" style="background:${ELC[i]};box-shadow:0 0 12px ${ELC[i]}"></div></div><b>${c}</b></div>`).join("")}</div>
+        <p class="small" style="margin:12px 0 0"><b class="hl">${SJ.EL[maxE]}</b> 기운이 가장 강해요.${miss.length ? ` <b class="hl">${miss.join("·")}</b> 기운이 없어요 — 그 색·계절·활동을 가까이하면 균형이 맞아요.` : " 다섯 기운이 모두 있어 고른 편이에요."}</p></div>
+    </div>
+    <div class="grid2">
+      <div class="panel"><div class="eyebrow">기운의 세기</div><h2 style="margin-top:4px">${slabel}</h2>
+        <div class="meter"><div class="knob" data-r="${ratio}"></div></div><div class="meter-l"><span>신약</span><span>중화</span><span>신강</span></div>
+        <p class="small muted" style="margin:10px 0 0">나를 돕는 글자(같은 오행·나를 생하는 오행)의 비율 ${ratio}%. 월지(태어난 계절)는 두 배로 쳐요. ${ratio >= 55 ? "에너지가 넘쳐 밖으로 쓰는 일(표현·활동·재물)에 힘이 실려요." : ratio <= 40 ? "주변의 도움과 배움으로 힘을 채우면 크게 피어나요." : "치우치지 않아 어느 쪽으로든 쓰기 좋아요."}</p></div>
+      <div class="panel"><div class="eyebrow">십성</div><h2 style="margin-top:4px">십신으로 본 성향</h2><div class="godg">${order.filter((g) => groups[g]).sort((a, b) => groups[b] - groups[a]).map((g) => `<div><b>${DECK.groupMeaning[g][0]} ${g} ×${groups[g]}</b><br><span class="muted">${esc(DECK.groupMeaning[g][1])}</span></div>`).join("")}</div></div>
+    </div>
+    <div class="grid2">
+      <div class="panel"><div class="eyebrow">${yp.year}년 운</div><h2 style="margin-top:4px">${yp.year}년 ${SJ.ptext(yp.p)}(${SJ.phanja(yp.p)})년 운</h2>
+        <p style="margin:0"><span class="chip gold">${ygod}의 해</span></p><p>${esc(YEAR_GOD[ygod])}</p>
+        ${yrels.map(([n, d, x]) => `<p class="small" style="margin:6px 0 0"><span class="chip ${d > 0 ? "good" : "bad"}">${SJ.ZODIAC[sj.year.b]}띠·${SJ.ZODIAC[yp.p.b]}해 ${n}</span> ${esc(x)}</p>`).join("")}</div>
+      <div class="panel"><div class="eyebrow">오늘</div>${(() => { const tp = SJ.todayPillar(); const g = SJ.tenGod(ds, SJ.SE[tp.s], tp.s % 2 === 0); return `<h2 style="margin-top:4px">오늘 ${SJ.ptext(tp)}일 · ${g}</h2><p style="margin:0">${esc(DAILY_GOD[g])}</p>`; })()}
+        <div class="row" style="margin-top:14px"><button class="btn sm" data-go="love">💞 이 사주로 궁합 보기</button></div></div>
+    </div><p class="basis">근거 · 만세력: 일주는 율리우스일 기준 60갑자 순환, 년·월주는 태양 황경 절기(입춘 315°부터 30°씩), 월간은 오호둔·시간은 오자둔법 · 시간: 출생 당시 한국 시계(1954~61년 UTC+8:30, 서머타임 포함)를 세계시로 풀고 서울 경도(127°) 평균태양시로 바꿈(표준시 −32분) · 절입: 한국천문연구원 발표와 분 단위로 같은 천문 계산표 · 자시: 진태양시 23시부터 다음 날 일주로 보는 방식(23~24시를 그날로 두는 학파도 있어요) · 십신: 일간과의 생극·음양 관계 · 신강/신약: 비겁·인성 비율(월지 2배) · 세운: 올해 천간이 내 일간에 주는 십신. 띠는 입춘 기준이에요(민간에서는 설날로 나누기도 해요). 출생 시각을 모르는 날짜 기준으로 실제 만세력 400개 날짜와 대조해 일치</p>`;
+  $$(".tile", el).forEach((t, i) => G.from(t, { opacity: 0, y: 10, filter: "blur(6px)", duration: 0.9, delay: 0.08 * i, ease: "sine.out", clearProps: "filter" }));
+  $$(".fill", el).forEach((f, i) => G.to(f, { width: f.dataset.w + "%", duration: 1, delay: 0.3 + i * 0.1, ease: "power3.out" }));
+  const kn = $(".knob", el); G.to(kn, { left: kn.dataset.r + "%", duration: 1.6, delay: 0.4, ease: "power2.out" });
+}
+
+// ---------- 궁합
+function renderLove(el) {
+  el.innerHTML = `<div class="eyebrow" style="margin-top:8px">궁합</div><h1 style="margin-top:6px">연애 궁합</h1>
+    <p class="lead">전통 궁합법(일간 합·일지·띠·오행 보완·배우자 별)과 이름 발음오행으로 봐요. 상대 생일을 몰라도 이름만으로 볼 수 있어요.</p>
+    <div class="grid2">
+      <div class="panel"><h2>🙋 나</h2>${me ? `<p style="margin:0">${birthText(me)}</p><label class="f" style="margin-top:10px">내 이름</label><input type="text" id="lvMy" maxlength="12" value="${esc(me.name || "")}" placeholder="예: 김민준">`
+        : `<p class="muted small" style="margin-top:0">내 생일이 없으면 이름 궁합만 볼 수 있어요.</p><button class="btn sm" data-open-me>내 정보 넣기</button><label class="f" style="margin-top:12px">내 이름</label><input type="text" id="lvMy" maxlength="12" placeholder="예: 김민준">`}</div>
+      <div class="panel"><h2>💘 그 사람</h2><label class="f">이름</label><input type="text" id="lvTh" maxlength="12" placeholder="예: 이서연"><div style="height:12px"></div>${birthFields("th", null, true)}</div>
+    </div>
+    <p id="lvErr" class="small" style="color:var(--bad);text-align:center;min-height:1.2em"></p>
+    <div class="row" style="justify-content:center"><button class="btn" id="lvGo">💞 궁합 보기</button></div>
+    <div id="lvOut"></div><p class="muted small" style="text-align:center">상대 정보는 저장하지 않아요.</p>`;
+  bindSeg("thG");
+  $("#lvGo").onclick = () => {
+    const myName = $("#lvMy").value.trim(), thName = $("#lvTh").value.trim(); const [tb, err] = readBirth("th");
+    if (err) return ($("#lvErr").textContent = err);
+    const mine = sajuOf(me), theirs = tb ? sajuOf(tb) : null;
+    const nm = SJ.nameMatch(myName, thName);
+    if (!(mine && theirs) && !(nm[1].length)) return ($("#lvErr").textContent = "두 사람 생일이나, 두 사람의 한글 이름을 넣어 주세요.");
+    $("#lvErr").textContent = "";
+    const r = SJ.compatibility(mine && theirs ? mine : null, mine && theirs ? theirs : null, myName, thName);
+    const C = 2 * Math.PI * 86;
+    $("#lvOut").innerHTML = `<div class="panel"><div class="grid2" style="align-items:center">
+      <div><div class="ring"><svg viewBox="0 0 200 200"><defs><linearGradient id="rg" x1="0" x2="1"><stop offset="0" stop-color="#ff8fb1"/><stop offset="1" stop-color="#e8c372"/></linearGradient></defs>
+        <circle cx="100" cy="100" r="86" fill="none" stroke="rgba(255,255,255,.08)" stroke-width="14"/><circle id="rgArc" cx="100" cy="100" r="86" fill="none" stroke="url(#rg)" stroke-width="14" stroke-linecap="round" stroke-dasharray="${C}" stroke-dashoffset="${C}"/></svg>
+        <div class="num"><div><b id="rgNum">0</b><div class="small muted">/ 99</div></div></div></div>
+        <h2 style="text-align:center;margin:6px 0 0">${r.grade}</h2><p style="text-align:center;margin:4px 0 0" class="muted">${r.summary}</p></div>
+      <div><h3>무엇을 봤나요</h3><div class="items">${r.items.map(([n, d, t]) => `<div class="item"><span class="t">${esc(n)}</span><span class="chip ${d > 0 ? "good" : d < 0 ? "bad" : ""}">${d > 0 ? "+" + d : d}</span><span class="d">${esc(t)}</span></div>`).join("") || '<p class="muted small">생일이 둘 다 있으면 사주 항목이 더해져요.</p>'}</div>
+        <p class="muted small" style="margin:10px 0 0">기본 60점에서 항목마다 더하고 빼요.</p><p class="basis">근거 · 전통 궁합: 일간 천간합(갑기·을경·병신·정임·무계)/충, 일지 육합·삼합·충·원진·형·해, 띠 관계, 서로 부족한 오행을 채우는지, 상대가 내 배우자 별(남:재성 · 여:관성)인지 · 이름: 훈민정음 해례본의 초성 발음오행(ㄱㅋ 목, ㄴㄷㄹㅌ 화, ㅁㅂㅍ 토, ㅅㅈㅊ 금, ㅇㅎ 수)</p></div></div></div>
+    ${nm[1].length ? `<div class="panel"><h2>✍️ 이름 획수 궁합 <span class="chip gold">${nm[0]}%</span></h2><p class="muted small" style="margin-top:0">두 이름을 한 글자씩 번갈아 놓고 획수를 이웃끼리 더해 일의 자리만 남기는, 예부터 해 온 놀이예요. 점술이 아니라 재미로만 봐 주세요.</p>
+      <div class="pyr"><div class="r letters">${[...nm[2]].map((c) => `<span>${c}</span>`).join("")}</div>${nm[1].map((row, i) => `<div class="r ${i === nm[1].length - 1 ? "last" : ""}">${row.map((x) => `<span>${x}</span>`).join("")}</div>`).join("")}</div></div>` : ""}`;
+    $("#lvOut").scrollIntoView({ behavior: REDUCED ? "auto" : "smooth", block: "start" });
+    const o = { v: 0 }; G.to(o, { v: r.score, duration: 1.6, ease: "power3.out", onUpdate: () => { $("#rgNum").textContent = Math.round(o.v); $("#rgArc").setAttribute("stroke-dashoffset", C * (1 - o.v / 100)); },
+      onComplete: () => { $("#rgNum").textContent = r.score; $("#rgArc").setAttribute("stroke-dashoffset", C * (1 - r.score / 100)); FX.play("love", $("#rgArc").closest("svg"), r.score >= 78 ? 1.1 : 0.6); } });
+    G.from($$(".item", $("#lvOut")), { opacity: 0, y: 10, duration: 0.7, ease: "sine.out", stagger: 0.08, delay: 0.3 });
+    $$(".pyr .r", $("#lvOut")).forEach((rw, i) => G.from($$("span", rw), { scale: 0.7, opacity: 0, filter: "blur(4px)", duration: 0.7, stagger: 0.05, delay: 0.6 + i * 0.25, ease: "sine.out", clearProps: "filter" }));
+  };
+}
+
+// ---------- 별자리 · 띠 · 숫자
+const SIGNS = [
+  ["양자리", "♈", "3/21 ~ 4/19", "불", "화성", "시작이 빠르고 솔직한 개척자. 경쟁에서 힘이 나고 지루한 건 못 참아요.", "마음에 들면 먼저 다가가는 직진형"],
+  ["황소자리", "♉", "4/20 ~ 5/20", "흙", "금성", "느긋하지만 한번 정하면 끝까지 가요. 맛·향·촉감 같은 감각을 즐기는 실속파.", "천천히, 그러나 깊게. 안정감이 1순위"],
+  ["쌍둥이자리", "♊", "5/21 ~ 6/21", "공기", "수성", "호기심 많고 말재주 좋은 정보통. 여러 일을 한꺼번에 굴리는 재주가 있어요.", "대화가 통해야 설레요"],
+  ["게자리", "♋", "6/22 ~ 7/22", "물", "달", "정 많고 내 사람을 챙기는 보호자. 기억력과 공감 능력이 뛰어나요.", "집처럼 따뜻하고 편안한 사랑"],
+  ["사자자리", "♌", "7/23 ~ 8/22", "불", "태양", "어디서나 빛나는 무대 체질. 당당하고 의리 있으며 통이 커요.", "아낌없이 표현하고, 인정받고 싶어 해요"],
+  ["처녀자리", "♍", "8/23 ~ 9/22", "흙", "수성", "꼼꼼하고 분석적인 해결사. 남을 돕는 데서 보람을 느껴요.", "작은 배려로 마음을 보여 줘요"],
+  ["천칭자리", "♎", "9/23 ~ 10/22", "공기", "금성", "균형과 조화를 아는 미적 감각의 소유자. 사교적이고 매너가 좋아요.", "다정한 매너, 하지만 결정은 어려워해요"],
+  ["전갈자리", "♏", "10/23 ~ 11/22", "물", "명왕성 · 화성", "깊고 강렬한 집중력. 겉은 조용해도 속은 뜨겁고, 한번 믿으면 끝까지 가요.", "한 사람에게 깊이 빠지는 올인형"],
+  ["사수자리", "♐", "11/23 ~ 12/21", "불", "목성", "자유와 모험을 사랑하는 낙천가. 배움과 여행에서 힘을 얻어요.", "친구 같은 연인, 구속은 싫어요"],
+  ["염소자리", "♑", "12/22 ~ 1/19", "흙", "토성", "성실하고 목표가 분명한 노력파. 시간이 갈수록 빛나는 대기만성형.", "말보다 행동으로 증명해요"],
+  ["물병자리", "♒", "1/20 ~ 2/18", "공기", "천왕성 · 토성", "독창적이고 자유로운 아이디어 뱅크. 틀에 박힌 걸 싫어하고 모두를 친구로 대해요.", "서로의 공간을 존중하는 사이"],
+  ["물고기자리", "♓", "2/19 ~ 3/20", "물", "해왕성 · 목성", "공감 능력과 상상력이 풍부한 예술가. 남의 마음을 내 일처럼 느껴요.", "영화 같은 로맨스를 꿈꿔요"],
+];
+const ZODIAC_TEXT = ["재치 있고 눈치 빠른 생활력의 달인", "묵묵히 끝까지 해내는 우직한 노력파", "용감하고 카리스마 있는 리더", "온화하고 섬세한 평화주의자", "꿈이 크고 기세 좋은 야심가", "지혜롭고 신중한 전략가",
+  "활동적이고 자유로운 행동파", "따뜻하고 예술적인 감성파", "재주 많고 영리한 만능 재주꾼", "부지런하고 꼼꼼한 완벽주의자", "의리 있고 정직한 든든한 친구", "너그럽고 복이 많은 낙천가"];
+const LIFE = { 1: ["개척자", "독립심과 리더십으로 스스로 길을 내는 사람. 남이 안 간 길에서 빛나요."], 2: ["조정자", "섬세하게 공감하고 사람 사이를 이어 줘요. 협력할 때 가장 강해요."],
+  3: ["표현가", "말·글·예술로 기쁨을 퍼뜨리는 사람. 밝은 에너지가 주변을 웃게 해요."], 4: ["건축가", "성실하고 체계적으로 단단한 기반을 쌓아요. 믿음직한 사람."],
+  5: ["모험가", "변화와 자유를 사랑하고 경험으로 배워요. 새로운 곳에서 힘이 나요."], 6: ["보호자", "책임감과 사랑으로 가족과 공동체를 돌봐요. 따뜻한 중심."],
+  7: ["탐구자", "분석과 직관으로 진리를 파고들어요. 혼자 생각하는 시간이 꼭 필요해요."], 8: ["실현가", "야망과 실행력으로 큰 성취를 이뤄요. 재물과 권한을 다루는 힘."],
+  9: ["이상가", "넓은 시야와 너그러움으로 세상에 나누는 사람. 끝맺음을 잘해요."], 11: ["영감가 · 마스터 넘버", "직관과 영감이 특히 강해요. 사람들에게 빛과 방향을 보여 줘요."],
+  22: ["마스터 빌더", "큰 꿈을 현실의 구조로 바꾸는 힘. 오래 남는 것을 만들어요."], 33: ["마스터 힐러", "헌신과 치유의 숫자. 사랑으로 사람을 일으켜 세워요."] };
+function renderStars(el) {
+  const sj = sajuOf(me); if (!sj) { el.innerHTML = `<div class="eyebrow" style="margin-top:8px">별자리 · 수비학</div><h1 style="margin-top:6px">별자리 · 띠 · 숫자</h1>` + needMe("생일을 알려 주면 별자리를 찾아 줄게요"); return; }
+  const si = SJ.signOf(sj), S = SIGNS[si], lp = SJ.lifePath(me.y, me.mo, me.d), L = LIFE[lp];
+  // 트랜싯: 지금 태양 황경과 태어날 때 태양 황경 사이 각도(애스펙트)
+  const nowLon = SJ.sunLon(Date.now()), diff = SJ.mod(nowLon - sj.lon, 360), sep = Math.min(diff, 360 - diff);
+  const ASP = [[0, "컨정션 (0°) · 태양 회귀", "태양이 태어날 때 자리로 돌아온 시기예요. 새 1년의 시작, 나를 다시 세우기 좋아요.", 5],
+    [60, "섹스타일 (60°)", "작은 기회가 열리는 각도예요. 먼저 손을 내밀면 잘 이어져요.", 4],
+    [90, "스퀘어 (90°)", "긴장의 각도예요. 부딪히는 일이 있어도 그만큼 밀고 나갈 힘이 생겨요.", 2],
+    [120, "트라인 (120°)", "가장 순한 조화의 각도예요. 흐름이 부드럽고 하는 일이 잘 풀려요.", 5],
+    [180, "오포지션 (180°)", "태양이 내 자리 정반대에 있어요. 관계·상대방이 거울이 되는 시기, 균형을 찾아요.", 3]];
+  const hit = ASP.find(([a]) => Math.abs(sep - a) <= 8);
+  const curSign = SIGNS[Math.floor(nowLon / 30)];
+  const [aspName, aspText, sc] = hit ? hit.slice(1) : ["주요 각도 없음", `지금 태양은 ${curSign[0]}에 있어요. 나의 태양과 큰 각을 이루지 않아 잔잔한 시기예요.`, 3];
+  el.innerHTML = `<div class="eyebrow" style="margin-top:8px">별자리 · 수비학</div><h1 style="margin-top:6px">별자리 · 띠 · 숫자</h1>
+    <p class="lead">태어난 순간 태양이 있던 자리(황경 ${sj.lon.toFixed(1)}°)로 별자리를 정해요. 경계일에 태어나도 정확해요.</p>
+    <div class="panel"><div class="sign"><div class="glyph" id="glyph">${S[1]}</div><div><div class="eyebrow">나의 별자리</div><h2 style="margin:2px 0 0;font-size:1.5rem">${S[0]}</h2><span class="muted small">${S[2]}</span></div></div>
+      <dl class="kv"><dt>원소</dt><dd>${S[3]}</dd><dt>수호성</dt><dd>${S[4]}</dd><dt>성향</dt><dd>${S[5]}</dd><dt>연애</dt><dd>${S[6]}</dd></dl>
+      <div class="lucky"><div style="flex:2"><small>요즘 태양 흐름 · 지금 태양 ${curSign[1]} ${curSign[0]} ${(nowLon % 30).toFixed(0)}°</small><b style="font-size:1rem">☀️ ${aspName}</b><small style="color:var(--text);font-size:.85rem">${aspText}</small></div><div><small>흐름 세기</small><b class="stars">${[1, 2, 3, 4, 5].map((n) => `<i class="${n <= sc ? "on" : ""}">★</i>`).join("")}</b></div></div>
+      <p class="basis">근거 · 별자리: 태어난 시각의 태양 황경(트로피컬 황도대, 30°씩 12궁) · 태양 흐름: 오늘 태양과 출생 태양 사이 각도를 점성술의 5대 애스펙트(오브 ±8°)로 판정</p></div>
+    <div class="grid2">
+      <div class="panel"><div class="eyebrow">나의 띠</div><h2 style="margin-top:4px">${SJ.ZODIAC_EMOJI[sj.year.b]} ${SJ.ZODIAC[sj.year.b]}띠 · ${SJ.ptext(sj.year)}년</h2><p style="margin:0">${ZODIAC_TEXT[sj.year.b]}</p>
+        <p class="muted small" style="margin:8px 0 0">띠는 1월 1일이 아니라 입춘(2월 4일 무렵)에 바뀌어요. 1~2월 초에 태어났다면 앞 해의 띠일 수 있어요.</p></div>
+      <div class="panel"><div class="eyebrow">생명수 (라이프 패스)</div><div class="row" style="gap:16px"><div class="lp" id="lpNum">${lp}</div><div><h2 style="margin:0">${L[0]}</h2><span class="muted small">생년월일 숫자를 모두 더해 한 자리로 (11·22·33은 그대로)</span></div></div><p style="margin:8px 0 0">${L[1]}</p><p class="basis">근거 · 피타고라스식 수비학: 생년월일 숫자를 모두 더해 한 자리로 줄이는 생명수(마스터 넘버 11·22·33 유지)</p></div>
+    </div>`;
+  G.from("#glyph", { rotation: -25, scale: 0.85, opacity: 0, filter: "blur(8px)", duration: 1.6, ease: "sine.out", clearProps: "filter" });
+  G.from("#lpNum", { scale: 1.15, opacity: 0, filter: "blur(8px)", duration: 1.3, delay: 0.3, ease: "sine.out", clearProps: "filter" });
+}
+
+// ---------- 화면 전환
+const PAGES = { today: renderToday, tarot: renderTarot, saju: renderSaju, love: renderLove, stars: renderStars };
+const rendered = new Set(); let current = null;
+function show(tab, force) {
+  if (!PAGES[tab]) tab = "today";
+  $$("nav.tabs button").forEach((b) => b.classList.toggle("on", b.dataset.tab === tab));
+  $$("section.page").forEach((s) => s.classList.toggle("on", s.id === "p-" + tab));
+  const el = $("#p-" + tab);
+  if (!rendered.has(tab) || force) { PAGES[tab](el); rendered.add(tab); }
+  if (current !== tab || force) G.fromTo(el, { opacity: 0, y: 8, filter: "blur(4px)" }, { opacity: 1, y: 0, filter: "blur(0px)", duration: 0.6, ease: "sine.out", clearProps: "filter" });
+  current = tab; store.set("tab", tab);
+}
+function go(tab) { show(tab); scrollTo({ top: 0, behavior: REDUCED ? "auto" : "smooth" }); }
+$$("nav.tabs button").forEach((b) => b.onclick = () => go(b.dataset.tab));
+show(store.get("tab", "today"));
+$("#meLabel").textContent = me ? `${me.name || "나"} · ${me.y}.${me.mo}.${me.d}` : "내 정보 입력";
+})();
+</script>

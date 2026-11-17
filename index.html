@@ -1,0 +1,1168 @@
+<!doctype html>
+<html lang="ko">
+<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<meta name="description" content="라이더-웨이트 78장 타로, 만세력 사주, 궁합, 별자리·수비학을 전통 계산법으로 보는 운세">
+<meta property="og:title" content="쪼꼬미 운세">
+<meta property="og:description" content="오늘의 카드, 타로 리딩, 사주팔자, 궁합, 별자리">
+<meta property="og:image" content="cards/back.webp">
+<link rel="icon" href="cards/back.webp">
+<meta charset="utf-8">
+<title>쪼꼬미 운세</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@500;700&family=Gowun+Batang:wght@400;700&family=Noto+Sans+KR:wght@400;500;700&display=swap" rel="stylesheet">
+<style>
+:root{
+  color-scheme: dark;
+  --bg:#0a0918; --bg2:#141130; --panel:rgba(28,24,62,.62); --panel-solid:#1b1840; --line:rgba(232,195,114,.22);
+  --gold:#e8c372; --gold2:#f6e2a8; --text:#efeaff; --muted:#a9a2cc; --lav:#b9a6ff; --rose:#ff8fb1;
+  --wood:#5fd38d; --fire:#ff6f6f; --earth:#e3b45c; --metal:#d7dbe6; --water:#5aa9ff;
+  --good:#7be0a8; --bad:#ff8f8f;
+  --radius:18px; --gutter:max(16px, env(safe-area-inset-left)); --gutter-r:max(16px, env(safe-area-inset-right));
+  --navh:64px;
+}
+*{box-sizing:border-box}
+html,body{margin:0;background:var(--bg);color:var(--text)}
+body{font-family:"Noto Sans KR",system-ui,sans-serif;line-height:1.6;min-height:100vh;overflow-x:hidden;-webkit-tap-highlight-color:transparent}
+.bgimg{position:fixed;inset:-4%;z-index:0;pointer-events:none;background:url(cards/bg.webp) center/cover no-repeat;opacity:.9;animation:bgdrift 90s ease-in-out infinite alternate}
+@keyframes bgdrift{from{transform:scale(1) translate(0,0)}to{transform:scale(1.06) translate(-1.2%,-.8%)}}
+@media (prefers-reduced-motion:reduce){.bgimg{animation:none}}
+#sky{position:fixed;inset:0;width:100%;height:100%;z-index:0;pointer-events:none}
+.nebula{position:fixed;inset:-20%;z-index:0;pointer-events:none;background:
+  radial-gradient(40% 30% at 20% 15%, rgba(123,92,255,.22), transparent 70%),
+  radial-gradient(35% 30% at 85% 30%, rgba(255,143,177,.12), transparent 70%),
+  radial-gradient(50% 40% at 50% 100%, rgba(232,195,114,.10), transparent 70%)}
+.wrap{position:relative;z-index:1;max-width:920px;margin:0 auto;padding:0 var(--gutter-r) calc(var(--navh) + 40px) var(--gutter)}
+header.top{display:flex;align-items:center;justify-content:space-between;gap:12px;padding:18px 0 8px}
+.brand{display:flex;align-items:center;gap:10px}
+.brand .mark{width:38px;height:38px;border-radius:50%;display:grid;place-items:center;background:radial-gradient(circle at 35% 35%,#fff6d8,#e8c372 45%,#8a6a2a);box-shadow:0 0 24px rgba(232,195,114,.55)}
+.brand b{font-family:"Gowun Batang",serif;font-size:1.25rem;letter-spacing:.02em}
+.brand small{display:block;font-family:Cinzel,serif;font-size:.62rem;letter-spacing:.32em;color:var(--gold);margin-top:-4px}
+.me-btn{display:flex;align-items:center;gap:8px;border:1px solid var(--line);background:var(--panel);color:var(--text);padding:8px 14px;border-radius:999px;font:inherit;font-size:.88rem;cursor:pointer;backdrop-filter:blur(8px)}
+.me-btn:hover{border-color:var(--gold)}
+nav.tabs{position:fixed;left:0;right:0;bottom:0;z-index:20;display:flex;justify-content:center;padding:6px max(8px,env(safe-area-inset-left)) calc(6px + env(safe-area-inset-bottom));background:rgba(12,10,32,.88);backdrop-filter:blur(14px);border-top:1px solid var(--line)}
+nav.tabs .in{display:flex;width:100%;max-width:560px;justify-content:space-between}
+nav.tabs button{flex:1;background:none;border:0;color:var(--muted);font:inherit;font-size:.72rem;display:flex;flex-direction:column;align-items:center;gap:2px;padding:6px 2px;cursor:pointer;border-radius:12px;position:relative}
+nav.tabs button .i{font-size:1.3rem;line-height:1.1;filter:grayscale(.5);transition:transform .45s cubic-bezier(.22,.61,.36,1), filter .45s ease}
+nav.tabs button.on{color:var(--gold2)}
+nav.tabs button.on .i{filter:none;transform:translateY(-2px) scale(1.12)}
+nav.tabs button.on::after{content:"";position:absolute;top:0;width:24px;height:3px;border-radius:3px;background:var(--gold);box-shadow:0 0 10px var(--gold)}
+@media (min-width:760px){
+  nav.tabs{position:sticky;top:0;bottom:auto;border-top:0;border-bottom:1px solid var(--line);background:rgba(12,10,32,.7)}
+  nav.tabs button{flex-direction:row;justify-content:center;font-size:.92rem;gap:8px;padding:10px}
+  nav.tabs button.on::after{top:auto;bottom:-6px}
+  .wrap{padding-bottom:60px}
+}
+section.page{display:none;padding-top:10px}
+section.page.on{display:block}
+h1,h2,h3{font-family:"Gowun Batang",serif;font-weight:700;margin:0}
+h1{font-size:clamp(1.6rem,5vw,2.3rem);line-height:1.25}
+h2{font-size:1.25rem;margin-bottom:10px}
+h3{font-size:1.05rem}
+.eyebrow{font-family:Cinzel,serif;font-size:.7rem;letter-spacing:.3em;color:var(--gold)}
+.lead{color:var(--muted);margin:6px 0 0}
+.panel{background:var(--panel);border:1px solid var(--line);border-radius:var(--radius);padding:18px;backdrop-filter:blur(10px);margin-top:16px}
+.grid2{display:grid;gap:16px;grid-template-columns:1fr}
+@media (min-width:760px){.grid2{grid-template-columns:1fr 1fr}}
+.btn{appearance:none;border:0;cursor:pointer;font:inherit;font-weight:700;border-radius:999px;padding:12px 22px;color:#2a1d05;background:linear-gradient(135deg,#fff1c4,#e8c372 45%,#c99a3e);box-shadow:0 6px 24px rgba(232,195,114,.35), inset 0 1px 0 rgba(255,255,255,.6);transition:transform .4s cubic-bezier(.22,.61,.36,1), box-shadow .5s ease}
+.btn:hover{transform:translateY(-1px);box-shadow:0 10px 30px rgba(232,195,114,.5)}
+.btn:active{transform:scale(.97)}
+.btn.ghost{background:transparent;color:var(--gold2);border:1px solid var(--line);box-shadow:none}
+.btn.ghost:hover{border-color:var(--gold)}
+.btn.sm{padding:8px 14px;font-size:.85rem}
+.row{display:flex;gap:10px;flex-wrap:wrap;align-items:center}
+.chip{display:inline-flex;align-items:center;gap:4px;padding:3px 10px;border-radius:999px;font-size:.78rem;background:rgba(185,166,255,.14);color:var(--lav);border:1px solid rgba(185,166,255,.25)}
+.chip.gold{background:rgba(232,195,114,.12);color:var(--gold2);border-color:var(--line)}
+.chip.good{background:rgba(123,224,168,.12);color:var(--good);border-color:rgba(123,224,168,.3)}
+.chip.bad{background:rgba(255,143,143,.12);color:var(--bad);border-color:rgba(255,143,143,.3)}
+.muted{color:var(--muted)}
+.small{font-size:.86rem}
+b.hl{color:var(--gold2)}
+/* form */
+label.f{display:block;font-size:.8rem;color:var(--muted);margin-bottom:4px}
+.field{flex:1;min-width:0}
+select,input[type=text],input[type=time]{width:100%;font:inherit;color:var(--text);background:rgba(10,9,24,.6);border:1px solid var(--line);border-radius:12px;padding:11px 12px;outline:none;appearance:none;-webkit-appearance:none}
+input[type=time]{color-scheme:dark;min-height:46px}
+select{background-image:linear-gradient(45deg,transparent 50%,var(--gold) 50%),linear-gradient(135deg,var(--gold) 50%,transparent 50%);background-position:calc(100% - 16px) 50%,calc(100% - 11px) 50%;background-size:5px 5px;background-repeat:no-repeat;padding-right:28px}
+select option{background:#1b1840}
+select:focus,input:focus{border-color:var(--gold);box-shadow:0 0 0 3px rgba(232,195,114,.15)}
+.seg{display:flex;border:1px solid var(--line);border-radius:12px;overflow:hidden}
+.seg button{flex:1;background:transparent;border:0;color:var(--muted);font:inherit;padding:10px;cursor:pointer}
+.seg button.on{background:rgba(232,195,114,.18);color:var(--gold2);font-weight:700}
+.fgrid{display:grid;gap:12px;grid-template-columns:repeat(3,1fr)}
+.fgrid .full{grid-column:1/-1}
+/* flip card */
+.card3d{perspective:1000px}
+.card3d .inner{position:relative;width:100%;aspect-ratio:300/514;transform-style:preserve-3d}
+.card3d img{position:absolute;inset:0;width:100%;height:100%;border-radius:8%/4.7%;backface-visibility:hidden;-webkit-backface-visibility:hidden;box-shadow:0 10px 30px rgba(0,0,0,.5)}
+.card3d .face{transform:rotateY(180deg)}
+.card3d .face.rev{transform:rotateY(180deg) rotate(180deg)}
+#dailyCard{transition:filter 1.8s ease}
+.glow{filter:drop-shadow(0 0 18px rgba(232,195,114,.45))}
+/* today */
+.hero{display:grid;gap:20px;align-items:center;grid-template-columns:1fr}
+@media (min-width:760px){.hero{grid-template-columns:260px 1fr}}
+.daily-card{width:min(220px,58vw);margin:6px auto 0;cursor:pointer;position:relative}
+.daily-card .hint{position:absolute;left:0;right:0;bottom:-30px;text-align:center;font-size:.85rem;color:var(--gold2);animation:pulse 1.8s ease-in-out infinite}
+@keyframes pulse{50%{opacity:.35}}
+.stars-row{display:grid;grid-template-columns:auto 1fr;gap:6px 12px;align-items:center;margin-top:10px}
+.stars{letter-spacing:2px;color:rgba(255,255,255,.18);font-size:1.05rem}
+.stars i{font-style:normal;display:inline-block}
+.stars i.on{color:var(--gold);text-shadow:0 0 8px rgba(232,195,114,.7)}
+.lucky{display:flex;gap:10px;flex-wrap:wrap;margin-top:14px}
+.lucky div{flex:1;min-width:120px;padding:10px 12px;border-radius:14px;background:rgba(10,9,24,.5);border:1px solid var(--line)}
+.lucky small{display:block;color:var(--muted);font-size:.75rem}
+.lucky b{font-size:1.1rem}
+.cta{display:flex;gap:14px;align-items:center;justify-content:space-between;flex-wrap:wrap}
+/* tarot */
+.spreads{display:grid;gap:12px;grid-template-columns:repeat(2,1fr);margin-top:16px}
+@media (min-width:760px){.spreads{grid-template-columns:repeat(4,1fr)}}
+.spread{cursor:pointer;text-align:left;font:inherit;color:var(--text);background:var(--panel);border:1px solid var(--line);border-radius:var(--radius);padding:16px;transition:transform .45s cubic-bezier(.22,.61,.36,1),border-color .45s ease, box-shadow .5s ease;position:relative;overflow:hidden}
+.spread:hover{transform:translateY(-3px);border-color:var(--gold);box-shadow:0 10px 30px rgba(123,92,255,.25)}
+.spread .ic{font-size:1.7rem}
+.spread b{display:block;font-family:"Gowun Batang",serif;font-size:1.05rem;margin:6px 0 2px}
+.spread span{font-size:.8rem;color:var(--muted)}
+.spread .n{position:absolute;right:12px;top:10px;font-family:Cinzel,serif;color:var(--gold);font-size:.75rem}
+.table{position:relative;margin-top:16px;border-radius:24px;padding:18px 12px 14px;background:radial-gradient(120% 90% at 50% 0%, rgba(123,92,255,.22), rgba(20,17,48,.85) 60%);border:1px solid var(--line);overflow:hidden}
+.table .q{text-align:center;font-family:"Gowun Batang",serif;color:var(--gold2);min-height:1.5em}
+.slots{display:grid;gap:10px;justify-content:center;margin:12px auto 0;grid-template-columns:repeat(var(--cols),minmax(0,var(--sw)))}
+.slot{display:flex;flex-direction:column;align-items:center;gap:4px}
+.slot .ph{width:100%;aspect-ratio:300/514;border-radius:8%/4.7%;border:1.5px dashed rgba(232,195,114,.35);display:grid;place-items:center;color:rgba(232,195,114,.5);font-family:Cinzel,serif;font-size:.8rem;position:relative}
+.slot .ph .card3d{position:absolute;inset:0}
+.slot .lbl{font-size:.74rem;color:var(--muted);text-align:center;line-height:1.25;min-height:2.5em}
+.slot.done .lbl{color:var(--gold2)}
+.slots.celtic{grid-template-columns:repeat(4,minmax(0,var(--sw)));grid-template-areas:". c3 . s10" "c5 c1 c6 s9" ". c4 . s8" ". . . s7";}
+.fan{position:relative;margin-top:18px;touch-action:manipulation}
+.fan .fc{position:absolute;left:50%;bottom:8px;width:var(--cw);margin-left:calc(var(--cw) / -2);aspect-ratio:300/514;cursor:pointer;border-radius:8%/4.7%;background:url(cards/back.webp) center/cover;box-shadow:0 6px 16px rgba(0,0,0,.55);border:1px solid rgba(232,195,114,.35);will-change:transform;transition:filter .45s ease}
+@media (hover:hover){.fan .fc:hover{filter:brightness(1.2)}}
+.fan-hint{text-align:center;color:var(--muted);font-size:.86rem;margin-top:10px;min-height:1.4em;line-height:1.4;padding:0 8px;transition:opacity .5s ease}
+.reading{margin-top:18px;display:grid;gap:12px}
+.rcard{display:grid;grid-template-columns:72px 1fr;gap:14px;padding:14px;border-radius:16px;background:rgba(10,9,24,.55);border:1px solid var(--line)}
+.rcard img{width:72px;border-radius:6px;cursor:zoom-in}
+.rcard img.rev{transform:rotate(180deg)}
+.rcard .pos{font-size:.75rem;color:var(--gold);font-family:Cinzel,"Noto Sans KR",serif;letter-spacing:.08em}
+.rcard h3{margin:2px 0 6px}
+.rcard p{margin:6px 0 0;font-size:.93rem}
+.topic{margin:8px 0 0!important;padding:8px 10px;border-radius:10px;background:rgba(232,195,114,.08);border:1px solid var(--line);font-size:.88rem}
+.topic .stars{font-size:.85rem}
+.rcard .adv{color:var(--gold2);font-size:.88rem}
+.verdict{text-align:center;padding:16px;border-radius:16px;background:linear-gradient(135deg,rgba(232,195,114,.18),rgba(123,92,255,.18));border:1px solid var(--line)}
+.verdict b{display:block;font-family:"Gowun Batang",serif;font-size:2rem;color:var(--gold2)}
+.dict-filter{display:flex;gap:6px;flex-wrap:wrap;margin:12px 0}
+.dict{display:grid;gap:10px;grid-template-columns:repeat(auto-fill,minmax(78px,1fr))}
+.dict button{background:none;border:0;padding:0;cursor:pointer;color:var(--text);font:inherit;font-size:.72rem;text-align:center}
+.dict img{width:100%;border-radius:6px;display:block;margin-bottom:3px;transition:transform .45s cubic-bezier(.22,.61,.36,1)}
+.dict button:hover img{transform:translateY(-3px) scale(1.03)}
+/* saju */
+.pillars{display:grid;grid-template-columns:repeat(4,1fr);gap:8px;margin-top:14px}
+.pcol{text-align:center}
+.pcol .ph2{font-size:.75rem;color:var(--muted)}
+.tile{border-radius:14px;padding:8px 2px 6px;margin:4px 0;border:1px solid rgba(255,255,255,.08);position:relative}
+.tile .hj{font-family:"Gowun Batang",serif;font-size:clamp(1.6rem,7vw,2.4rem);line-height:1.1;font-weight:700}
+.tile .kr{font-size:.72rem;opacity:.85}
+.tile.unknown{border:1.5px dashed rgba(255,255,255,.18);background:transparent;color:var(--muted)}
+.god{font-size:.72rem;color:var(--lav)}
+.god.me{color:var(--gold2);font-weight:700}
+.e0{background:linear-gradient(160deg,rgba(95,211,141,.32),rgba(95,211,141,.08));color:#c9f5da}
+.e1{background:linear-gradient(160deg,rgba(255,111,111,.32),rgba(255,111,111,.08));color:#ffd6d6}
+.e2{background:linear-gradient(160deg,rgba(227,180,92,.34),rgba(227,180,92,.08));color:#ffe9bf}
+.e3{background:linear-gradient(160deg,rgba(215,219,230,.30),rgba(215,219,230,.06));color:#f4f6fb}
+.e4{background:linear-gradient(160deg,rgba(90,169,255,.32),rgba(90,169,255,.08));color:#d4e8ff}
+.bars{display:grid;gap:9px;margin-top:6px}
+.bar{display:grid;grid-template-columns:52px 1fr 28px;gap:10px;align-items:center;font-size:.88rem}
+.bar .track{height:12px;border-radius:99px;background:rgba(255,255,255,.07);overflow:hidden}
+.bar .fill{height:100%;width:0;border-radius:99px}
+.meter{position:relative;height:14px;border-radius:99px;background:linear-gradient(90deg,#5aa9ff,#7be0a8 50%,#ff8f6f);margin:16px 0 6px}
+.meter .knob{position:absolute;top:50%;left:0;width:22px;height:22px;margin:-11px 0 0 -11px;border-radius:50%;background:#fff;box-shadow:0 0 0 4px rgba(255,255,255,.2),0 0 16px rgba(255,255,255,.6)}
+.meter-l{display:flex;justify-content:space-between;font-size:.72rem;color:var(--muted)}
+.godg{display:grid;gap:10px}
+.godg div{padding:10px 12px;border-radius:12px;background:rgba(10,9,24,.45);border:1px solid rgba(255,255,255,.06);font-size:.88rem}
+.empty{text-align:center;padding:34px 18px}
+.empty .big{font-size:2.6rem}
+/* love */
+.ring{position:relative;width:200px;height:200px;margin:4px auto}
+.ring svg{width:100%;height:100%;transform:rotate(-90deg)}
+.ring .num{position:absolute;inset:0;display:grid;place-items:center;text-align:center}
+.ring .num b{font-family:Cinzel,serif;font-size:3rem;line-height:1;color:var(--gold2)}
+.items{display:grid;gap:8px;margin-top:10px}
+.item{display:grid;grid-template-columns:1fr auto;gap:2px 10px;padding:10px 12px;border-radius:12px;background:rgba(10,9,24,.45);border:1px solid rgba(255,255,255,.06)}
+.item .t{font-weight:700;font-size:.9rem}
+.item .d{grid-column:1/-1;font-size:.86rem;color:var(--muted)}
+.pyr{display:grid;gap:6px;justify-items:center;margin-top:10px}
+.pyr .r{display:flex;gap:6px}
+.pyr span{width:30px;height:30px;border-radius:50%;display:grid;place-items:center;font-family:Cinzel,serif;font-weight:700;font-size:.9rem;background:rgba(255,143,177,.14);border:1px solid rgba(255,143,177,.3)}
+.pyr .letters span{background:rgba(232,195,114,.14);border-color:var(--line);font-family:"Gowun Batang",serif}
+.pyr .last span{background:linear-gradient(135deg,#ff8fb1,#e8c372);color:#2a1020;border:0}
+/* stars page */
+.sign{display:grid;grid-template-columns:auto 1fr;gap:16px;align-items:center}
+.glyph{width:86px;height:86px;border-radius:50%;display:grid;place-items:center;font-size:2.8rem;background:radial-gradient(circle,rgba(232,195,114,.25),rgba(123,92,255,.12) 60%,transparent 70%);border:1px solid var(--line);color:var(--gold2);font-family:"Segoe UI Symbol","Noto Sans Symbols",serif}
+.kv{display:grid;grid-template-columns:auto 1fr;gap:4px 14px;font-size:.9rem;margin-top:10px}
+.kv dt{color:var(--muted)}
+.kv dd{margin:0}
+.lp{font-family:Cinzel,serif;font-size:3.2rem;color:var(--gold2);line-height:1;text-shadow:0 0 20px rgba(232,195,114,.5)}
+/* sheet & modal */
+.overlay{position:fixed;inset:0;z-index:50;background:rgba(5,4,14,.72);backdrop-filter:blur(6px);display:none;align-items:flex-end;justify-content:center}
+.overlay.on{display:flex}
+@media (min-width:640px){.overlay{align-items:center}}
+.sheet{width:100%;max-width:520px;max-height:92vh;overflow:auto;background:linear-gradient(180deg,#221d4f,#14112f);border:1px solid var(--line);border-radius:24px 24px 0 0;padding:22px var(--gutter-r) calc(22px + env(safe-area-inset-bottom)) var(--gutter)}
+@media (min-width:640px){.sheet{border-radius:24px}}
+.sheet .close{float:right;background:none;border:0;color:var(--muted);font-size:1.4rem;cursor:pointer}
+.cardview{max-width:760px;width:100%}
+.cardview .in{display:grid;gap:18px;grid-template-columns:1fr}
+@media (min-width:640px){.cardview .in{grid-template-columns:240px 1fr}}
+.cardview img{width:min(240px,60vw);margin:0 auto;display:block;border-radius:12px;box-shadow:0 20px 50px rgba(0,0,0,.6)}
+.toast{position:fixed;left:50%;bottom:calc(var(--navh) + 20px);transform:translateX(-50%);z-index:60;background:var(--panel-solid);border:1px solid var(--gold);color:var(--gold2);padding:10px 18px;border-radius:999px;font-size:.88rem;opacity:0;pointer-events:none;transition:opacity .5s ease}
+.toast.on{opacity:1}
+.fly{position:fixed;z-index:40;pointer-events:none;will-change:transform,left,top;border-radius:8%/4.7%;background:url(cards/back.webp) center/cover;box-shadow:0 14px 30px rgba(0,0,0,.6)}
+.basis{margin:12px 0 0;font-size:.74rem;color:var(--muted);border-top:1px dashed rgba(232,195,114,.18);padding-top:8px;line-height:1.5}
+.basis::before{content:"📜 "}
+footer{margin-top:30px;text-align:center;font-size:.78rem;color:var(--muted)}
+@media (prefers-reduced-motion: reduce){*{animation:none!important;transition:none!important}}
+</style>
+
+<div class="bgimg"></div><canvas id="sky"></canvas><div class="nebula"></div>
+<div class="wrap">
+  <header class="top">
+    <div class="brand"><div class="mark">✦</div><div><b>쪼꼬미 운세</b><small>CHOKKOMI FORTUNE</small></div></div>
+    <button class="me-btn" id="meBtn">🌙 <span id="meLabel">내 정보 입력</span></button>
+  </header>
+</div>
+<nav class="tabs"><div class="in">
+  <button data-tab="today"><span class="i">🌅</span>오늘</button>
+  <button data-tab="tarot"><span class="i">🃏</span>타로</button>
+  <button data-tab="saju"><span class="i">🀄</span>사주</button>
+  <button data-tab="love"><span class="i">💞</span>궁합</button>
+  <button data-tab="stars"><span class="i">✨</span>별자리</button>
+</div></nav>
+<div class="wrap">
+  <section class="page" id="p-today"></section>
+  <section class="page" id="p-tarot"></section>
+  <section class="page" id="p-saju"></section>
+  <section class="page" id="p-love"></section>
+  <section class="page" id="p-stars"></section>
+  <footer>사주는 진태양시·절기(태양 황경)로, 별자리는 실제 태양 위치로 계산해요 · 타로 78장 해석은 직접 쓴 글이에요<br>재미로 봐 주세요 ✦ 입력한 정보는 이 기기에만 저장돼요</footer>
+</div>
+
+<div class="overlay" id="sheetOv"><div class="sheet" id="sheet"></div></div>
+<div class="overlay" id="cardOv"><div class="sheet cardview" id="cardSheet"></div></div>
+<div class="toast" id="toast"></div>
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/gsap.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/canvas-confetti@1.9.3/dist/confetti.browser.min.js"></script>
+<script>
+// 운세 계산 엔진 — 쪼꼬미 봇 core/saju.py · gunghap.py · tarot.py 를 그대로 옮김 (DOM 없음)
+const SJ = (() => {
+  const STEMS = "갑을병정무기경신임계", STEMS_H = "甲乙丙丁戊己庚辛壬癸";
+  const BR = "자축인묘진사오미신유술해", BR_H = "子丑寅卯辰巳午未申酉戌亥";
+  const ZODIAC = ["쥐", "소", "호랑이", "토끼", "용", "뱀", "말", "양", "원숭이", "닭", "개", "돼지"];
+  const ZODIAC_EMOJI = ["🐭", "🐮", "🐯", "🐰", "🐲", "🐍", "🐴", "🐑", "🐵", "🐔", "🐶", "🐷"];
+  const EL = ["목", "화", "토", "금", "수"], EL_H = ["木", "火", "土", "金", "水"];
+  const SE = [0, 0, 1, 1, 2, 2, 3, 3, 4, 4];
+  const BE = [4, 2, 0, 0, 2, 1, 1, 2, 3, 3, 2, 4];
+  // 지지 음양은 십성을 볼 때 본기(정기) 지장간 기준: 자(계)·오(정)는 음, 사(병)·해(임)는 양
+  const BY = [0, 0, 1, 0, 1, 1, 0, 0, 1, 0, 1, 1].map(Boolean);
+  const set = (s) => [...s].sort().join("");
+  const STEM_COMBINE = { [set("갑기")]: "토", [set("을경")]: "금", [set("병신")]: "수", [set("정임")]: "목", [set("무계")]: "화" };
+  const STEM_CLASH = new Set(["갑경", "을신", "병임", "정계"].map(set));
+  const SIX_HARMONY = { [set("자축")]: "토", [set("인해")]: "목", [set("묘술")]: "화", [set("진유")]: "금", [set("사신")]: "수", [set("오미")]: "화" };
+  const THREE = [["신자진", "수"], ["해묘미", "목"], ["인오술", "화"], ["사유축", "금"]];
+  const SIX_CLASH = new Set(["자오", "축미", "인신", "묘유", "진술", "사해"].map(set));
+  const WONJIN = new Set(["자미", "축오", "인유", "묘신", "진해", "사술"].map(set));
+  const SIX_HARM = new Set(["자미", "축오", "인사", "묘진", "신해", "유술"].map(set));
+  const PUNISH = new Set(["인사", "사신", "인신", "축술", "술미", "축미", "자묘"].map(set));
+  const TEN = { same: ["비견", "겁재"], output: ["식신", "상관"], wealth: ["편재", "정재"], power: ["편관", "정관"], resource: ["편인", "정인"] };
+  const GROUP = { 비견: "비겁", 겁재: "비겁", 식신: "식상", 상관: "식상", 편재: "재성", 정재: "재성", 편관: "관성", 정관: "관성", 편인: "인성", 정인: "인성" };
+  const mod = (a, n) => ((a % n) + n) % n;
+  const gen = (a, b) => (a + 1) % 5 === b;
+  const ctl = (a, b) => (a + 2) % 5 === b;
+
+  function tenGod(dayStem, el, yang) {
+    const me = SE[dayStem];
+    const rel = el === me ? "same" : gen(me, el) ? "output" : ctl(me, el) ? "wealth" : ctl(el, me) ? "power" : "resource";
+    return TEN[rel][((dayStem % 2 === 0) === yang) ? 0 : 1];
+  }
+  const jd = (ms) => ms / 864e5 + 2440587.5;
+  function sunLon(ms) {
+    const t = (jd(ms) - 2451545) / 36525, r = Math.PI / 180;
+    const l0 = 280.46646 + 36000.76983 * t + 0.0003032 * t * t;
+    const m = (357.52911 + 35999.05029 * t - 0.0001537 * t * t) * r;
+    const c = (1.914602 - 0.004817 * t - 0.000014 * t * t) * Math.sin(m) + (0.019993 - 0.000101 * t) * Math.sin(2 * m) + 0.000289 * Math.sin(3 * m);
+    const om = (125.04 - 1934.136 * t) * r;
+    return mod(l0 + c - 0.00569 - 0.00478 * Math.sin(om), 360);
+  }
+  // 12절 입절 시각표 (1899 입춘 ~ 2101, UTC 분). astronomy-engine으로 구해 한국천문연구원 발표와 분 단위 일치 확인
+  const JIE = (() => { const base = -37293113, e = "27r2q33ax3sr42d40y3ow35s2kz2421v71wk27q2q33ay3ss42f4113oy35s2kz2401v51wj27r2q53b23su42f40z3ow35s2l02431v71wi27p2q23ay3sp42a40w3ox35u2l52471vb1wj27o2pz3aw3sp42d4103oy35w2l32461va1wj27n2pz3aw3sr42f4103oy35u2l12451v91wl27p2q13aw3sn42b40x3ox35u2l22451vb1wm27s2q33ay3so42a40w3ox35v2l42461va1wk27o2q03av3sn42a40x3oy35x2l52471va1wi27m2pz3au3sp42d40z3oy35u2l32461va1wj27o2q13ay3sq42e40z3ow35s2l22461vb1wl27p2py3at3sl42940w3ox35v2l52471vc1wl27p2py3as3sl42b40z3p135y2l42451v81wi27n2pz3av3so42e4103p135x2l42441v71wh27m2pz3au3sn42a40x3oy35x2l72471va1wi27n2py3au3so42b40y3p035y2l824a1vb1wi27j2pt3ap3sm42b4103p235z2l924a1vc1wi27j2pt3an3sk42c4123p235z2l62481vc1wk27n2px3as3sl42b4103p235y2l72481vc1wk27o2pw3ap3sh42540v3p03612lb24b1vd1wk27m2pw3ap3sj42840x3p23612lb24a1vb1wh27l2pw3as3so42c40z3p135y2l824a1vb1wi27l2pw3ar3sl42a40x3oy35x2l724a1vd1wl27n2px3ar3sl42b4103p135z2l82491vc1wi27l2pt3ao3sl42c4123p43632l92481v91wg27j2ps3ap3sj42c4133p63622l92481v81wg27j2pu3as3sm42d4123p53632lb24a1vb1wf27i2pq3am3si42840y3p43652lf24f1ve1wh27g2po3aj3sf42a4113p63662le24d1vd1wh27h2pp3al3si42b4133p73642lc24b1vd1wj27j2pr3al3se42640x3p33632lc24e1ve1wk27l2pt3am3sf42640x3p43652le24e1vd1wi27h2pq3am3sg42840z3p43662lf24e1vd1wg27g2pp3al3sh4284103p33632lc24d1vc1wi27j2pr3an3sj42b4113p43622lb24d1ve1wi27j2pp3ak3se4274103p43652le24d1ve1wj27h2po3ai3se4274133p83672le24c1va1we27g2pp3am3si42c4153pa3682le24b1va1we27e2pp3al3sh4274103p63672lg24f1vd1wg27f2pm3aj3sg4284123p736a2lj24h1ve1wf27b2pj3ag3se42b4153pb36b2li24i1ve1wg27c2pj3ae3sc4284143p93692lh24f1ve1wi27g2pn3ah3sd4284133pa36a2li24g1vf1wi27g2pm3ag3s942440y3p836c2ll24k1vg1wh27e2pl3ae3sa42440z3p936b2ll24i1ve1wg27d2pm3ah3sg4294133p836a2li24h1vf1wh27e2pm3ah3sd42540y3p53672lh24i1vg1wk27g2pm3ag3sb4264103p836a2li24h1ve1wh27d2pk3af3sd4284153pc36d2lj24f1vc1we27c2pj3af3sc4274133pb36b2lj24f1vb1we27c2pl3ah3se4294133pb36d2ll24i1vd1we27a2ph3ad3sa4264123pb36e2lo24l1vh1wf27a2pe3a83s74264143pc36f2lm24k1vf1wf27a2pg3ab3sa4294163pf36f2ll24i1ve1wg27d2pi3ab3s84234103pa36e2lm24k1vh1wh27d2pj3ab3s74224103pb36g2lp24l1vg1we2792pg3ab3sa4264143pe36g2lq24l1vg1we2782pf3aa3sa4264133pa36d2lm24k1vh1wg27b2ph3ab3sb4274143pc36e2lm24k1vh1wg27c2pf3a93s74254143pe36g2lp24m1vh1wf27b2pe3a73s64244143pg36i2lo24k1vd1wc2792pf3ab3sa4294173ph36k2lp24k1vd1wc2782pf3ab3s94254123pc36i2lr24o1vh1we2782pd3a83s64234133pe36j2ls24p1vi1we2752pa3a53s64284173pj36k2ls24p1vh1wf2772pa3a53s54244143pg36i2lp24m1vh1wg27b2pe3a73s44234133pf36k2lr24n1vh1wg2792pd3a73s34214123pf36l2lv24q1vi1wf2772pb3a53s24214123pf36j2lt24o1vg1wd2762pb3a73s84274153pg36k2lr24n1vg1we2782pc3a73s64244123pd36h2lr24o1vj1wg2782pb3a53s24234133pg36k2ls24n1vh1wc2752p93a43s54264193pm36o2lu24n1vf1wa2742p83a53s54254163pi36n2lt24o1vf1wa2752p93a43s54244163pi36o2lw24s1vh1wc2732p63a13s14244163pk36q2lz24u1vl1we2732p439x3rz4214163pk36p2lx24r1vj1we2752p63a03s14244173pm36q2lw24r1vi1wf2762pa3a23s04204123pi36o2ly24t1vk1wg2772p93a23ry41y4103pi36o2lz24u1vj1wd2742p63a13s24244163pl36q2lz24t1vj1wc2742p63a13s44244143ph36m2lv24r1vk1we2762p83a23s24234153pi36m2lv24s1vj1we2752p739z3s04234173pm36q2ly24s1vj1wd2732p539z3ry4224173pm36r2ly24p1vf1wa2712p63a13s14254193po36t2lz24q1vf1w92712p53a13s14234153pl36s2m124v1vj1wc2702p239x3rx4214153pl36s2m224w1vk1wb26y2oy39t3ry42441a3pr36w2m224u1vk1wb2702p139u3rx4224183pn36t2m024u1vj1wd2732p439w3rv41y4153pm36t2m324v1vk1wd2712p239v3ru41y4153po36x2m624y1vm1wd2702p039u3rv41z4143pm36u2m324w1vl1wb2702p139w3rx4224183pm36t2m224v1vl1wc2722p239x3rx4214163pm36s2m224w1vm1wf2732p239v3ru41z4153pn36u2m224v1vj1wb26z2p039u3rw42341b3ps36z2m524u1vi1w826y2p039w3rz4234193pq36w2m424v1vj1w926y2p039v3ry4204173pp36w2m624y1vl1wb26w2ow39q3ru42141a3ps3702m92511vn1wc26x2ov39o3rs4204193ps36z2m524y1vl1wb26y2oy39q3rs4204193ps36z2m624x1vl1wb2702p039s3rt41x4153pq36z2m82501vm1wd26z2oz39s3rr41v4133po36z2m82511vl1wa26w2ov39p3ru4204183ps3712m82501vm1w926w2ov39r3rw4214193pp36w2m624y1vm1wc26y2ox39r3rt41z4163pp36x2m524z1vm1wc26x2ov39n3rr41y41a3pu3732m92501vl1wa26w2ov39n3rr41z4193pv3722m824y1vj1w726v2ov39p3rt41z4193pu3732ma24z1vk1w826u2ou39p3rs41z4173pt3722mc2541vp1wb26u2os39m3rq41w4173ps3722mc2541vo1wa26t2oq39j3ro41z41c3pw3752mc2521vn1wa26v2ot39m3rq41y41a3pv3732ma2511vn1wb26y2ov39o3rp41v4163ps3732mb2531vn1wb26v2os39l3ro41w4183pu3772mf2551vo1wa26u2or39l3rq41y41a3pu3732mc2531vn1w926t2os39n3rq4204193pu3722mb2511vn1wa26v2os39m3rq41y4193pu3742mc2531vo1wc26v2ot39k3ro41x4193pv3752mc2521vm1w726s2op39j3ro41y41d3q03782mf2531vj1w626p2oq39l3rr41z41c3py3772mf2541vm1w726r2op39k3rp41x4193pv3762mg2561vp1w926p2ok39e3rk41w41b3pz37b2mj2581vr1w926q2ol39e3rj41w41d3q03792mg2551vo1wa26r2oo39g3rk41u41a3py3782mg2551vo1w926t2oq39g3rk41s4163px3792mj2591vq1wb26t2op39h3rk41s4163pv3782mj2581vp1w826p2om39g3rk41w4193py3792mi2571vp1w826q2om39h3ro41y41b3px3762mf2561vp1wb26s2op39i3rm41w4193pw3772mf2551vp1w926r2ol39e3ri41v41c3q237c2mk2571vn1w826o2ol39f3rl41x41e3q337d2mj2551vl1w526n2ol39h3rm41x41c3q137c2mk2571vo1w526n2oj39e3rj41w41b3q037e2mn25b1vs1w926n2oi39b3ri41v41b3q137e2mm25b1vr1w826m2og3993rg41u41d3q537f2mm25a1vp1w926n2oj39b3ri41u41c3q237e2ml25a1vq1wa26q2om39e3rh41s4183py37d2mm25c1vr1w826o2oi39a3re41r4193q137g2mp25d1vt1w826m2oh39a3rh41v41c3q237d2mm25a1vq1w926n2oi39c3rj41v41b3q037b2mk2591vq1w926p2oi39b3rf41t41a3q137d2mm25b1vr1wa26o2oj39b3rf41t41c3q337f2mn2591vo1w626l2og3993rh41u41d3q537i2mo25a1vn1w326j2og39a3rj41v41d3q437h2mo25c1vq1w526l2og39a3ri41v41b3q237g2mp25e1vs1w726j2ob3933rc41s41e3q637j2mr25f1vt1w826j2oc3933rc41u41g3q837k2mp25c1vq1w826l2of3973re41t41c3q537j2mp25c1vr1w626m2of3973rb41p4193q337k2mu25g1vt1w826l2oe3973rd41r41a3q537j2mt25g1vt1w626i2ob3953re41t41d3q537j2ms25e1vs1w726i2oc3963re41v41d3q537i2mq25d1vt1w926m2of3973re41u41d3q437i2mq25e1vs1w726k2oc3923ra41q41e3q937m2mu25f1vr1w626h2ob3933rc41u41g3qa37o2mu25e1vp1w326h2oc3963re41v41d3q737m2mu25g1vr1w526g2o93923ra41q41c3q637m2mx25k1vv1w826i2o83903r941q41e3q937n2mw25i1vu1w726h2o738z3r841r41e3qa37o2mv25g1vt1w626i2o93923r841q41c3q737n2mw25g1vu1w726j2od3943rb41p41a3q637m2mw25i1vu1w726g2o83903r741o41b3q837o2my25j1vv1w626f2o738z3r941s41f3q937o2mv25h1vs1w626g2o93933rb41u41e3q837m2mt25g1vt1w626h2o83903r741o41d3q937o2mw25i1vu1w726h2o73903r741q41f3qc37s2my25h1vr1w326d2o638z3r941s41g3qd37t2n025i1vq1w226c2o438z3r941r41f3qb37r2n025l1vu1w526d2o638y3r941s41f3qa37r2n125m1vx1w626d2o138t3r341p41f3qd37u2n225n1vx1w726d2o238t3r341p41g3qf37u2n125k1vu1w626g2o738y3r641p41e3qc37s2n125k1vv1w626g2o638x3r341k4193q937t2n225p1vx1w726f2o538w3r541n41c3qb37t2n225n1vw1w526c2o438w3r741r41f3qc37r2n125l1vu1w526d2o338w3r641q41e3qb37p2mz25k1vw1w626f2o638y3r641r41f3qd37s2mz25k1vv1w426d2o238t3r341p41f3qg37w2n325m1vs1w226a2o038t3r341q41i3qh37x2n425l1vs1w02692o238v3r841r41i3qf37w2n425n1vv1w22692ny38r3r141m41e3qe37w2n625r1vy1w626a2nx38o3qz41n41g3qi37y2n725p1vx1w426a2ny38p3r041o41i3qh37z2n625p1vv1w326b2nz38r3r041k41d3qe37x2n725p1vx1w626c2o238t3r141m41d3qe37x2n825r1vy1w526a2nx38q3qz41m41e3qe37z2n925s1vy1w52692nw38o3r041o41g3qg37x2n625q1vw1w526b2o038s3r341q41i3qg37w2n425o1vx1w626b2o038p3qz41l41d3qg37y2n725q1vy1w526b2nz38o3qz41l41h3qj3822n925p1vu1w12672ny38q3r341p41j3qk3822n925q1vv1w02652nw38q3r141n41g3qg3802n925s1vy1w42672nw38o3r041p41g3qi3812na25t1vz1w52662nt38j3qw41n41i3qk3842nb25t1vz1w42672ns38j3qv41l41h3ql3832na25r1vx1w32682nx38o3qy41m41h3qk3822nb25r1vy1w32682nw38m3qv41i41b3qh3822nd25v1w11w42672nu38j3qv41j41e3qi3842nc25v1vy1w22662ns38m3qy41o41j3qk3822nb25s1vy1w32662nt38m3qx41l41f3qh3802n925s1vz1w52682nv38l3qx41l41h3qk3842nb25t1vx", t = [base];
+    for (let i = 0; i < e.length; i += 3) t.push(t[t.length - 1] + parseInt(e.substr(i, 3), 36) + 40000); return t; })();
+  // 그 순간이 몇 번째 절기 구간인지 (0 = 1899년 입춘 이후). 표 밖이면 근사식으로
+  function jieIndex(utcMs) {
+    const m = utcMs / 6e4;
+    if (m < JIE[0] || m >= JIE[JIE.length - 1]) { const y = new Date(utcMs).getUTCFullYear(), off = Math.floor(mod(sunLon(utcMs) - 315, 360) / 30);
+      const mo = new Date(utcMs).getUTCMonth(); return ((mo <= 1 && off >= 10 ? y - 1 : y) - 1899) * 12 + off; }
+    let lo = 0, hi = JIE.length - 1; while (hi - lo > 1) { const mid = (lo + hi) >> 1; if (JIE[mid] <= m) lo = mid; else hi = mid; } return lo;
+  }
+  // 가장 가까운 절입 시각과의 차이(시간). 태어난 시를 모를 때 경계일 경고용
+  function jieGapHours(utcMs) { const i = jieIndex(utcMs), m = utcMs / 6e4; if (i < 0 || i >= JIE.length - 1) return 99;
+    return Math.min(m - JIE[i], JIE[i + 1] - m) / 60; }
+  // 한국 표준시의 역사적 변화(1954~61 UTC+8:30, 1948~60·1987~88 서머타임)를 브라우저 시간대 DB로 반영
+  let seoulFmt = null;
+  function seoulOff(utcMs) {
+    try { seoulFmt = seoulFmt || new Intl.DateTimeFormat("en-US", { timeZone: "Asia/Seoul", hourCycle: "h23", year: "numeric", month: "numeric", day: "numeric", hour: "numeric", minute: "numeric", second: "numeric" });
+      const p = {}; for (const x of seoulFmt.formatToParts(new Date(utcMs))) p[x.type] = +x.value;
+      return (Date.UTC(p.year, p.month - 1, p.day, p.hour, p.minute, p.second) - Math.floor(utcMs / 1000) * 1000) / 6e4;
+    } catch (_) { return 540; }
+  }
+  function wallToUtc(wallMs) { let o = seoulOff(wallMs - 540 * 6e4), u = wallMs - o * 6e4; const o2 = seoulOff(u); if (o2 !== o) u = wallMs - o2 * 6e4; return u; }
+  // 그 날짜 한낮에 서울이 쓰던 UTC 시차(분): 보통 540, 서머타임 600, 1954~61년 510
+  const tzAt = (y, mo, d) => Math.round(seoulOff(wallToUtc(Date.UTC(y, mo - 1, d, 12))));
+  const dayIndexUTC = (ms) => mod(Math.floor(ms / 864e5) + 2440588 + 49, 60);
+  const gapja = (i) => ({ s: i % 10, b: i % 12 });
+  const ptext = (p) => STEMS[p.s] + BR[p.b];
+  const phanja = (p) => STEMS_H[p.s] + BR_H[p.b];
+
+  function compute(y, mo, d, h = null, mi = 0, gender = null) {
+    const known = h !== null && h !== undefined;
+    const wall = Date.UTC(y, mo - 1, d, known ? h : 12, known ? mi : 0);   // 태어난 곳 벽시계 (서울 기준)
+    const utc = wallToUtc(wall);                                           // 그때 실제 쓰던 표준시·서머타임을 풀어 세계시로
+    const tz = Math.round(seoulOff(utc));
+    const solar = utc + 508 * 6e4;                                         // 서울 경도(127°) 평균태양시 = 세계시 + 8시간 28분
+    const sd = new Date(known ? solar : wall);
+    let dayMs = Date.UTC(sd.getUTCFullYear(), sd.getUTCMonth(), sd.getUTCDate());
+    if (known && sd.getUTCHours() >= 23) dayMs += 864e5;                  // 자시(23시~)는 다음 날로 넘김
+    const day = gapja(dayIndexUTC(dayMs));
+    const ji = jieIndex(utc), sy = 1899 + Math.floor(ji / 12), off = mod(ji, 12);
+    const year = gapja(mod(sy - 4, 60));
+    const month = { s: ((year.s % 5) * 2 + 2 + off) % 10, b: (2 + off) % 12 };
+    let hour = null;
+    if (known) {
+      const hb = Math.floor((sd.getUTCHours() + 1) / 2) % 12;
+      hour = { s: ((day.s % 5) * 2 + hb) % 10, b: hb };
+    }
+    const pillars = [hour, day, month, year].filter(Boolean);
+    const gap = jieGapHours(utc);
+    return { year, month, day, hour, pillars, gender, lon: sunLon(utc), tz, jieNear: !known && gap < 13, solarHM: known ? [sd.getUTCHours(), sd.getUTCMinutes()] : null,
+      birth: { y, mo, d, h: known ? h : null, mi } };
+  }
+  function elements(sj) {
+    const c = [0, 0, 0, 0, 0];
+    for (const p of sj.pillars) { c[SE[p.s]]++; c[BE[p.b]]++; }
+    return c;
+  }
+  function gods(sj) {
+    const r = {};
+    const add = (g) => (r[g] = (r[g] || 0) + 1);
+    for (const p of sj.pillars) {
+      if (p !== sj.day) add(tenGod(sj.day.s, SE[p.s], p.s % 2 === 0));
+      add(tenGod(sj.day.s, BE[p.b], BY[p.b]));
+    }
+    return r;
+  }
+  function strength(sj) {
+    const me = SE[sj.day.s];
+    const helps = (e) => e === me || gen(e, me);
+    let score = 0;
+    for (const p of sj.pillars) {
+      if (p !== sj.day && helps(SE[p.s])) score += 10;
+      if (helps(BE[p.b])) score += p === sj.month ? 20 : 10;
+    }
+    const total = 10 * (sj.pillars.length * 2 - 1) + 10;
+    const x = (score * 100) / total; let ratio = Math.round(x); if (x - Math.floor(x) === 0.5 && ratio % 2) ratio--; // 파이썬 round 와 같게
+    const label = ratio >= 55 ? "신강 (힘이 센 편)" : ratio <= 40 ? "신약 (힘이 여린 편)" : "중화 (균형 잡힌 편)";
+    return [label, ratio];
+  }
+  function branchRelations(a, b) {
+    const pair = set(BR[a] + BR[b]), out = [];
+    if (a === b) out.push(["같은 글자", 4, "같은 기운이라 서로를 잘 이해해요"]);
+    if (a === b && [4, 6, 9, 11].includes(a)) out.push(["자형", -3, `${BR[a]}${BR[b]} 자형 — 같은 고집끼리 부딪혀 스스로 지치기 쉬워요`]);
+    if (SIX_HARMONY[pair]) out.push(["육합", 12, `${BR[a]}${BR[b]}합(${SIX_HARMONY[pair]}) — 자연스럽게 끌리고 맞물리는 짝`]);
+    for (const [g, e] of THREE) if (a !== b && g.includes(BR[a]) && g.includes(BR[b])) out.push(["삼합", 9, `${g} 삼합(${e}국)의 일부 — 같은 목표를 향해 힘을 모아요`]);
+    if (SIX_CLASH.has(pair)) out.push(["충", -10, `${BR[a]}${BR[b]}충 — 정반대 기운이라 부딪히지만 강하게 끌리기도 해요`]);
+    if (WONJIN.has(pair)) out.push(["원진", -8, `${BR[a]}${BR[b]} 원진 — 이유 없이 서운함이 쌓이기 쉬워요. 대화로 풀어야 해요`]);
+    if (PUNISH.has(pair)) out.push(["형", -5, `${BR[a]}${BR[b]} 형 — 서로를 다듬으려다 상처를 줄 수 있어요`]);
+    if (SIX_HARM.has(pair) && !WONJIN.has(pair)) out.push(["해", -4, `${BR[a]}${BR[b]} 해 — 사소한 오해를 조심해요`]);
+    return out;
+  }
+  function stemRelation(a, b) {
+    const pair = set(STEMS[a] + STEMS[b]), ea = SE[a], eb = SE[b];
+    if (STEM_COMBINE[pair]) return ["천간합", 20, `${STEMS[a]}${STEMS[b]}합(${STEM_COMBINE[pair]}) — 일간끼리 합하는 '천생연분'형. 만나면 서로 끌려요`];
+    if (STEM_CLASH.has(pair)) return ["천간충", -10, `${STEMS[a]}${STEMS[b]}충 — 생각과 방식이 정면으로 달라 다툼이 잦을 수 있어요`];
+    if (ea === eb) return ["비화", 6, "같은 오행 — 친구처럼 편하고 말이 잘 통해요"];
+    if (gen(ea, eb)) return ["상생", 12, `내 ${EL[ea]}이(가) 상대의 ${EL[eb]}을(를) 생해요 — 내가 아끼고 챙겨 주는 관계`];
+    if (gen(eb, ea)) return ["상생", 12, `상대의 ${EL[eb]}이(가) 내 ${EL[ea]}을(를) 생해요 — 상대가 나를 아끼고 챙겨 주는 관계`];
+    if (ctl(ea, eb)) return ["상극", -3, `내 ${EL[ea]}이(가) 상대의 ${EL[eb]}을(를) 극해요 — 내가 주도하는 관계, 강요는 금물`];
+    return ["상극", -3, `상대의 ${EL[eb]}이(가) 내 ${EL[ea]}을(를) 극해요 — 상대가 주도하는 관계, 휘둘리지 않게`];
+  }
+  // KST 기준 오늘
+  function kstNow() { const n = Date.now() + 9 * 36e5; const d = new Date(n); return { y: d.getUTCFullYear(), mo: d.getUTCMonth() + 1, d: d.getUTCDate(), ms: n }; }
+  function todayPillar() { const t = kstNow(); return gapja(dayIndexUTC(Date.UTC(t.y, t.mo - 1, t.d))); }
+  function yearPillarNow() { const sy = 1899 + Math.floor(jieIndex(Date.now()) / 12); return { p: gapja(mod(sy - 4, 60)), year: sy }; }
+
+  // ---- 이름 (훈민정음 해례본 오음 · 획수 놀이)
+  const CHO = "ㄱㄲㄴㄷㄸㄹㅁㅂㅃㅅㅆㅇㅈㅉㅊㅋㅌㅍㅎ", JUNG = "ㅏㅐㅑㅒㅓㅔㅕㅖㅗㅘㅙㅚㅛㅜㅝㅞㅟㅠㅡㅢㅣ";
+  const JONG = ["", "ㄱ", "ㄲ", "ㄳ", "ㄴ", "ㄵ", "ㄶ", "ㄷ", "ㄹ", "ㄺ", "ㄻ", "ㄼ", "ㄽ", "ㄾ", "ㄿ", "ㅀ", "ㅁ", "ㅂ", "ㅄ", "ㅅ", "ㅆ", "ㅇ", "ㅈ", "ㅊ", "ㅋ", "ㅌ", "ㅍ", "ㅎ"];
+  const STROKES = { ㄱ: 2, ㄲ: 4, ㄴ: 2, ㄷ: 3, ㄸ: 6, ㄹ: 5, ㅁ: 4, ㅂ: 4, ㅃ: 8, ㅅ: 2, ㅆ: 4, ㅇ: 1, ㅈ: 3, ㅉ: 6, ㅊ: 4, ㅋ: 3, ㅌ: 4, ㅍ: 4, ㅎ: 3,
+    ㅏ: 2, ㅐ: 3, ㅑ: 3, ㅒ: 4, ㅓ: 2, ㅔ: 3, ㅕ: 3, ㅖ: 4, ㅗ: 2, ㅘ: 4, ㅙ: 5, ㅚ: 3, ㅛ: 3, ㅜ: 2, ㅝ: 4, ㅞ: 5, ㅟ: 3, ㅠ: 3, ㅡ: 1, ㅢ: 2, ㅣ: 1,
+    ㄳ: 4, ㄵ: 5, ㄶ: 5, ㄺ: 7, ㄻ: 9, ㄼ: 9, ㄽ: 7, ㄾ: 9, ㄿ: 9, ㅀ: 8, ㅄ: 6 };
+  const SOUND = {};
+  [["ㄱㄲㅋ", 0], ["ㄴㄷㄸㄹㅌ", 1], ["ㅁㅂㅃㅍ", 2], ["ㅅㅆㅈㅉㅊ", 3], ["ㅇㅎ", 4]].forEach(([s, e]) => [...s].forEach((c) => (SOUND[c] = e)));
+  function decompose(ch) { const c = ch.charCodeAt(0) - 0xac00; if (!(c >= 0 && c < 11172)) return null; return [CHO[Math.floor(c / 588)], JUNG[Math.floor((c % 588) / 28)], JONG[c % 28]]; }
+  const hangul = (n) => [...(n || "")].filter((c) => decompose(c)).join("");
+  const strokes = (ch) => decompose(ch).reduce((a, p) => a + (p ? STROKES[p] || 0 : 0), 0);
+  function nameMatch(a, b) {
+    a = hangul(a); b = hangul(b);
+    if (!a || !b) return [0, [], ""];
+    let seq = [], letters = "";
+    for (let i = 0; i < Math.max(a.length, b.length); i++) {
+      if (i < a.length) { seq.push(strokes(a[i])); letters += a[i]; }
+      if (i < b.length) { seq.push(strokes(b[i])); letters += b[i]; }
+    }
+    const rows = [seq];
+    while (seq.length > 2) { seq = seq.slice(1).map((x, i) => (seq[i] + x) % 10); rows.push(seq); }
+    return [seq.length === 2 ? seq[0] * 10 + seq[1] : seq[0] * 10, rows, letters];
+  }
+  function soundRelation(mine, theirs) {
+    const a = [...hangul(mine)].map((c) => SOUND[decompose(c)[0]]), b = [...hangul(theirs)].map((c) => SOUND[decompose(c)[0]]);
+    if (!a.length || !b.length) return null;
+    const ea = a.length >= 3 ? a[1] : a[0], eb = b.length >= 3 ? b[1] : b[0];
+    if (ea === eb) return [4, `두 이름 모두 ${EL[ea]} 소리 — 말투와 분위기가 닮았어요`];
+    if (gen(ea, eb) || gen(eb, ea)) return [8, `${EL[ea]} 소리와 ${EL[eb]} 소리가 서로 생해요 — 이름을 부를수록 정이 쌓여요`];
+    return [-3, `${EL[ea]} 소리와 ${EL[eb]} 소리가 극해요 — 애칭을 지어 부르면 부드러워져요`];
+  }
+  const GRADES = [[90, "💞 천생연분", "만나기만 해도 기운이 맞물리는 사이예요. 인연을 놓치지 마요!"], [78, "💗 아주 좋은 인연", "서로 채워 주는 힘이 커요. 조금만 다가가도 잘 통해요."],
+    [64, "💛 좋은 인연", "기본 궁합이 좋아요. 대화를 쌓을수록 가까워져요."], [50, "🤍 노력형 인연", "좋은 점과 부딪히는 점이 반반이에요. 배려가 열쇠예요."],
+    [0, "🩶 성장형 인연", "다른 점이 많은 만큼 서로에게서 배울 게 많아요. 천천히 맞춰 가요."]];
+  function compatibility(me, other, myName, theirName) {
+    const items = [];
+    if (me && other) {
+      const [n, dlt, t] = stemRelation(me.day.s, other.day.s);
+      items.push([`일간 ${STEMS[me.day.s]}·${STEMS[other.day.s]} (${n})`, dlt, t]);
+      const rels = branchRelations(me.day.b, other.day.b);
+      rels.forEach(([n2, d2, t2]) => items.push([`일지(배우자 자리) ${n2}`, d2, t2]));
+      if (!rels.length) items.push(["일지(배우자 자리)", 0, "특별한 합·충이 없어 무난해요"]);
+      for (const [n3, d3, t3] of branchRelations(me.year.b, other.year.b)) {
+        if (n3 === "같은 글자") continue;
+        items.push([`띠 ${ZODIAC[me.year.b]}·${ZODIAC[other.year.b]} ${n3}`, Math.round(d3 * 0.6), t3]);
+      }
+      const mine = elements(me), theirs = elements(other);
+      const filled = mine.map((c, i) => (c === 0 && theirs[i] >= 2 ? i : -1)).filter((i) => i >= 0);
+      if (filled.length) items.push(["오행 보완", 10, `나에게 없는 ${filled.map((i) => EL[i]).join("·")} 기운을 상대가 넉넉히 가졌어요 — 곁에 있으면 편안해지는 사이`]);
+      const back = theirs.map((c, i) => (c === 0 && mine[i] >= 2 ? i : -1)).filter((i) => i >= 0);
+      if (back.length) items.push(["오행 보완", 6, `상대에게 없는 ${back.map((i) => EL[i]).join("·")} 기운을 내가 채워 줘요`]);
+      if (me.gender === "남" || me.gender === "여") {
+        const g = tenGod(me.day.s, SE[other.day.s], other.day.s % 2 === 0);
+        const want = me.gender === "남" ? ["정재", "편재"] : ["정관", "편관"];
+        if (want.includes(g)) items.push(["배우자 별", g === "정재" || g === "정관" ? 8 : 5, `상대 일간이 나에게 ${g} — 명리에서 말하는 '배우자 자리' 기운이라 끌림이 있어요`]);
+      }
+    }
+    if (myName && theirName) { const r = soundRelation(myName, theirName); if (r) items.push(["이름 발음오행", r[0], r[1]]); }
+    const score = Math.max(30, Math.min(99, 60 + items.reduce((a, x) => a + x[1], 0)));
+    const g = GRADES.find(([cut]) => score >= cut);
+    return { score, items, grade: g[1], summary: g[2] };
+  }
+
+  // ---- 별자리 (실제 태양 황경 기준 회귀황도 12궁) · 수비학 생명수
+  const signOf = (sj) => Math.floor(sj.lon / 30) % 12;
+  function lifePath(y, mo, d) {
+    const red = (n) => { while (n > 9 && ![11, 22, 33].includes(n)) n = [...String(n)].reduce((a, c) => a + +c, 0); return n; };
+    return red(red(mo) + red(d) + red(y));
+  }
+  return { STEMS, STEMS_H, BR, BR_H, ZODIAC, ZODIAC_EMOJI, EL, EL_H, SE, BE, BY, GROUP, tenGod, sunLon, compute, elements, gods, strength,
+    branchRelations, stemRelation, todayPillar, yearPillarNow, kstNow, gapja, ptext, phanja, nameMatch, compatibility, signOf, lifePath, gen, ctl, mod, tzAt };
+})();
+if (typeof module !== "undefined") module.exports = SJ;
+
+</script>
+<script>
+// FX v3: 은은한 '샤르르' 파티클 엔진. 터지는 섬광·화면 흔들림 없이, 천천히 스며드는 빛·흩날리는 반짝임·옅은 안개로 분위기를 만든다.
+// 카드별 효과는 황금여명회(Golden Dawn) 원소/행성 배속을 근거로 하고, 상징이 뚜렷한 카드(탑·별·달·태양·죽음·악마·연인·은둔자)는 그 그림의 핵심 현상을 부드럽게 옮긴다.
+const FX = (() => {
+  const RM = matchMedia("(prefers-reduced-motion: reduce)").matches;
+  const cv = document.createElement("canvas"); cv.id = "fx";
+  cv.style.cssText = "position:fixed;inset:0;width:100%;height:100%;pointer-events:none;z-index:60";
+  // 베일: 어둡게 덮지 않고, 주변만 살짝 흐리고 낮춰 카드에 시선이 모이게 한다
+  const vg = document.createElement("div"); vg.id = "fxVeil";
+  vg.style.cssText = "position:fixed;inset:0;pointer-events:none;z-index:59;opacity:0;-webkit-backdrop-filter:blur(2.5px);backdrop-filter:blur(2.5px);background:radial-gradient(ellipse at var(--fx,50%) var(--fy,50%),transparent 0,transparent 22%,rgba(8,6,22,.28) 60%,rgba(6,4,18,.45) 100%);transition:opacity 1.1s ease;-webkit-mask:radial-gradient(ellipse at var(--fx,50%) var(--fy,50%),transparent 0,transparent 20%,#000 52%);mask:radial-gradient(ellipse at var(--fx,50%) var(--fy,50%),transparent 0,transparent 20%,#000 52%)";
+  const ctx = cv.getContext("2d");
+  let W = 0, H = 0, DPR = 1, parts = [], rays = [], blooms = [], running = false, last = 0, T = 0;
+  const fit = () => { DPR = Math.min(devicePixelRatio || 1, 2); W = innerWidth; H = innerHeight; cv.width = W * DPR; cv.height = H * DPR; ctx.setTransform(DPR, 0, 0, DPR, 0, 0); };
+  const R = (a, b) => a + Math.random() * (b - a);
+  const pick = (a) => a[(Math.random() * a.length) | 0];
+  const mk = (s, fn) => { const c = document.createElement("canvas"); c.width = c.height = s; fn(c.getContext("2d"), s); return c; };
+  const SPR = {};
+  // 안개 덩어리: 흐린 원을 겹친 불규칙한 노이즈 스프라이트
+  const puff = (rgb, v) => SPR["p" + rgb + v] || (SPR["p" + rgb + v] = mk(128, (g, s) => {
+    let seed = v * 9301 + 49297; const rnd = () => (seed = (seed * 9301 + 49297) % 233280) / 233280;
+    try { g.filter = "blur(4px)"; } catch (e) {}
+    for (let i = 0; i < 40; i++) { const a = rnd() * 6.283, d = rnd() ** 1.6 * s * 0.3, x = s / 2 + Math.cos(a) * d, y = s / 2 + Math.sin(a) * d, r = s * (0.08 + rnd() * 0.16);
+      const gr = g.createRadialGradient(x, y, 0, x, y, r); gr.addColorStop(0, `rgba(${rgb},${0.18 + rnd() * 0.16})`); gr.addColorStop(1, `rgba(${rgb},0)`); g.fillStyle = gr; g.fillRect(0, 0, s, s); } }));
+  const glow = (rgb) => SPR["g" + rgb] || (SPR["g" + rgb] = mk(64, (g, s) => { const r = g.createRadialGradient(s / 2, s / 2, 0, s / 2, s / 2, s / 2); r.addColorStop(0, "rgba(255,255,255,.95)"); r.addColorStop(0.12, `rgba(${rgb},.75)`); r.addColorStop(0.45, `rgba(${rgb},.16)`); r.addColorStop(1, `rgba(${rgb},0)`); g.fillStyle = r; g.fillRect(0, 0, s, s); }));
+  // 별빛 반짝임: 작은 코어 + 가는 십자 빛줄기
+  const twinkle = (rgb) => SPR["t" + rgb] || (SPR["t" + rgb] = mk(128, (g, s) => { const c = s / 2; const r = g.createRadialGradient(c, c, 0, c, c, c * 0.24); r.addColorStop(0, "rgba(255,255,255,1)"); r.addColorStop(0.3, `rgba(${rgb},.7)`); r.addColorStop(1, `rgba(${rgb},0)`); g.fillStyle = r; g.fillRect(0, 0, s, s);
+    for (const [w, a] of [[c, 0], [c * 0.45, Math.PI / 4]]) { g.save(); g.translate(c, c); g.rotate(a); for (let k = 0; k < 2; k++) { g.rotate(Math.PI / 2); const l = g.createLinearGradient(-w, 0, w, 0); l.addColorStop(0, `rgba(${rgb},0)`); l.addColorStop(0.5, "rgba(255,255,255,.75)"); l.addColorStop(1, `rgba(${rgb},0)`); g.fillStyle = l; g.fillRect(-w, -0.6, w * 2, 1.2); } g.restore(); } }));
+  const bokeh = (rgb) => SPR["b" + rgb] || (SPR["b" + rgb] = mk(96, (g, s) => { const c = s / 2; const r = g.createRadialGradient(c, c, 0, c, c, c * 0.95); r.addColorStop(0, `rgba(${rgb},.12)`); r.addColorStop(0.8, `rgba(${rgb},.18)`); r.addColorStop(0.92, `rgba(${rgb},.28)`); r.addColorStop(1, `rgba(${rgb},0)`); g.fillStyle = r; g.fillRect(0, 0, s, s); }));
+  const petal = (v) => SPR["pe" + v] || (SPR["pe" + v] = mk(64, (g, s) => { g.translate(s / 2, s / 2); const l = g.createLinearGradient(0, -s * 0.4, 0, s * 0.4); l.addColorStop(0, ["#ffe1ea", "#fff0f4", "#fbd0dc"][v]); l.addColorStop(0.75, ["#f39ab4", "#f6b8ca", "#e6799c"][v]); l.addColorStop(1, "#c8507a"); g.fillStyle = l;
+    g.beginPath(); g.moveTo(0, s * 0.4); g.bezierCurveTo(-s * 0.36, s * 0.1, -s * 0.3, -s * 0.38, -s * 0.04, -s * 0.36); g.quadraticCurveTo(0, -s * 0.3, s * 0.04, -s * 0.36); g.bezierCurveTo(s * 0.3, -s * 0.38, s * 0.36, s * 0.1, 0, s * 0.4); g.fill(); }));
+  const raySpr = (rgb) => SPR["r" + rgb] || (SPR["r" + rgb] = (() => { const c = document.createElement("canvas"); c.width = 256; c.height = 64; const g = c.getContext("2d"); const im = g.createImageData(256, 64); const [cr, cg, cb] = rgb.split(",").map(Number);
+    for (let x = 0; x < 256; x++) { const t = x / 255, along = Math.min(1, t / 0.1) * (1 - t) ** 1.6; for (let y = 0; y < 64; y++) { const d = (y - 31.5) / 32 * (1 + t * 0.3), a = along * Math.exp(-d * d * 5); const i = (y * 256 + x) * 4; im.data[i] = cr; im.data[i + 1] = cg; im.data[i + 2] = cb; im.data[i + 3] = a * 255; } }
+    g.putImageData(im, 0, 0); return c; })());
+  const RGB = {
+    fire: ["255,190,110", "255,160,80", "255,225,160"], water: ["150,210,255", "190,235,255", "130,170,255"], air: ["225,235,255", "200,215,255", "245,248,255"],
+    earth: ["240,210,140", "215,230,160", "255,238,190"], wood: ["160,235,175", "130,215,190", "215,250,200"], light: ["255,236,190", "255,248,232", "225,210,255"],
+    love: ["255,175,200", "255,215,228", "245,210,150"], shadow: ["175,140,255", "130,100,230", "215,185,255"], moon: ["205,218,255", "180,198,255", "238,242,255"],
+    sun: ["255,222,150", "255,240,205", "255,200,110"], star: ["205,228,255", "255,255,255", "180,205,255"], arcane: ["255,218,150", "205,178,255", "255,244,215"],
+    hell: ["255,130,110", "220,80,110", "255,180,150"],
+  };
+  const add = (p) => { if (parts.length < 900) parts.push(p); };
+  const at = (t) => { if (t && t.getBoundingClientRect) { const r = t.getBoundingClientRect(); return { x: r.left + r.width / 2, y: r.top + r.height / 2, w: r.width, h: r.height }; } return Object.assign({ x: W / 2, y: H / 2, w: 200, h: 300 }, t || {}); };
+  // 느린 흐름장: 파티클이 바람에 실린 듯 살랑이게
+  const flow = (x, y) => [Math.sin(y * 0.011 + T * 0.6) * 0.8 + Math.cos(y * 0.027 - T * 0.4) * 0.4, Math.cos(x * 0.009 - T * 0.5) * 0.5];
+
+  const E = {
+    // 반짝이 가루: 천천히 나타나 살짝 떠오르다 사라짐 — 모든 효과의 바탕
+    dust(o, n, pal = RGB.light, spread = 0.8) { for (let i = 0; i < n; i++) add({ k: "mote", rgb: pick(pal), x: o.x + R(-o.w * spread, o.w * spread), y: o.y + R(-o.h * 0.7, o.h * 0.6), vx: R(-6, 6), vy: R(-18, -4), sz: R(0.5, 1.5), turb: 8, life: R(2.6, 4.6), delay: R(0, 1.4), ph: R(0, 6) }); },
+    // 샤르르: 카드 위를 대각선으로 쓸고 지나가는 반짝임의 물결
+    sweep(o, n, pal = RGB.light) { for (let i = 0; i < n; i++) { const u = i / n, x = o.x - o.w * 0.55 + u * o.w * 1.1 + R(-o.w * 0.12, o.w * 0.12), y = o.y + o.h * 0.5 - u * o.h + R(-o.h * 0.1, o.h * 0.1);
+      add({ k: Math.random() < 0.3 ? "twinkle" : "mote", rgb: pick(pal), x, y, vx: R(-4, 4), vy: R(-14, -4), sz: Math.random() < 0.3 ? R(5, 11) : R(0.6, 1.6), turb: 6, life: R(1.6, 2.8), delay: u * 0.9 + R(0, 0.12), ph: R(0, 6) }); } },
+    sparkle(o, n, pal = RGB.light) { for (let i = 0; i < n; i++) add({ k: "twinkle", rgb: pick(pal), x: o.x + R(-o.w * 0.75, o.w * 0.75), y: o.y + R(-o.h * 0.65, o.h * 0.65), vx: R(-3, 3), vy: R(-8, 2), sz: R(4, 12), life: R(1.6, 3), delay: R(0, 1.6), ph: R(0, 6) }); },
+    bokeh(o, n, pal = RGB.light) { for (let i = 0; i < n; i++) add({ k: "bokeh", rgb: pick(pal), x: o.x + R(-o.w, o.w), y: o.y + R(-o.h * 0.8, o.h * 0.8), vx: R(-4, 4), vy: R(-8, 2), sz: R(12, 34), life: R(2.6, 4.2), delay: R(0, 1.2) }); },
+    // 옅은 안개: 아주 낮은 알파로 피어오르는 빛 번짐
+    haze(o, n, rgb, a = 0.14, rise = -10) { for (let i = 0; i < n; i++) add({ k: "mist", rgb, v: (Math.random() * 4) | 0, x: o.x + R(-o.w * 0.55, o.w * 0.55), y: o.y + R(-o.h * 0.2, o.h * 0.45), vx: R(-8, 8), vy: R(rise * 1.5, rise * 0.5), sz: R(50, 100), grow: 0.8, rot: R(0, 6.28), spin: R(-0.15, 0.15), turb: 10, life: R(3, 4.6), delay: R(0, 1), a }); },
+    // 불: 터지는 불꽃 대신, 따스한 불씨가 천천히 떠올라 꺼져 간다
+    fire(o, n, pal = RGB.fire) { E.haze(o, n * 0.12, pal[0], 0.1, -16);
+      for (let i = 0; i < n * 0.6; i++) add({ k: "ember", rgb: pick(pal), x: o.x + R(-o.w * 0.45, o.w * 0.45), y: o.y + R(0, o.h * 0.5), vx: R(-8, 8), vy: R(-48, -18), sz: R(0.7, 1.7), turb: 22, life: R(2.4, 4), delay: R(0, 1.4), ph: R(0, 6) });
+      E.dust(o, n * 0.3, pal); },
+    // 물: 물방울이 천천히 떨어지며 반짝이고, 잔물결이 느리게 번진다
+    water(o, n) { E.haze(o, n * 0.12, "150,200,255", 0.12, -6);
+      for (let i = 0; i < n * 0.35; i++) add({ k: "drop", rgb: pick(RGB.water), x: o.x + R(-o.w * 0.5, o.w * 0.5), y: o.y + R(-o.h * 0.6, o.h * 0.1), vx: R(-3, 3), vy: R(14, 34), sz: R(0.8, 1.6), turb: 4, life: R(2, 3.4), delay: R(0, 1.4), ph: R(0, 6) });
+      for (let i = 0; i < 3; i++) add({ k: "ripple", rgb: pick(RGB.water), x: o.x + R(-o.w * 0.2, o.w * 0.2), y: o.y + o.h * R(0.38, 0.5), sz: 4, grow: R(60, 110), life: R(2.6, 3.4), delay: 0.3 + i * 0.7 });
+      E.bokeh(o, n * 0.15, RGB.water); },
+    // 공기: 실바람처럼 가느다란 빛줄기가 옆으로 흘러간다
+    air(o, n) { for (let i = 0; i < n * 0.25; i++) add({ k: "wisp", rgb: pick(RGB.air), v: (Math.random() * 4) | 0, x: o.x - o.w * R(0.3, 0.9), y: o.y + R(-o.h * 0.5, o.h * 0.5), vx: R(50, 95), vy: R(-6, 6), sz: R(28, 50), turb: 20, life: R(2.6, 3.8), delay: R(0, 1.2), a: 0.1 });
+      E.dust(o, n * 0.6, RGB.air); },
+    earth(o, n, pal = RGB.earth) { E.dust(o, n * 0.8, pal); E.bokeh(o, n * 0.2, pal); E.haze(o, n * 0.08, "190,160,110", 0.08, -4); },
+    wood(o, n) { E.earth(o, n, RGB.wood); E.petals(o, n * 0.1, 1); },
+    petals(o, n, v) { for (let i = 0; i < n; i++) add({ k: "petal", v: v ?? (Math.random() * 3) | 0, x: o.x + R(-o.w * 0.9, o.w * 0.9), y: o.y - o.h * R(0.4, 0.8), vx: R(6, 22), vy: R(14, 32), sz: R(6, 11), rot: R(0, 6.28), spin: R(-0.8, 0.8), flip: R(1, 2.4), turb: 18, life: R(3.4, 5), delay: R(0, 1.8) }); },
+    // 소용돌이: 빛 가루가 카드 둘레를 천천히 감돌며 모여든다
+    vortex(o, n, pal = RGB.arcane) { for (let i = 0; i < n; i++) add({ k: "orbit", rgb: pick(pal), cx: o.x, cy: o.y, r0: Math.max(o.w, o.h) * R(0.4, 0.75), ang: R(0, 6.28), w: R(0.35, 0.8) * (Math.random() < 0.5 ? 1 : -1), sz: R(0.6, 1.4), life: R(2.8, 4.2), delay: R(0, 1.2), x: o.x, y: o.y, ph: R(0, 6) }); },
+  };
+  function aura(t, kind = "light", dur = 3.2) { const o = at(t), pal = RGB[kind] || RGB.light; for (let k = 0; k < 2; k++) add({ k: "aura", rgb: pick(pal), t, x: o.x, y: o.y, sz: Math.max(o.w, o.h) * (0.62 + k * 0.14), life: dur, delay: k * 0.4, ph: R(0, 6) }); }
+  function godrays(t, kind = "light", dur = 3.2) { const o = at(t), pal = RGB[kind] || RGB.light; for (let i = 0; i < 9; i++) rays.push({ x: o.x, y: o.y, a: R(0, 6.283), w: R(0.02, 0.05), len: Math.max(W, H) * R(0.35, 0.7), rgb: pick(pal), life: dur * R(0.85, 1.1), t: 0, spin: R(-0.03, 0.03), al: R(0.05, 0.12) }); }
+  // 은은한 빛 번짐: 0.6초에 걸쳐 차오르고 2초 가까이 천천히 가라앉는다
+  function flash(t, rgb = "255,240,200", sz = 1, life = 2.4) { const o = at(t); blooms.push({ x: o.x, y: o.y, rgb, t: 0, life, r: Math.max(o.w, o.h) * 1.3 * Math.min(1.4, 0.7 + sz * 0.4), a: Math.min(0.3, 0.12 + sz * 0.08) }); }
+  const shake = () => {}; // 흔들림은 쓰지 않는다
+  function veil(t, on) { const o = at(t); vg.style.setProperty("--fx", o.x + "px"); vg.style.setProperty("--fy", o.y + "px"); vg.style.opacity = on ? 1 : 0; }
+
+  function frame(now) {
+    const dt = Math.min(0.05, (now - last) / 1000 || 0.016); last = now; T += dt;
+    ctx.clearRect(0, 0, W, H);
+    ctx.globalCompositeOperation = "lighter";
+    for (let i = blooms.length - 1; i >= 0; i--) { const f = blooms[i]; f.t += dt; const p = f.t / f.life; if (p >= 1) { blooms.splice(i, 1); continue; }
+      const env = p < 0.25 ? Math.sin((p / 0.25) * Math.PI / 2) : (1 - (p - 0.25) / 0.75) ** 1.6;
+      const g = ctx.createRadialGradient(f.x, f.y, 0, f.x, f.y, f.r * (0.8 + p * 0.3)); g.addColorStop(0, `rgba(${f.rgb},1)`); g.addColorStop(0.35, `rgba(${f.rgb},.35)`); g.addColorStop(1, `rgba(${f.rgb},0)`);
+      ctx.globalAlpha = env * f.a; ctx.fillStyle = g; ctx.fillRect(f.x - f.r * 1.2, f.y - f.r * 1.2, f.r * 2.4, f.r * 2.4); }
+    for (let i = rays.length - 1; i >= 0; i--) { const r = rays[i]; r.t += dt; const p = r.t / r.life; if (p >= 1) { rays.splice(i, 1); continue; }
+      r.a += r.spin * dt; ctx.save(); ctx.translate(r.x, r.y); ctx.rotate(r.a);
+      ctx.globalAlpha = Math.sin(Math.PI * p) ** 1.5 * r.al; const hw = r.len * r.w * 1.6; ctx.drawImage(raySpr(r.rgb), 0, -hw, r.len, hw * 2); ctx.restore(); }
+    for (let i = parts.length - 1; i >= 0; i--) { const p = parts[i];
+      if (p.delay > 0) { p.delay -= dt; continue; }
+      p.age = (p.age || 0) + dt; p.q = p.age / p.life; if (p.q >= 1) { parts.splice(i, 1); continue; }
+      if (p.k === "orbit") { p.ang += p.w * dt; const r = p.r0 * (1 - p.q * 0.45); p.x = p.cx + Math.cos(p.ang) * r; p.y = p.cy + Math.sin(p.ang) * r * 0.5 - p.q * 24; }
+      else if (p.vx !== undefined) { if (p.turb) { const [fx, fy] = flow(p.x, p.y); p.vx += fx * p.turb * dt; p.vy += fy * p.turb * dt; } p.vx *= 1 - 0.25 * dt; p.x += p.vx * dt; p.y += p.vy * dt; if (p.spin) p.rot += p.spin * dt; }
+      draw(p);
+    }
+    ctx.globalAlpha = 1; ctx.globalCompositeOperation = "source-over";
+    if (parts.length || rays.length || blooms.length) requestAnimationFrame(frame); else running = false;
+  }
+  // 부드러운 등장·퇴장: 앞 30%는 서서히 밝아지고 나머지는 천천히 스러진다
+  const env = (q) => q < 0.3 ? Math.sin((q / 0.3) * Math.PI / 2) : Math.max(0, 1 - (q - 0.3) / 0.7) ** 1.3;
+  function draw(p) {
+    const q = p.q, e = env(q);
+    switch (p.k) {
+      case "mist": case "wisp": { const s = p.sz * (1 + (p.grow || 0) * q); ctx.globalAlpha = Math.sin(Math.PI * q) * (p.a ?? 0.12); ctx.save(); ctx.translate(p.x, p.y); ctx.rotate(p.k === "wisp" ? Math.atan2(p.vy, p.vx) : p.rot); if (p.k === "wisp") ctx.scale(3, 0.35); ctx.drawImage(puff(p.rgb, p.v), -s, -s, s * 2, s * 2); ctx.restore(); break; }
+      case "ember": { ctx.globalAlpha = e * (0.55 + 0.45 * Math.sin(p.age * 4 + p.ph)); const s = p.sz * 5; ctx.drawImage(glow(p.rgb), p.x - s, p.y - s, s * 2, s * 2); break; }
+      case "drop": { ctx.globalAlpha = e * (0.6 + 0.4 * Math.sin(p.age * 6 + p.ph)); const s = p.sz * 4; ctx.drawImage(glow(p.rgb), p.x - s, p.y - s * 1.3, s * 2, s * 2.6); break; }
+      case "ripple": { const r = p.sz + p.grow * Math.sqrt(q); ctx.globalAlpha = Math.sin(Math.PI * q) * 0.28; for (const k of [1, 0.75]) { ctx.strokeStyle = `rgba(${p.rgb},${k === 1 ? 0.8 : 0.35})`; ctx.lineWidth = 0.9; ctx.beginPath(); ctx.ellipse(p.x, p.y, r * k, r * k * 0.26, 0, 0, 7); ctx.stroke(); } break; }
+      case "mote": { ctx.globalAlpha = e * (0.55 + 0.45 * Math.sin(p.age * 3 + p.ph)); const s = p.sz * 5; ctx.drawImage(glow(p.rgb), p.x - s, p.y - s, s * 2, s * 2); break; }
+      case "bokeh": { const s = p.sz; ctx.globalAlpha = Math.sin(Math.PI * q) * 0.35; ctx.drawImage(bokeh(p.rgb), p.x - s, p.y - s, s * 2, s * 2); break; }
+      case "twinkle": { const s = p.sz * (0.6 + 0.4 * Math.sin(p.age * 3.2 + p.ph)) * Math.sin(Math.PI * q); ctx.globalAlpha = 0.85; ctx.drawImage(twinkle(p.rgb), p.x - s * 2, p.y - s * 2, s * 4, s * 4); break; }
+      case "petal": { ctx.globalCompositeOperation = "source-over"; ctx.globalAlpha = e * 0.85; const s = p.sz; ctx.save(); ctx.translate(p.x, p.y); ctx.rotate(p.rot); ctx.scale(Math.cos(p.age * p.flip), 1); ctx.drawImage(petal(p.v), -s, -s, s * 2, s * 2); ctx.restore(); ctx.globalCompositeOperation = "lighter"; break; }
+      case "orbit": { ctx.globalAlpha = e * (0.6 + 0.4 * Math.sin(p.age * 3 + p.ph)); const s = p.sz * 5; ctx.drawImage(glow(p.rgb), p.x - s, p.y - s, s * 2, s * 2); break; }
+      case "aura": { if (p.t && p.t.getBoundingClientRect) { const o = at(p.t); p.x = o.x; p.y = o.y; }
+        const s = p.sz * (1 + 0.04 * Math.sin(p.age * 1.6 + p.ph)); ctx.globalAlpha = Math.sin(Math.PI * q) ** 1.4 * 0.32; ctx.save(); ctx.translate(p.x, p.y); ctx.scale(0.62, 0.86);
+        const g = ctx.createRadialGradient(0, 0, s * 0.38, 0, 0, s); g.addColorStop(0, `rgba(${p.rgb},0)`); g.addColorStop(0.5, `rgba(${p.rgb},.35)`); g.addColorStop(0.78, `rgba(${p.rgb},.1)`); g.addColorStop(1, `rgba(${p.rgb},0)`);
+        ctx.fillStyle = g; ctx.beginPath(); ctx.arc(0, 0, s, 0, 7); ctx.fill(); ctx.restore(); break; }
+    }
+  }
+  function kick() { if (!cv.isConnected) { document.body.append(vg, cv); fit(); addEventListener("resize", fit); } if (!running) { running = true; last = performance.now(); requestAnimationFrame(frame); } }
+
+  // 메이저 0~21 → 효과 (근거: 황금여명회 배속 / 그림의 핵심 현상)
+  const MAJOR = ["air", "arcane", "moon", "bloom", "fire", "earth", "love", "water", "fire", "lantern", "arcane", "air", "water", "death", "water", "darkfire", "tower", "star", "moon", "sun", "light", "arcane"];
+  const WHY = ["바보·공기", "마법사·수성", "여사제·달", "여황제·금성", "황제·양자리(불)", "교황·황소자리(흙)", "연인·쌍둥이자리", "전차·게자리(물)", "힘·사자자리(불)", "은둔자·등불", "운명의 수레바퀴·목성", "정의·천칭자리(공기)", "매달린 사람·물", "죽음·전갈자리", "절제·물을 섞음", "악마·염소자리", "탑·번개", "별·별빛", "달·물고기자리", "태양", "심판·나팔의 빛", "세계·토성"];
+  const kindOf = (card, rev) => rev ? "shadow" : card.arcana === "major" ? MAJOR[card.id] || "light" : { wands: "fire", cups: "water", swords: "air", pentacles: "earth" }[card.suit] || "light";
+  const PALOF = { bloom: "love", lantern: "fire", death: "moon", darkfire: "hell", tower: "fire", arcane: "arcane", star: "star", moon: "moon", sun: "sun", water: "water", air: "air", earth: "earth", fire: "fire", wood: "wood", light: "light", love: "love", shadow: "shadow" };
+  const BLOOM = { light: "255,240,210", sun: "255,225,160", moon: "190,205,255", star: "210,228,255", tower: "235,235,255", death: "200,205,230", darkfire: "200,70,90", lantern: "255,200,130", arcane: "255,225,175", bloom: "255,205,215", love: "255,185,205", shadow: "150,115,255", fire: "255,190,120", water: "150,205,255", air: "220,232,255", earth: "240,215,150", wood: "180,235,180" };
+  const api = {
+    kindOf, WHY,
+    play(kind, t, power = 1) { if (RM) return; kick(); const o = at(t), n = Math.round(60 * power), pal = RGB[PALOF[kind]] || RGB.light;
+      flash(o, BLOOM[kind] || "255,240,210", power * (kind === "shadow" || kind === "death" ? 0.6 : 1));
+      switch (kind) {
+        case "light": godrays(o, "light"); aura(t, "light"); E.sweep(o, n * 0.5); E.dust(o, n * 0.5); E.bokeh(o, n * 0.15); break;
+        case "sun": godrays(o, "sun", 3.6); aura(t, "sun"); E.dust(o, n * 0.8, RGB.sun); E.bokeh(o, n * 0.2, RGB.sun); break;
+        case "moon": aura(t, "moon"); E.haze(o, n * 0.15, "150,165,230", 0.12, -5); E.sparkle(o, n * 0.25, RGB.moon); E.dust(o, n * 0.5, RGB.moon); break;
+        case "star": aura(t, "star"); E.sparkle(o, n * 0.6, RGB.star); E.dust(o, n * 0.6, RGB.star); break;
+        // 탑: 쾅 대신, 먼 하늘의 희미한 번개빛이 두 번 스치고 불씨가 내려앉는다
+        case "tower": setTimeout(() => flash(o, "235,235,255", power * 0.8, 1.4), 600); E.fire(o, n * 0.5); E.haze(o, n * 0.1, "90,80,110", 0.12, -6); break;
+        // 죽음: 어둠보다는 새벽 안개 속에 옅은 빛 알갱이가 조용히 떠오른다
+        case "death": aura(t, "moon"); E.haze(o, n * 0.18, "120,120,150", 0.12, -5); E.dust(o, n * 0.5, ["220,222,240", "200,205,230"]); break;
+        case "darkfire": aura(t, "shadow"); E.fire(o, n * 0.6, RGB.hell); E.haze(o, n * 0.1, "60,30,70", 0.14, -6); break;
+        case "lantern": aura(t, "fire"); E.dust(o, n * 0.8, RGB.fire, 0.5); E.sparkle(o, n * 0.12, RGB.fire); break;
+        case "arcane": aura(t, "arcane"); E.vortex(o, n * 0.8); E.sparkle(o, n * 0.2, RGB.arcane); break;
+        case "bloom": aura(t, "love"); E.petals(o, n * 0.25); E.dust(o, n * 0.5, RGB.wood); break;
+        case "love": aura(t, "love"); E.petals(o, n * 0.3); E.bokeh(o, n * 0.2, RGB.love); E.dust(o, n * 0.4, RGB.love); break;
+        case "shadow": aura(t, "shadow"); E.haze(o, n * 0.15, "70,50,130", 0.14, -5); E.dust(o, n * 0.5, RGB.shadow); break;
+        default: aura(t, PALOF[kind] || "light"); (E[kind] || E.dust)(o, n, pal);
+      } },
+    // 카드 공개: 주변이 살짝 흐려지고 → 빛이 스며들고 → 반짝임이 대각선으로 '샤르르' 쓸고 지나간 뒤 → 카드별 효과가 피어난다
+    reveal(card, rev, t, power = 1, multi = false) { if (RM) return; kick(); const k = kindOf(card, rev), o = at(t), pal = RGB[PALOF[k]] || RGB.light;
+      if (!multi) { veil(t, true); setTimeout(() => veil(t, false), 2600); } E.sweep(o, Math.round(26 + 16 * power), pal);
+      if (k !== "tower" && k !== "death" && k !== "shadow") godrays(t, PALOF[k] || "light", 2.6);
+      setTimeout(() => api.play(k, t, power), 450); },
+    ambient(kind, t, sec = 3) { if (RM) return; kick(); const end = performance.now() + sec * 1000; const tick = () => { if (performance.now() > end) return; const o = at(t); E.dust(o, 2, RGB[PALOF[kind]] || RGB.light); setTimeout(tick, 220); }; tick(); },
+    aura: (t, kind, d) => aura(t, PALOF[kind] || kind, d), godrays, flash, veil, kick, shake,
+  };
+  return api;
+})();
+
+</script>
+<script>
+const DECK = {"cards":[{"id":0,"ko":"바보","en":"The Fool","arcana":"major","suit":null,"up_kw":["시작","자유","모험"],"rev_kw":["무모함","망설임","준비 부족"],"up":"계산보다 설렘이 앞서는 새 출발의 카드예요. 아직 정해진 길은 없지만 그래서 무엇이든 될 수 있어요.","rev":"발밑을 안 보고 뛰어들거나, 반대로 겁이 나서 첫발을 못 떼고 있어요. 가벼운 마음은 좋지만 최소한의 준비는 챙겨요.","advice":"완벽한 타이밍은 오지 않아요. 작게라도 오늘 시작해 봐요.","tone":[1,1,0,1],"color":"노랑"},{"id":1,"ko":"마법사","en":"The Magician","arcana":"major","suit":null,"up_kw":["능력","집중","실행"],"rev_kw":["속임수","산만함","재능 낭비"],"up":"필요한 도구는 이미 손 안에 있어요. 생각을 현실로 옮길 힘과 재주가 가장 잘 발휘되는 때예요.","rev":"재주는 있는데 방향이 흩어져 있거나, 누군가 말로만 그럴듯하게 꾸미고 있을 수 있어요. 겉모습보다 실속을 확인해요.","advice":"하고 싶은 일 하나만 골라 오늘 바로 손을 대 봐요.","tone":[1,2,1,1],"color":"빨강"},{"id":2,"ko":"여사제","en":"The High Priestess","arcana":"major","suit":null,"up_kw":["직감","비밀","내면"],"rev_kw":["외면","숨긴 감정","혼란"],"up":"답은 바깥이 아니라 내 안에 있어요. 서두르지 말고 조용히 느낌을 따라가면 숨은 사정이 보여요.","rev":"마음속 목소리를 무시하고 있거나, 드러나지 않은 정보 때문에 판단이 흐려져 있어요. 확인 안 된 소문은 믿지 말아요.","advice":"결정을 하루만 미루고 혼자 생각할 시간을 가져요.","tone":[0,0,0,1],"color":"은색"},{"id":3,"ko":"여황제","en":"The Empress","arcana":"major","suit":null,"up_kw":["풍요","돌봄","결실"],"rev_kw":["과보호","게으름","의존"],"up":"정성 들인 것이 무르익어 열매를 맺어요. 사랑받고, 넉넉하고, 마음이 편안해지는 흐름이에요.","rev":"챙겨 주는 게 지나쳐 서로 지치거나, 편안함에 머물러 성장이 멈춰 있을 수 있어요. 나 자신부터 돌봐요.","advice":"맛있는 걸 먹고 좋아하는 사람에게 다정한 말을 건네요.","tone":[2,1,2,1],"color":"초록"},{"id":4,"ko":"황제","en":"The Emperor","arcana":"major","suit":null,"up_kw":["질서","책임","리더십"],"rev_kw":["고집","통제","권위 다툼"],"up":"규칙과 계획으로 상황을 단단히 잡을 수 있어요. 책임지는 태도가 신뢰와 성과로 돌아와요.","rev":"내 방식만 고집하거나 윗사람과 부딪히기 쉬워요. 단단함이 딱딱함이 되지 않게 한 발 물러서 봐요.","advice":"할 일을 목록으로 정리하고 우선순위를 정해요.","tone":[0,2,1,0],"color":"빨강"},{"id":5,"ko":"교황","en":"The Hierophant","arcana":"major","suit":null,"up_kw":["가르침","전통","신뢰"],"rev_kw":["틀에 갇힘","반항","형식주의"],"up":"검증된 방법과 믿을 만한 조언자가 도움이 돼요. 배우고 따르는 것이 지름길인 때예요.","rev":"정해진 방식이 오히려 발목을 잡거나, 남의 기준에 맞추느라 지쳐 있어요. 나에게 맞는 방식을 찾아도 괜찮아요.","advice":"믿을 만한 사람에게 한 번 물어보고 결정해요.","tone":[1,1,1,1],"color":"주황"},{"id":6,"ko":"연인","en":"The Lovers","arcana":"major","suit":null,"up_kw":["사랑","선택","조화"],"rev_kw":["엇갈림","유혹","우유부단"],"up":"마음이 통하는 관계, 그리고 진심으로 고르는 선택의 카드예요. 가치관이 맞는 쪽으로 가면 후회가 없어요.","rev":"마음과 행동이 따로 놀거나, 두 갈래 사이에서 오래 망설이고 있어요. 무엇을 가장 아끼는지 먼저 정해요.","advice":"머리 말고 마음이 끌리는 쪽을 골라 봐요.","tone":[2,1,0,1],"color":"분홍"},{"id":7,"ko":"전차","en":"The Chariot","arcana":"major","suit":null,"up_kw":["돌파","의지","승리"],"rev_kw":["폭주","방향 상실","좌절"],"up":"흔들림 없이 밀고 나가면 이기는 흐름이에요. 상반된 힘도 의지로 묶으면 앞으로 달려 나가요.","rev":"힘은 있는데 방향이 없거나, 너무 몰아붙여 탈이 날 수 있어요. 속도보다 핸들을 먼저 잡아요.","advice":"목표 하나를 정하고 오늘 끝까지 밀어붙여요.","tone":[1,2,1,1],"color":"하늘색"},{"id":8,"ko":"힘","en":"Strength","arcana":"major","suit":null,"up_kw":["용기","인내","부드러운 힘"],"rev_kw":["자신감 부족","짜증","자기 의심"],"up":"억누르는 힘이 아니라 다독이는 힘이 이겨요. 차분한 용기로 어려운 상황과 감정을 다룰 수 있어요.","rev":"스스로를 못 믿거나 감정이 쉽게 터져 나와요. 나를 다그치기보다 먼저 쉬게 해 줘요.","advice":"화가 나면 세 번 숨 쉬고 웃으며 말해 봐요.","tone":[1,1,0,2],"color":"주황"},{"id":9,"ko":"은둔자","en":"The Hermit","arcana":"major","suit":null,"up_kw":["성찰","고독","지혜"],"rev_kw":["고립","외로움","회피"],"up":"잠시 혼자 등불을 들고 내면을 비추는 시간이에요. 소란에서 떨어지면 진짜 답이 보여요.","rev":"혼자 있는 시간이 쉼이 아니라 벽이 되어 버렸어요. 도움을 청하는 것도 용기예요.","advice":"휴대폰을 내려놓고 30분만 조용히 걸어 봐요.","tone":[-1,0,0,1],"color":"남색"},{"id":10,"ko":"운명의 수레바퀴","en":"Wheel of Fortune","arcana":"major","suit":null,"up_kw":["전환점","행운","흐름"],"rev_kw":["불운","정체","통제 불가"],"up":"바퀴가 돌기 시작했어요. 뜻밖의 기회와 변화가 찾아오니 흐름에 올라타요.","rev":"일이 꼬이는 것 같아도 바퀴는 계속 돌아요. 억지로 거스르기보다 때를 기다려요.","advice":"평소와 다른 길로 가 보면 뜻밖의 행운을 만날 수 있어요.","tone":[1,1,2,0],"color":"보라"},{"id":11,"ko":"정의","en":"Justice","arcana":"major","suit":null,"up_kw":["공정","균형","결과"],"rev_kw":["불공정","책임 회피","편견"],"up":"뿌린 대로 거두는 때예요. 정직하게 따져 보고 공정하게 결정하면 결과도 바르게 나와요.","rev":"한쪽으로 기운 판단이나 억울한 일이 있을 수 있어요. 감정 말고 사실을 기록해 두세요.","advice":"계약·약속은 꼼꼼히 읽고 확인해요.","tone":[0,1,1,1],"color":"초록"},{"id":12,"ko":"매달린 사람","en":"The Hanged Man","arcana":"major","suit":null,"up_kw":["멈춤","관점 전환","내려놓음"],"rev_kw":["헛된 희생","지연","버팀"],"up":"지금은 움직일 때가 아니라 거꾸로 보며 깨닫는 때예요. 잠깐의 멈춤이 새로운 시야를 줘요.","rev":"의미 없이 버티고만 있거나, 손해를 보면서도 놓지 못하고 있어요. 내려놓을 것을 정해요.","advice":"고민을 반대 입장에서 한 번 다시 생각해 봐요.","tone":[-1,-1,-1,0],"color":"파랑"},{"id":13,"ko":"죽음","en":"Death","arcana":"major","suit":null,"up_kw":["끝과 시작","변화","정리"],"rev_kw":["변화 거부","미련","질질 끌기"],"up":"무서운 카드가 아니에요. 한 장이 끝나야 다음 장이 열려요. 낡은 것을 보내면 새로운 것이 들어와요.","rev":"이미 끝난 것을 붙잡고 있어서 다음이 안 와요. 아쉬워도 정리할 때예요.","advice":"안 쓰는 물건이나 앱 하나를 정리해 봐요.","tone":[-1,0,0,0],"color":"검정"},{"id":14,"ko":"절제","en":"Temperance","arcana":"major","suit":null,"up_kw":["균형","조화","회복"],"rev_kw":["과함","불균형","조급함"],"up":"서두르지도 넘치지도 않게 섞어 가는 때예요. 적당함이 가장 큰 힘이 되고 몸과 마음이 회복돼요.","rev":"한쪽으로 너무 쏠려 있어요. 일·관계·생활 중 넘치는 것을 덜어 내요.","advice":"물 한 잔 마시고 오늘 일정을 조금 덜어 내요.","tone":[1,1,1,2],"color":"하늘색"},{"id":15,"ko":"악마","en":"The Devil","arcana":"major","suit":null,"up_kw":["집착","유혹","속박"],"rev_kw":["해방","벗어남","깨달음"],"up":"끊기 힘든 것에 끌려가고 있어요. 달콤하지만 나를 묶는 것이 무엇인지 알아차리는 게 시작이에요.","rev":"묶여 있던 사슬이 느슨해지고 있어요. 나쁜 습관이나 관계에서 벗어날 기회예요.","advice":"충동구매·과식·밤샘 중 하나를 오늘은 참아 봐요.","tone":[0,-1,-1,-1],"color":"검정"},{"id":16,"ko":"탑","en":"The Tower","arcana":"major","suit":null,"up_kw":["급변","붕괴","각성"],"rev_kw":["위기 모면","미룬 변화","불안"],"up":"갑자기 무너지는 일이 있어도, 애초에 흔들리던 것이 드러난 거예요. 무너진 자리에 더 튼튼하게 다시 지어요.","rev":"큰 사고는 피했지만 문제는 그대로예요. 터지기 전에 스스로 고칠 기회로 삼아요.","advice":"미뤄 둔 문제 하나를 오늘 정면으로 마주해요.","tone":[-2,-1,-1,-1],"color":"빨강"},{"id":17,"ko":"별","en":"The Star","arcana":"major","suit":null,"up_kw":["희망","치유","영감"],"rev_kw":["실망","의욕 저하","자신감 상실"],"up":"폭풍이 지나고 맑은 밤하늘에 별이 떴어요. 상처가 아물고, 바라는 일을 믿어도 되는 때예요.","rev":"희망이 잠깐 흐려졌을 뿐 꺼진 건 아니에요. 작은 목표부터 다시 하나씩 찾아봐요.","advice":"이루고 싶은 소원 하나를 적어 두세요.","tone":[2,1,1,2],"color":"하늘색"},{"id":18,"ko":"달","en":"The Moon","arcana":"major","suit":null,"up_kw":["불안","착각","꿈"],"rev_kw":["진실 드러남","불안 해소","혼란 정리"],"up":"달빛 아래선 모든 게 흐릿해요. 불안이 상상을 키우고 있으니 확실해질 때까지 단정 짓지 말아요.","rev":"흐릿하던 것이 조금씩 선명해지고 있어요. 오해가 풀리고 숨은 사정이 드러나요.","advice":"확인되지 않은 걱정은 메모해 두고 내일 다시 봐요.","tone":[-1,-1,-1,-1],"color":"은색"},{"id":19,"ko":"태양","en":"The Sun","arcana":"major","suit":null,"up_kw":["성공","기쁨","활력"],"rev_kw":["들뜸","일시적 그늘","과신"],"up":"모든 게 환하게 밝아요. 자신감, 즐거움, 성과가 한꺼번에 찾아오는 최고의 카드 중 하나예요.","rev":"해는 떠 있지만 구름이 살짝 가렸어요. 좋은 흐름이니 너무 들뜨지만 않으면 돼요.","advice":"햇볕을 쬐고 오늘 좋았던 일을 누군가에게 자랑해요.","tone":[2,2,2,2],"color":"노랑"},{"id":20,"ko":"심판","en":"Judgement","arcana":"major","suit":null,"up_kw":["부활","결단","소명"],"rev_kw":["자책","미련","결정 회피"],"up":"지난 일을 돌아보고 다시 일어설 때예요. 미뤄 둔 결정에 답을 내리면 새 단계가 열려요.","rev":"과거 일로 스스로를 너무 탓하고 있어요. 반성은 짧게, 다음 걸음은 길게요.","advice":"미뤄 둔 연락이나 결정을 오늘 끝내요.","tone":[1,1,0,1],"color":"흰색"},{"id":21,"ko":"세계","en":"The World","arcana":"major","suit":null,"up_kw":["완성","성취","새 여정"],"rev_kw":["미완성","마무리 부족","지연"],"up":"한 바퀴를 완주했어요. 노력이 완성되고 인정받으며, 더 넓은 세상으로 나갈 준비가 됐어요.","rev":"거의 다 왔는데 마지막 한 조각이 남았어요. 끝맺음을 해야 다음이 열려요.","advice":"끝내지 못한 일 하나를 완전히 마무리해요.","tone":[2,2,1,1],"color":"보라"},{"id":22,"ko":"완드 에이스","en":"Ace of Wands","arcana":"minor","suit":"wands","up_kw":["영감","열정","새 계획"],"rev_kw":["의욕 저하","지연","헛불"],"up":"가슴을 뛰게 하는 아이디어가 불꽃처럼 튀어요. 시작하기 딱 좋은 에너지예요.","rev":"불은 붙었는데 장작이 없어요. 계획을 구체적으로 만들어야 타올라요.","advice":"떠오른 아이디어를 바로 메모해요.","tone":[1,2,1,2],"color":"주황"},{"id":23,"ko":"완드 2","en":"Two of Wands","arcana":"minor","suit":"wands","up_kw":["계획","선택","넓은 시야"],"rev_kw":["두려움","안주","계획 부족"],"up":"손에 쥔 것과 더 큰 세상 사이에서 다음 걸음을 그려요. 멀리 보는 계획이 통해요.","rev":"익숙한 곳을 떠나기 무서워 머뭇거리고 있어요. 지도를 먼저 그려 봐요.","advice":"6개월 뒤 모습을 한 줄로 적어 봐요.","tone":[0,1,0,1],"color":"주황"},{"id":24,"ko":"완드 3","en":"Three of Wands","arcana":"minor","suit":"wands","up_kw":["확장","기다림","기회"],"rev_kw":["좌절된 기대","지연","근시안"],"up":"뿌려 둔 것이 돌아올 배를 기다려요. 시야를 넓히면 기회가 보여요.","rev":"기다리던 소식이 늦어져요. 다른 길도 열어 두세요.","advice":"새로운 사람이나 모임에 한 번 얼굴을 비춰요.","tone":[0,1,0,1],"color":"주황"},{"id":25,"ko":"완드 4","en":"Four of Wands","arcana":"minor","suit":"wands","up_kw":["축하","안정","귀향"],"rev_kw":["불안정","어색함","축하 미룸"],"up":"작은 축제 같은 날이에요. 함께하는 사람들과 성과를 나누면 기쁨이 커져요.","rev":"분위기가 살짝 삐걱여요. 작은 것부터 함께 축하해 봐요.","advice":"고마운 사람에게 간식 하나 건네요.","tone":[1,2,1,2],"color":"주황"},{"id":26,"ko":"완드 5","en":"Five of Wands","arcana":"minor","suit":"wands","up_kw":["경쟁","충돌","의견 다툼"],"rev_kw":["갈등 회피","화해","내부 다툼"],"up":"여러 사람이 각자 목소리를 내며 부딪혀요. 경쟁이 실력을 키우기도 해요.","rev":"싸움을 피하려다 속이 끓고 있어요. 솔직하게 말할 때예요.","advice":"말다툼은 이기기보다 정리하는 데 집중해요.","tone":[0,-1,0,-1],"color":"주황"},{"id":27,"ko":"완드 6","en":"Six of Wands","arcana":"minor","suit":"wands","up_kw":["승리","인정","자신감"],"rev_kw":["자만","인정 부족","추락"],"up":"박수를 받으며 들어서는 승리의 행진이에요. 노력이 인정받아요.","rev":"칭찬이 안 와서 서운하거나, 자만이 고개를 들어요.","advice":"오늘 잘한 일 하나를 스스로 칭찬해요.","tone":[1,2,1,2],"color":"주황"},{"id":28,"ko":"완드 7","en":"Seven of Wands","arcana":"minor","suit":"wands","up_kw":["방어","소신","버팀"],"rev_kw":["지침","포기","압도됨"],"up":"높은 곳에서 내 자리를 지켜요. 밀리지 않으면 지킬 수 있어요.","rev":"혼자 막기엔 버거워요. 모든 싸움을 다 받을 필요는 없어요.","advice":"지킬 것과 내려놓을 것을 구분해요.","tone":[0,0,0,0],"color":"주황"},{"id":29,"ko":"완드 8","en":"Eight of Wands","arcana":"minor","suit":"wands","up_kw":["속도","소식","급진전"],"rev_kw":["지연","성급함","엇갈린 연락"],"up":"일이 빠르게 날아가요. 연락과 소식이 몰려오고 진행이 빨라져요.","rev":"서두르다 엇갈리기 쉬워요. 보내기 전에 한 번 더 읽어요.","advice":"미뤄 둔 답장을 지금 보내요.","tone":[0,1,0,1],"color":"주황"},{"id":30,"ko":"완드 9","en":"Nine of Wands","arcana":"minor","suit":"wands","up_kw":["끈기","경계","마지막 고비"],"rev_kw":["피로","방어적","의심"],"up":"상처는 있지만 아직 서 있어요. 마지막 고비만 넘기면 돼요.","rev":"너무 오래 경계해서 지쳤어요. 잠깐 쉬어도 무너지지 않아요.","advice":"오늘은 일찍 자요.","tone":[0,0,0,0],"color":"주황"},{"id":31,"ko":"완드 10","en":"Ten of Wands","arcana":"minor","suit":"wands","up_kw":["부담","책임 과다","무거운 짐"],"rev_kw":["짐 내려놓기","위임","번아웃"],"up":"혼자 너무 많은 짐을 지고 있어요. 목적지는 가깝지만 허리가 휘어요.","rev":"더는 못 들어요. 나눠 들 사람을 찾을 때예요.","advice":"할 일 하나를 누군가에게 부탁해요.","tone":[0,-1,0,-1],"color":"주황"},{"id":32,"ko":"완드 시종","en":"Page of Wands","arcana":"minor","suit":"wands","up_kw":["호기심","새 소식","탐험"],"rev_kw":["변덕","철없음","나쁜 소식"],"up":"신나는 소식이나 새로운 관심사가 생겨요. 아이처럼 탐험해 봐요.","rev":"흥미가 금방 식거나 계획 없이 들떠 있어요.","advice":"배우고 싶던 것 하나를 검색해 봐요.","tone":[0,1,0,1],"color":"주황"},{"id":33,"ko":"완드 기사","en":"Knight of Wands","arcana":"minor","suit":"wands","up_kw":["모험","추진력","열정적 행동"],"rev_kw":["성급함","무모함","산만함"],"up":"말을 달리듯 거침없이 나아가요. 행동력이 최고조예요.","rev":"출발은 빠른데 끝이 흐지부지해요. 브레이크도 챙겨요.","advice":"생각만 하던 걸 오늘 실행해요.","tone":[0,1,0,1],"color":"주황"},{"id":34,"ko":"완드 여왕","en":"Queen of Wands","arcana":"minor","suit":"wands","up_kw":["자신감","매력","독립"],"rev_kw":["질투","자신감 저하","까칠함"],"up":"따뜻하고 당당한 매력이 빛나요. 사람들이 자연스럽게 모여요.","rev":"에너지가 바닥나 예민해졌어요. 나를 먼저 채워요.","advice":"좋아하는 옷을 입고 나가요.","tone":[1,2,1,2],"color":"주황"},{"id":35,"ko":"완드 왕","en":"King of Wands","arcana":"minor","suit":"wands","up_kw":["리더십","비전","결단"],"rev_kw":["독단","성급한 결정","기대 과다"],"up":"큰 그림을 그리고 사람들을 이끌어요. 결단이 길을 열어요.","rev":"내 비전만 밀어붙이면 사람들이 떠나요.","advice":"팀이나 친구 의견을 먼저 듣고 결정해요.","tone":[1,2,1,2],"color":"주황"},{"id":36,"ko":"컵 에이스","en":"Ace of Cups","arcana":"minor","suit":"cups","up_kw":["새 감정","사랑","충만"],"rev_kw":["감정 억누름","공허","막힌 마음"],"up":"마음의 잔이 넘쳐흘러요. 새로운 사랑이나 따뜻한 감정이 시작돼요.","rev":"마음을 닫아 두었어요. 표현하지 않으면 잔이 비어 가요.","advice":"좋아하는 사람에게 먼저 안부를 물어요.","tone":[2,1,1,1],"color":"하늘색"},{"id":37,"ko":"컵 2","en":"Two of Cups","arcana":"minor","suit":"cups","up_kw":["교감","끌림","파트너"],"rev_kw":["불균형","오해","엇갈림"],"up":"서로를 알아보는 눈빛이 오가요. 마음이 통하는 연결이 생겨요.","rev":"한쪽만 애쓰고 있거나 작은 오해가 쌓였어요.","advice":"상대 말을 끝까지 들어 줘요.","tone":[2,1,1,1],"color":"하늘색"},{"id":38,"ko":"컵 3","en":"Three of Cups","arcana":"minor","suit":"cups","up_kw":["우정","축하","모임"],"rev_kw":["과한 놀이","뒷말","어긋난 무리"],"up":"친구들과 잔을 부딪치는 즐거운 때예요. 함께라서 기뻐요.","rev":"놀이가 지나치거나 무리 안에서 말이 돌아요.","advice":"오랜 친구에게 연락해 봐요.","tone":[2,1,1,1],"color":"하늘색"},{"id":39,"ko":"컵 4","en":"Four of Cups","arcana":"minor","suit":"cups","up_kw":["권태","무관심","재평가"],"rev_kw":["새 관심","의욕 회복","기회 포착"],"up":"주어진 것에 시큰둥해요. 내미는 손을 못 보고 있을 수 있어요.","rev":"다시 고개를 들어 주변을 보기 시작했어요.","advice":"익숙한 것에서 고마운 점 하나를 찾아요.","tone":[-1,0,0,0],"color":"하늘색"},{"id":40,"ko":"컵 5","en":"Five of Cups","arcana":"minor","suit":"cups","up_kw":["상실","후회","아쉬움"],"rev_kw":["회복","용서","다시 보기"],"up":"쏟아진 잔을 보며 아파하고 있어요. 하지만 뒤에 아직 두 잔이 남아 있어요.","rev":"슬픔에서 조금씩 걸어 나와요. 남은 것이 보이기 시작해요.","advice":"잃은 것 말고 남은 것을 세어 봐요.","tone":[-2,-1,-1,-1],"color":"하늘색"},{"id":41,"ko":"컵 6","en":"Six of Cups","arcana":"minor","suit":"cups","up_kw":["추억","순수","다정함"],"rev_kw":["과거 집착","미성숙","떠나보냄"],"up":"어린 시절처럼 순수하고 따뜻한 마음이 찾아와요. 옛 인연이 떠오를 수 있어요.","rev":"과거에 머물러 지금을 놓치고 있어요.","advice":"옛날 사진을 보고 웃어 봐요.","tone":[1,0,0,0],"color":"하늘색"},{"id":42,"ko":"컵 7","en":"Seven of Cups","arcana":"minor","suit":"cups","up_kw":["선택지","환상","공상"],"rev_kw":["현실 직시","명확함","결정"],"up":"눈앞에 그럴듯한 선택이 여러 개예요. 다 좋아 보이지만 다 진짜는 아니에요.","rev":"환상이 걷히고 진짜 원하는 것이 보여요.","advice":"선택지마다 현실적인 단점 하나씩 적어 봐요.","tone":[0,0,0,0],"color":"하늘색"},{"id":43,"ko":"컵 8","en":"Eight of Cups","arcana":"minor","suit":"cups","up_kw":["떠남","더 깊은 의미","포기"],"rev_kw":["미련","떠나기 두려움","방황"],"up":"쌓아 둔 것을 두고 더 의미 있는 것을 찾아 떠나요.","rev":"떠나야 하는 걸 알지만 발이 안 떨어져요.","advice":"더는 즐겁지 않은 일 하나를 그만둬요.","tone":[-1,0,0,0],"color":"하늘색"},{"id":44,"ko":"컵 9","en":"Nine of Cups","arcana":"minor","suit":"cups","up_kw":["소원 성취","만족","행복"],"rev_kw":["욕심","허세","불만족"],"up":"'소원 카드'예요. 바라던 것이 이뤄지고 마음이 흡족해요.","rev":"가진 게 많아도 채워지지 않아요. 진짜 원하는 걸 다시 물어봐요.","advice":"오늘 하루는 나에게 작은 선물을 줘요.","tone":[2,1,1,1],"color":"하늘색"},{"id":45,"ko":"컵 10","en":"Ten of Cups","arcana":"minor","suit":"cups","up_kw":["행복한 관계","가족","평화"],"rev_kw":["불화","기대 차이","어긋난 가치"],"up":"무지개 아래 함께 웃는 가족처럼 관계가 화목해요.","rev":"그림 같은 관계를 기대하다 서운함이 쌓였어요.","advice":"가족이나 가까운 사람과 밥을 함께 먹어요.","tone":[2,1,1,1],"color":"하늘색"},{"id":46,"ko":"컵 시종","en":"Page of Cups","arcana":"minor","suit":"cups","up_kw":["설렘","감성","새 소식"],"rev_kw":["감정 기복","유치함","실망"],"up":"귀여운 고백이나 반가운 메시지가 올 수 있어요. 감성이 풍부해져요.","rev":"감정이 롤러코스터처럼 오르내려요.","advice":"마음에 든 노래를 누군가와 공유해요.","tone":[1,0,0,0],"color":"하늘색"},{"id":47,"ko":"컵 기사","en":"Knight of Cups","arcana":"minor","suit":"cups","up_kw":["로맨스","제안","이상주의"],"rev_kw":["변덕","비현실","실망"],"up":"꽃을 든 기사가 다가와요. 낭만적인 제안이나 고백의 기운이에요.","rev":"말은 달콤한데 행동이 따라오지 않아요. 지켜봐요.","advice":"마음을 말로 표현해 봐요.","tone":[1,0,0,0],"color":"하늘색"},{"id":48,"ko":"컵 여왕","en":"Queen of Cups","arcana":"minor","suit":"cups","up_kw":["공감","배려","직관"],"rev_kw":["감정 소진","예민함","의존"],"up":"남의 마음을 잘 알아주는 따뜻한 힘이 있어요. 위로가 필요한 사람에게 쉼터가 돼요.","rev":"남을 챙기다 내 마음이 바닥났어요.","advice":"오늘은 내 감정부터 돌봐요.","tone":[1,0,0,0],"color":"하늘색"},{"id":49,"ko":"컵 왕","en":"King of Cups","arcana":"minor","suit":"cups","up_kw":["너그러움","감정 조절","어른스러움"],"rev_kw":["감정 억압","냉정함","조종"],"up":"파도 위에서도 침착한 왕처럼 감정을 잘 다스려요.","rev":"괜찮은 척 꾹 누르고 있어요. 터지기 전에 풀어 줘요.","advice":"화를 내기 전에 한 박자 쉬어요.","tone":[1,0,0,0],"color":"하늘색"},{"id":50,"ko":"소드 에이스","en":"Ace of Swords","arcana":"minor","suit":"swords","up_kw":["명확함","진실","돌파구"],"rev_kw":["혼란","오판","날 선 말"],"up":"날카로운 깨달음이 안개를 가르고 지나가요. 생각이 또렷해져요.","rev":"생각이 엉켜 있거나 말이 칼처럼 상처를 줄 수 있어요.","advice":"결론을 한 문장으로 정리해 봐요.","tone":[0,1,0,0],"color":"은색"},{"id":51,"ko":"소드 2","en":"Two of Swords","arcana":"minor","suit":"swords","up_kw":["교착","결정 회피","외면"],"rev_kw":["정보 과다","결정","눈가리개 풀기"],"up":"눈을 가린 채 양쪽 검을 들고 있어요. 결정을 미루는 중이에요.","rev":"드디어 눈을 뜨고 무언가를 선택해야 해요.","advice":"장단점을 표로 써서 결정해요.","tone":[0,-1,0,0],"color":"은색"},{"id":52,"ko":"소드 3","en":"Three of Swords","arcana":"minor","suit":"swords","up_kw":["상처","이별","슬픔"],"rev_kw":["회복","용서","아픔 정리"],"up":"마음에 꽂힌 아픔이 있어요. 아프다는 걸 인정해야 아물기 시작해요.","rev":"상처가 천천히 아물고 있어요.","advice":"슬프면 참지 말고 털어놓아요.","tone":[-1,-2,-1,-1],"color":"은색"},{"id":53,"ko":"소드 4","en":"Four of Swords","arcana":"minor","suit":"swords","up_kw":["휴식","회복","재충전"],"rev_kw":["불안한 휴식","번아웃","억지 재가동"],"up":"싸움을 멈추고 쉬는 기사예요. 지금 필요한 건 잠과 휴식이에요.","rev":"쉬어야 할 때 쉬지 못해 지쳐 있어요.","advice":"오늘은 아무것도 안 하는 시간을 정해 둬요.","tone":[0,0,0,0],"color":"은색"},{"id":54,"ko":"소드 5","en":"Five of Swords","arcana":"minor","suit":"swords","up_kw":["이기적 승리","갈등","자존심"],"rev_kw":["화해","후회","물러섬"],"up":"이겼지만 남은 게 없는 싸움이에요. 이길 가치가 있는지 따져 봐요.","rev":"싸움을 끝내고 손을 내밀 때예요.","advice":"이기려는 대화 대신 듣는 대화를 해요.","tone":[-1,-2,-1,-1],"color":"은색"},{"id":55,"ko":"소드 6","en":"Six of Swords","arcana":"minor","suit":"swords","up_kw":["이동","벗어남","전환"],"rev_kw":["떠나지 못함","미해결","되돌아감"],"up":"거친 물을 떠나 잔잔한 곳으로 노를 저어요. 나아지는 중이에요.","rev":"떠나려 해도 짐이 발목을 잡아요.","advice":"자리라도 옮겨서 분위기를 바꿔 봐요.","tone":[0,0,0,0],"color":"은색"},{"id":56,"ko":"소드 7","en":"Seven of Swords","arcana":"minor","suit":"swords","up_kw":["요령","전략","몰래"],"rev_kw":["들킴","자백","양심"],"up":"정면 돌파보다 꾀가 통해요. 다만 속임수가 섞이지 않게 조심해요.","rev":"숨기던 것이 드러나거나 털어놓고 싶어져요.","advice":"솔직함이 가장 좋은 전략이에요.","tone":[0,-1,0,0],"color":"은색"},{"id":57,"ko":"소드 8","en":"Eight of Swords","arcana":"minor","suit":"swords","up_kw":["제약","무력감","스스로 묶임"],"rev_kw":["해방","새 관점","탈출"],"up":"갇힌 것 같지만 사실 묶은 끈은 느슨해요. 생각이 나를 가두고 있어요.","rev":"생각을 바꾸자 출구가 보이기 시작해요.","advice":"'못 해' 대신 '어떻게 하면?'을 말해 봐요.","tone":[0,-1,0,0],"color":"은색"},{"id":58,"ko":"소드 9","en":"Nine of Swords","arcana":"minor","suit":"swords","up_kw":["걱정","불면","불안"],"rev_kw":["불안 완화","털어놓기","희망"],"up":"밤새 걱정이 머릿속을 맴돌아요. 대부분은 실제보다 커 보이는 거예요.","rev":"걱정을 꺼내 놓으니 조금 가벼워져요.","advice":"잠들기 전 걱정을 종이에 적고 덮어요.","tone":[-1,-2,-1,-1],"color":"은색"},{"id":59,"ko":"소드 10","en":"Ten of Swords","arcana":"minor","suit":"swords","up_kw":["끝","바닥","새벽 직전"],"rev_kw":["회복","재기","최악 회피"],"up":"더 내려갈 곳이 없는 바닥이에요. 그래서 이제 올라갈 일만 남았어요.","rev":"최악은 지나갔어요. 천천히 일어서요.","advice":"오늘은 작은 일 하나만 해내도 충분해요.","tone":[-1,-2,-1,-1],"color":"은색"},{"id":60,"ko":"소드 시종","en":"Page of Swords","arcana":"minor","suit":"swords","up_kw":["호기심","탐구","날카로운 관찰"],"rev_kw":["뒷말","경솔함","말실수"],"up":"궁금한 걸 파고드는 눈이 반짝여요. 정보를 모으기 좋아요.","rev":"말이 앞서 실수하기 쉬워요.","advice":"말하기 전에 한 번 더 확인해요.","tone":[0,0,0,0],"color":"은색"},{"id":61,"ko":"소드 기사","en":"Knight of Swords","arcana":"minor","suit":"swords","up_kw":["돌진","결단력","직설"],"rev_kw":["무모함","공격적","충돌"],"up":"바람처럼 달려드는 기사예요. 빠른 결단이 필요할 때 강해요.","rev":"앞뒤 안 보고 돌진하다 부딪혀요.","advice":"급할수록 상대 입장을 한 번 생각해요.","tone":[0,0,0,0],"color":"은색"},{"id":62,"ko":"소드 여왕","en":"Queen of Swords","arcana":"minor","suit":"swords","up_kw":["독립","명석함","솔직함"],"rev_kw":["냉정함","날카로움","고립"],"up":"감정에 흔들리지 않고 정확히 판단해요. 솔직함이 힘이에요.","rev":"말이 너무 차갑게 전달돼요. 진실에도 온기가 필요해요.","advice":"필요한 말을 부드럽게 해요.","tone":[0,0,0,0],"color":"은색"},{"id":63,"ko":"소드 왕","en":"King of Swords","arcana":"minor","suit":"swords","up_kw":["판단력","원칙","논리"],"rev_kw":["권위 남용","냉혹함","조작"],"up":"공정하고 논리적인 판단이 빛나요. 원칙대로 하면 돼요.","rev":"논리를 무기로 사람을 몰아붙이고 있지 않은지 봐요.","advice":"결정의 근거를 분명히 해 두세요.","tone":[0,1,0,0],"color":"은색"},{"id":64,"ko":"펜타클 에이스","en":"Ace of Pentacles","arcana":"minor","suit":"pentacles","up_kw":["새 기회","재물","실속"],"rev_kw":["놓친 기회","낭비","불확실"],"up":"손에 쥐어지는 현실적인 기회예요. 돈·일과 관련된 좋은 출발이에요.","rev":"좋은 기회가 손가락 사이로 빠져나갈 수 있어요.","advice":"작은 돈이라도 저축을 시작해요.","tone":[1,2,2,1],"color":"초록"},{"id":65,"ko":"펜타클 2","en":"Two of Pentacles","arcana":"minor","suit":"pentacles","up_kw":["균형 잡기","융통성","멀티태스킹"],"rev_kw":["과부하","우선순위 혼란","지출 과다"],"up":"두 가지를 저글링하듯 잘 굴리고 있어요. 유연함이 힘이에요.","rev":"공이 너무 많아 떨어뜨리기 직전이에요.","advice":"오늘 할 일을 세 개로 줄여요.","tone":[0,0,0,0],"color":"초록"},{"id":66,"ko":"펜타클 3","en":"Three of Pentacles","arcana":"minor","suit":"pentacles","up_kw":["협업","실력","인정"],"rev_kw":["팀 불화","대충","인정 부족"],"up":"함께 만드는 일이 잘 풀려요. 실력이 인정받는 때예요.","rev":"손발이 안 맞거나 노력이 묻혀요.","advice":"도움 준 사람에게 고맙다고 말해요.","tone":[0,1,1,0],"color":"초록"},{"id":67,"ko":"펜타클 4","en":"Four of Pentacles","arcana":"minor","suit":"pentacles","up_kw":["지킴","절약","안정"],"rev_kw":["인색함","집착","풀어 주기"],"up":"가진 것을 꼭 쥐고 지켜요. 안정은 좋지만 너무 움켜쥐면 막혀요.","rev":"놓아야 들어오는데 손을 못 펴고 있어요.","advice":"가진 것 중 하나를 나눠 봐요.","tone":[0,0,0,0],"color":"초록"},{"id":68,"ko":"펜타클 5","en":"Five of Pentacles","arcana":"minor","suit":"pentacles","up_kw":["어려움","결핍","소외감"],"rev_kw":["회복","도움 받기","고비 넘김"],"up":"춥고 힘든 시기예요. 그래도 바로 옆 창문에 불이 켜져 있어요.","rev":"가장 힘든 때를 지나 도움의 손길이 와요.","advice":"혼자 끙끙대지 말고 도움을 청해요.","tone":[-1,-2,-2,-1],"color":"초록"},{"id":69,"ko":"펜타클 6","en":"Six of Pentacles","arcana":"minor","suit":"pentacles","up_kw":["나눔","도움","보답"],"rev_kw":["불공평","빚","조건부 친절"],"up":"주고받는 것이 잘 돌아요. 베푼 것이 돌아오거나 도움을 받아요.","rev":"주고받는 균형이 깨졌어요. 대가를 바라는 호의는 조심해요.","advice":"작은 친절을 하나 베풀어요.","tone":[0,1,1,0],"color":"초록"},{"id":70,"ko":"펜타클 7","en":"Seven of Pentacles","arcana":"minor","suit":"pentacles","up_kw":["인내","중간 점검","장기 투자"],"rev_kw":["조급함","헛수고 걱정","방향 수정"],"up":"심어 둔 것이 자라는 중이에요. 결과까지 조금만 더 기다려요.","rev":"결과가 안 보여 초조해요. 방향만 맞으면 괜찮아요.","advice":"지금까지 한 것을 점검해요.","tone":[0,0,0,0],"color":"초록"},{"id":71,"ko":"펜타클 8","en":"Eight of Pentacles","arcana":"minor","suit":"pentacles","up_kw":["숙련","성실","꾸준함"],"rev_kw":["대충","반복 피로","완벽주의"],"up":"한 땀 한 땀 실력을 쌓아요. 꾸준함이 장인을 만들어요.","rev":"같은 일에 질렸거나 완벽에 매달려 진도가 안 나가요.","advice":"하루 30분 연습을 정해 둬요.","tone":[0,1,1,0],"color":"초록"},{"id":72,"ko":"펜타클 9","en":"Nine of Pentacles","arcana":"minor","suit":"pentacles","up_kw":["자립","여유","보상"],"rev_kw":["과소비","의존","허세"],"up":"스스로 일군 정원에서 여유를 누려요. 노력의 보상이 와요.","rev":"보여 주기 위한 소비를 조심해요.","advice":"나를 위한 작은 사치 하나를 허락해요.","tone":[1,2,2,1],"color":"초록"},{"id":73,"ko":"펜타클 10","en":"Ten of Pentacles","arcana":"minor","suit":"pentacles","up_kw":["부","가족","유산"],"rev_kw":["집안 갈등","재산 문제","불안정"],"up":"오래가는 안정과 풍요예요. 가족·집·장기적인 재산운이 좋아요.","rev":"돈 문제로 가까운 사이가 삐걱일 수 있어요.","advice":"장기적인 계획을 가족과 이야기해요.","tone":[1,2,2,1],"color":"초록"},{"id":74,"ko":"펜타클 시종","en":"Page of Pentacles","arcana":"minor","suit":"pentacles","up_kw":["배움","계획","성실한 시작"],"rev_kw":["게으름","계획만","집중력 부족"],"up":"새로운 걸 배우고 싶은 마음이 생겨요. 공부·자격증운이 좋아요.","rev":"계획표만 예쁘고 실행이 없어요.","advice":"공부할 것 하나를 오늘 10분만 해요.","tone":[0,1,1,0],"color":"초록"},{"id":75,"ko":"펜타클 기사","en":"Knight of Pentacles","arcana":"minor","suit":"pentacles","up_kw":["성실","꾸준함","책임감"],"rev_kw":["정체","지루함","고집"],"up":"느리지만 확실하게 가는 기사예요. 성실함이 결국 이겨요.","rev":"너무 조심하다 멈춰 있어요.","advice":"하던 루틴을 오늘도 지켜요.","tone":[0,1,1,0],"color":"초록"},{"id":76,"ko":"펜타클 여왕","en":"Queen of Pentacles","arcana":"minor","suit":"pentacles","up_kw":["실속","살림","따뜻한 풍요"],"rev_kw":["일·생활 불균형","걱정","과한 희생"],"up":"현실 감각과 따뜻함을 모두 갖췄어요. 생활이 안정돼요.","rev":"챙길 게 너무 많아 나를 잊었어요.","advice":"집 안 한 곳을 정리하고 편히 쉬어요.","tone":[1,2,2,1],"color":"초록"},{"id":77,"ko":"펜타클 왕","en":"King of Pentacles","arcana":"minor","suit":"pentacles","up_kw":["성공","부","안정된 지위"],"rev_kw":["욕심","물질 집착","고집"],"up":"재물과 성취가 단단히 쌓인 왕이에요. 돈·일 모두 든든해요.","rev":"더 가지려다 소중한 걸 놓칠 수 있어요.","advice":"큰 결정은 숫자로 확인하고 내려요.","tone":[1,2,2,1],"color":"초록"}],"suits":{"wands":["완드","🔥","불","열정·행동·도전","주황"],"cups":["컵","💧","물","감정·관계·마음","하늘색"],"swords":["소드","⚔️","공기","생각·말·갈등","은색"],"pentacles":["펜타클","🪙","흙","돈·일·현실","초록"]},"dayMaster":{"갑":["🌲 큰 나무","곧게 위로 뻗는 큰 나무. 정의감과 추진력이 있고 리더 기질이 강해요. 한번 정하면 굽히지 않는 대신 융통성이 아쉬울 때가 있어요."],"을":["🌿 꽃과 덩굴","바람에 휘어도 꺾이지 않는 풀꽃. 부드럽고 적응력이 뛰어나며 사람 사이를 잘 엮어요. 겉은 여려 보여도 끈질긴 생명력이 있어요."],"병":["☀️ 태양","모두를 비추는 태양. 밝고 솔직하며 열정이 넘쳐요. 숨기는 게 없고 표현이 시원한 대신 쉽게 달아오르고 식기도 해요."],"정":["🕯️ 촛불","어둠을 밝히는 등불. 섬세하고 따뜻하며 한 사람에게 깊이 집중해요. 겉은 조용해도 속에 뜨거운 열정을 품고 있어요."],"무":["⛰️ 큰 산","듬직한 큰 산. 묵직하고 믿음직하며 사람들을 품어 줘요. 변화에는 느리지만 한번 맡은 건 끝까지 지켜요."],"기":["🌾 기름진 밭","만물을 기르는 논밭. 실속 있고 꼼꼼하며 남을 잘 챙겨요. 현실 감각이 좋지만 걱정이 많을 수 있어요."],"경":["🗡️ 원석·강철","단단한 바위와 쇠. 의리 있고 결단력이 강해요. 옳고 그름이 분명하며 시원시원한 대신 말이 날카로울 때가 있어요."],"신":["💎 보석","갈고닦은 보석. 섬세하고 깔끔하며 자존심과 미적 감각이 뛰어나요. 예민한 만큼 상처도 잘 받아요."],"임":["🌊 큰 바다","넓은 바다와 큰 강. 지혜롭고 포용력이 크며 자유로워요. 생각이 깊고 스케일이 크지만 속을 잘 안 보여요."],"계":["🌧️ 비와 이슬","조용히 스며드는 빗물. 감수성이 풍부하고 머리가 좋으며 직관이 뛰어나요. 부드럽게 주변을 적시는 힘이 있어요."]},"groupMeaning":{"비겁":["🤝","나와 같은 기운 — 자존감·독립심·경쟁심. 많으면 주관이 뚜렷하고 고집이 세요."],"식상":["🎨","내가 낳는 기운 — 표현력·재능·말솜씨. 많으면 끼가 많고 하고 싶은 말은 해요."],"재성":["💰","내가 다스리는 기운 — 재물·현실감·이성(남성에게). 많으면 실속과 사교성이 좋아요."],"관성":["🎖️","나를 다스리는 기운 — 책임감·명예·규칙·이성(여성에게). 많으면 반듯하고 조직에 강해요."],"인성":["📖","나를 돕는 기운 — 배움·생각·보살핌. 많으면 생각이 깊고 공부·자격에 강해요."]},"dailyGod":{"비견":"친구·동료와 함께하면 힘이 나는 날. 고집은 살짝 내려놓아요.","겁재":"경쟁과 지출이 생기기 쉬운 날. 돈 거래·내기는 피해요.","식신":"먹고 즐기고 표현하기 좋은 날. 맛있는 걸 먹고 재능을 펼쳐요.","상관":"말이 앞서기 쉬운 날. 아이디어는 반짝이지만 윗사람 앞에서는 말조심.","편재":"뜻밖의 기회·돈이 오가는 날. 활동적으로 움직이면 득이 있어요.","정재":"꼼꼼하게 챙기면 차곡차곡 쌓이는 날. 정리·저축에 좋아요.","편관":"압박과 일이 몰리는 날. 무리하지 말고 하나씩 처리해요.","정관":"책임감이 인정받는 날. 약속과 규칙을 지키면 평판이 올라가요.","편인":"생각이 많아지는 날. 혼자만의 공부·연구에 좋아요.","정인":"도움과 배움이 들어오는 날. 조언을 구하면 좋은 답을 얻어요."}};
+</script>
+<script>
+(() => {
+"use strict";
+// ---------- 기본 도구
+const $ = (s, r = document) => r.querySelector(s);
+const $$ = (s, r = document) => [...r.querySelectorAll(s)];
+const REDUCED = matchMedia("(prefers-reduced-motion: reduce)").matches;
+const G = window.gsap || (() => { // GSAP 이 못 불러와지면 끝 상태로 바로 적용
+  const apply = (t, v) => { const els = typeof t === "string" ? $$(t) : t instanceof Element ? [t] : [...t];
+    els.forEach((e) => { for (const k in v) { if (["duration", "delay", "ease", "stagger", "onComplete", "onUpdate", "repeat", "yoyo"].includes(k)) continue;
+      if (k === "opacity") e.style.opacity = v[k]; else if (k === "width") e.style.width = typeof v[k] === "number" ? v[k] + "px" : v[k]; else if (k === "rotationY") e.style.transform = `rotateY(${v[k]}deg)`; else if (k === "left" || k === "top") e.style[k] = v[k] + "px"; } }); v.onComplete && v.onComplete(); };
+  const g = { to: (t, v) => apply(t, v), set: (t, v) => apply(t, v), fromTo: (t, a, b) => apply(t, b), from: () => {}, timeline: () => { const tl = { to: (t, v) => (apply(t, v), tl), fromTo: (t, a, b) => (apply(t, b), tl), from: () => tl, add: () => tl, call: (f) => (f(), tl) }; return tl; } };
+  return g; })();
+if (REDUCED && window.gsap) gsap.globalTimeline.timeScale(8);
+const esc = (s) => String(s ?? "").replace(/[&<>"']/g, (c) => ({ "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;", "'": "&#39;" }[c]));
+const store = { get(k, d) { try { const v = localStorage.getItem("chokkomi:" + k); return v ? JSON.parse(v) : d; } catch { return d; } },
+  set(k, v) { try { localStorage.setItem("chokkomi:" + k, JSON.stringify(v)); } catch {} } };
+function hash(str) { let h1 = 0xdeadbeef, h2 = 0x41c6ce57; for (let i = 0; i < str.length; i++) { const ch = str.charCodeAt(i); h1 = Math.imul(h1 ^ ch, 2654435761); h2 = Math.imul(h2 ^ ch, 1597334677); }
+  h1 = Math.imul(h1 ^ (h1 >>> 16), 2246822507) ^ Math.imul(h2 ^ (h2 >>> 13), 3266489909); h2 = Math.imul(h2 ^ (h2 >>> 16), 2246822507) ^ Math.imul(h1 ^ (h1 >>> 13), 3266489909); return [h1 >>> 0, h2 >>> 0]; }
+const rnd = () => { const a = new Uint32Array(1); crypto.getRandomValues(a); return a[0] / 2 ** 32; };
+function sample(arr, n) { const a = arr.slice(); for (let i = a.length - 1; i > 0; i--) { const j = Math.floor(rnd() * (i + 1)); [a[i], a[j]] = [a[j], a[i]]; } return a.slice(0, n); }
+function toast(msg) { const t = $("#toast"); t.textContent = msg; t.classList.add("on"); clearTimeout(t._h); t._h = setTimeout(() => t.classList.remove("on"), 2200); }
+const IMG = (id) => `cards/${id}.webp`;
+const CARDS = DECK.cards, SUITS = DECK.suits;
+const cardName = (c, r) => `${c.ko}${r ? " (역방향)" : ""}`;
+const ELC = ["var(--wood)", "var(--fire)", "var(--earth)", "var(--metal)", "var(--water)"];
+const WEEK = "일월화수목금토";
+
+// ---------- 별 하늘 배경
+(function sky() {
+  const cv = $("#sky"), cx = cv.getContext("2d"); let W, H, stars = [], shoot = null, last = 0;
+  function size() { const d = Math.min(devicePixelRatio || 1, 2); W = cv.width = innerWidth * d; H = cv.height = innerHeight * d;
+    const n = Math.min(260, Math.floor((innerWidth * innerHeight) / 5200));
+    stars = Array.from({ length: n }, () => ({ x: Math.random() * W, y: Math.random() * H, r: (Math.random() * 1.3 + 0.3) * d, p: Math.random() * 6.28, s: 0.6 + Math.random() * 1.6, g: Math.random() < 0.12 })); }
+  function frame(t) {
+    cx.clearRect(0, 0, W, H);
+    for (const s of stars) { const a = REDUCED ? 0.7 : 0.35 + 0.65 * Math.abs(Math.sin(s.p + t / 1000 * s.s * 0.6));
+      cx.globalAlpha = a; cx.fillStyle = s.g ? "#f6e2a8" : "#e6e0ff"; cx.beginPath(); cx.arc(s.x, s.y, s.r, 0, 6.283); cx.fill(); }
+    if (!REDUCED) {
+      if (!shoot && t - last > 5200 + Math.random() * 4000) { last = t; shoot = { x: Math.random() * W * 0.7 + W * 0.2, y: Math.random() * H * 0.3, l: 0 }; }
+      if (shoot) { shoot.l += 0.025; const k = shoot.l, x = shoot.x - k * W * 0.35, y = shoot.y + k * W * 0.18;
+        const gr = cx.createLinearGradient(x, y, x + 90, y - 46); gr.addColorStop(0, "rgba(255,240,200,.9)"); gr.addColorStop(1, "rgba(255,240,200,0)");
+        cx.globalAlpha = 1 - k; cx.strokeStyle = gr; cx.lineWidth = 2; cx.beginPath(); cx.moveTo(x, y); cx.lineTo(x + 90, y - 46); cx.stroke(); if (k >= 1) shoot = null; }
+      requestAnimationFrame(frame);
+    }
+    cx.globalAlpha = 1;
+  }
+  size(); addEventListener("resize", size); requestAnimationFrame(frame);
+  if (REDUCED) addEventListener("resize", () => requestAnimationFrame(frame));
+})();
+
+// ---------- 내 정보
+// 시진 경계는 진태양시 홀수 정각 = 한국 표준시로 ○시 32분. [이름, 표준시 범위, 진태양시 대표 시각(분)]
+const SIJIN = (() => { const clock = (m) => { const h = Math.floor(m / 60) % 24, p = h < 6 ? "새벽" : h < 12 ? "오전" : h < 18 ? "오후" : "밤"; return `${p} ${h % 12 || 12}:${String(m % 60).padStart(2, "0")}`; };
+  const out = [["자시 (밤)", "밤 11:32~자정", 23 * 60 + 14], ["자시 (새벽)", "자정~새벽 1:31", 14]];
+  for (let i = 1; i < 12; i++) { const s = (2 * i - 1) * 60 + 32; out.push([`${SJ.BR[i]}시`, `${clock(s)}~${clock(s + 119)}`, 2 * i * 60]); } return out; })();
+let me = store.get("me", null);
+// 정확한 시각(p.t)이 있으면 그대로, 시진만 고르면 그 시진 한가운데 진태양시를 그날의 실제 시차(서머타임 포함)로 벽시계 시각으로 바꿔 계산
+function sajuOf(p) { if (!p) return null;
+  if (p.t) { const [h, mi] = p.t.split(":").map(Number); return SJ.compute(p.y, p.mo, p.d, h, mi, p.gender || null); }
+  if (!(p.sijin >= 0)) return SJ.compute(p.y, p.mo, p.d, null, 0, p.gender || null);
+  const m = SIJIN[p.sijin][2] + SJ.tzAt(p.y, p.mo, p.d) - 508; return SJ.compute(p.y, p.mo, p.d, Math.floor(m / 60), m % 60, p.gender || null); }
+function birthText(p) { return `${p.y}년 ${p.mo}월 ${p.d}일${p.t ? " " + p.t : p.sijin >= 0 ? " " + SIJIN[p.sijin][0] : ""}${p.gender ? " · " + p.gender : ""}`; }
+function birthFields(prefix, p, allowUnknownYear) {
+  const ys = []; const now = SJ.kstNow().y;
+  for (let y = now; y >= 1930; y--) ys.push(`<option value="${y}" ${p && p.y === y ? "selected" : ""}>${y}년</option>`);
+  const unknown = allowUnknownYear ? `<option value="" ${!p ? "selected" : ""}>모름</option>` : "";
+  const defY = p ? "" : (allowUnknownYear ? "" : "selected");
+  const ms = Array.from({ length: 12 }, (_, i) => `<option value="${i + 1}" ${p && p.mo === i + 1 ? "selected" : ""}>${i + 1}월</option>`).join("");
+  const ds = Array.from({ length: 31 }, (_, i) => `<option value="${i + 1}" ${p && p.d === i + 1 ? "selected" : ""}>${i + 1}일</option>`).join("");
+  const sj = [`<option value="-1">모름</option>`].concat(SIJIN.map((s, i) => `<option value="${i}" ${p && p.sijin === i ? "selected" : ""}>${s[0]} · ${s[1]}</option>`)).join("");
+  return `<div class="fgrid">
+    <div><label class="f">태어난 해</label><select id="${prefix}Y">${unknown}${ys.join("").replace(`value="2000" `, `value="2000" ${defY} `)}</select></div>
+    <div><label class="f">월 (양력)</label><select id="${prefix}M">${ms}</select></div>
+    <div><label class="f">일</label><select id="${prefix}D">${ds}</select></div>
+    <div class="full"><label class="f">태어난 시간 (몰라도 돼요)</label><select id="${prefix}H">${sj}</select>
+      <label class="f" style="margin-top:8px">정확한 출생 시각을 알면 (선택 · 이게 우선이에요)</label><input type="time" id="${prefix}T" value="${p && p.t ? p.t : ""}">
+      <p class="muted small" style="margin:6px 0 0">시진 범위는 지금 쓰는 한국 표준시 기준이에요. 서머타임(1948~60년 여름, 1987~88년 여름)이나 1954~61년에 태어났다면 출생 시각을 직접 넣어 주세요 — 그때 쓰던 시계에 맞춰 자동으로 보정해요.</p></div>
+    <div class="full"><label class="f">성별 (궁합의 배우자 별에 써요)</label><div class="seg" id="${prefix}G">
+      <button type="button" data-v="여" class="${p && p.gender === "여" ? "on" : ""}">여성</button><button type="button" data-v="남" class="${p && p.gender === "남" ? "on" : ""}">남성</button><button type="button" data-v="" class="${!p || !p.gender ? "on" : ""}">선택 안 함</button></div></div></div>`;
+}
+function bindSeg(id) { $$(`#${id} button`).forEach((b) => b.onclick = () => { $$(`#${id} button`).forEach((x) => x.classList.toggle("on", x === b)); }); }
+function readBirth(prefix) {
+  const y = +$(`#${prefix}Y`).value || null, mo = +$(`#${prefix}M`).value, d = +$(`#${prefix}D`).value;
+  const sijin = +$(`#${prefix}H`).value, gender = $(`#${prefix}G button.on`)?.dataset.v || "", t = $(`#${prefix}T`)?.value || "";
+  if (!y) return [null, null];
+  const dt = new Date(Date.UTC(y, mo - 1, d)); if (dt.getUTCMonth() !== mo - 1) return [null, `${y}년 ${mo}월에는 ${d}일이 없어요`];
+  return [{ y, mo, d, sijin, gender, ...(t ? { t } : {}) }, null];
+}
+function openMe() {
+  $("#sheet").innerHTML = `<button class="close" aria-label="닫기">✕</button><div class="eyebrow">내 정보</div><h2 style="margin-top:4px">🌙 내 정보</h2>
+    <p class="muted small" style="margin-top:0">한 번만 넣으면 오늘의 운세·사주·궁합·별자리에 모두 쓰여요. 이 기기에만 저장돼요.</p>
+    <label class="f">이름 (궁합·이름 풀이에 써요, 선택)</label><input type="text" id="meName" maxlength="12" placeholder="예: 김민준" value="${esc(me?.name || "")}">
+    <div style="height:12px"></div>${birthFields("me", me, false)}
+    <p id="meErr" class="small" style="color:var(--bad);min-height:1.2em"></p>
+    <div class="row" style="justify-content:space-between"><button class="btn ghost sm" id="meClear" ${me ? "" : "hidden"}>정보 지우기</button><button class="btn" id="meSave">저장하고 보기 ✦</button></div>`;
+  bindSeg("meG"); $("#sheet .close").onclick = () => closeOv("sheetOv");
+  $("#meSave").onclick = () => { const [b, err] = readBirth("me"); if (err) { $("#meErr").textContent = err; return; }
+    me = { ...b, name: $("#meName").value.trim().slice(0, 12) }; store.set("me", me); closeOv("sheetOv"); refreshMe(); toast("저장했어요 ✦"); };
+  $("#meClear").onclick = () => { me = null; store.set("me", null); closeOv("sheetOv"); refreshMe(); };
+  openOv("sheetOv");
+}
+function openOv(id) { const o = $("#" + id); o.classList.add("on"); G.fromTo(o.firstElementChild, { y: 24, opacity: 0 }, { y: 0, opacity: 1, duration: 0.6, ease: "power2.out" }); }
+function closeOv(id) { $("#" + id).classList.remove("on"); }
+$$(".overlay").forEach((o) => o.addEventListener("click", (e) => { if (e.target === o) o.classList.remove("on"); }));
+addEventListener("keydown", (e) => { if (e.key === "Escape") $$(".overlay.on").forEach((o) => o.classList.remove("on")); });
+$("#meBtn").onclick = openMe;
+function refreshMe() { $("#meLabel").textContent = me ? `${me.name || "나"} · ${me.y}.${me.mo}.${me.d}` : "내 정보 입력"; rendered.clear(); show(current, true); }
+const needMe = (what) => `<div class="panel empty"><div class="big">🌙</div><h2>${what}</h2><p class="muted">생년월일만 고르면 바로 볼 수 있어요. 태어난 시간은 몰라도 돼요.</p><button class="btn" data-open-me>내 정보 넣기</button></div>`;
+document.addEventListener("click", (e) => { if (e.target.closest("[data-open-me]")) openMe(); const g = e.target.closest("[data-go]"); if (g) go(g.dataset.go); });
+
+// ---------- 카드 크게 보기
+function cardView(c, r) {
+  const s = c.suit ? SUITS[c.suit] : null;
+  $("#cardSheet").innerHTML = `<button class="close" aria-label="닫기">✕</button><div class="in">
+    <div><img src="${IMG(c.id)}" alt="${esc(c.ko)}" style="${r ? "transform:rotate(180deg)" : ""}"></div>
+    <div><div class="eyebrow">${esc(c.en.toUpperCase())}</div><h2 style="margin-top:4px">${esc(c.ko)} ${r ? '<span class="chip bad">역방향</span>' : ""}</h2>
+    <div class="row" style="margin:6px 0 10px">${s ? `<span class="chip">${s[1]} ${s[0]} · ${s[3]}</span>` : '<span class="chip gold">메이저 아르카나</span>'}<span class="chip gold">상징색 ${esc(c.color)}</span></div>
+    <h3>⬆ 정방향 <span class="muted small">${c.up_kw.join(" · ")}</span></h3><p style="margin:4px 0 12px">${esc(c.up)}</p>
+    <h3>⬇ 역방향 <span class="muted small">${c.rev_kw.join(" · ")}</span></h3><p style="margin:4px 0 12px">${esc(c.rev)}</p>
+    <p class="rcard adv" style="display:block;margin:0">💡 ${esc(c.advice)}</p>
+    <p class="muted small" style="margin-top:10px">✨ 효과 근거: ${esc(c.arcana === "major" ? FX.WHY[c.id] : { wands: "완드 = 불 원소", cups: "컵 = 물 원소", swords: "소드 = 공기 원소", pentacles: "펜타클 = 흙 원소" }[c.suit])}${r ? " · 역방향은 그림자 효과" : ""}</p></div></div>`;
+  $("#cardSheet .close").onclick = () => closeOv("cardOv"); openOv("cardOv");
+  setTimeout(() => { const im = $("#cardSheet img"); if (im) { FX.aura(im, FX.kindOf(c, r), 2.6); FX.play(FX.kindOf(c, r), im, 0.5); } }, 300);
+}
+
+// ---------- 오늘
+const AREAS = [["💗", "연애"], ["📚", "일·공부"], ["💰", "금전"], ["🍀", "건강"]];
+const DAILY_GOD = DECK.dailyGod;
+function todayKey() { const t = SJ.kstNow(); return `${t.y}-${String(t.mo).padStart(2, "0")}-${String(t.d).padStart(2, "0")}`; }
+function whoKey() { if (me) return `${me.name}|${me.y}-${me.mo}-${me.d}`; let id = store.get("device", null); if (!id) { id = String(Math.floor(rnd() * 1e12)); store.set("device", id); } return id; }
+function dailyDraw() { const [h1, h2] = hash(`daily|${whoKey()}|${todayKey()}`); return { card: CARDS[h1 % 78], rev: (h2 >>> 16) % 2 === 0, h2 }; }
+function stars(card, rev, seed) { return card.tone.map((tone, i) => { const base = rev ? -tone * 0.6 : tone; const j = ((seed >>> (i * 8)) % 3) - 1; return Math.max(1, Math.min(5, Math.round(3 + base + j * 0.6))); }); }
+// 수비학 개인 일수 (Personal Day): 생월+생일+올해 → 개인 년수, +이번 달 → 월수, +오늘 → 일수. 생일 없으면 날짜만 더한 우주 일수.
+const red = (n) => { while (n > 9) n = String(n).split("").reduce((a, b) => a + +b, 0); return n; };
+const DAY_NUM = { 1: "새로 시작하기 좋은 날", 2: "협력과 기다림의 날", 3: "표현하고 어울리는 날", 4: "차근차근 다지는 날", 5: "변화와 이동의 날", 6: "가족·관계를 챙기는 날", 7: "혼자 생각하고 쉬는 날", 8: "일과 돈을 다루는 날", 9: "마무리하고 비우는 날" };
+function dayNumber(t) { if (me) { const py = red(red(me.mo) + red(me.d) + red(t.y)); return [red(red(py + red(t.mo)) + red(t.d)), "개인 일수"]; }
+  return [red(red(t.y) + red(t.mo) + red(t.d)), "오늘의 수"]; }
+// 오방색: 목 청 · 화 적 · 토 황 · 금 백 · 수 흑
+const OBANG = ["청록", "빨강", "노랑", "흰색", "검정·남색"];
+function dayColor(tp) { const sj = sajuOf(me); if (sj) { const ec = SJ.elements(sj); const lo = ec.indexOf(Math.min(...ec)); return [OBANG[lo], `내 사주에 가장 약한 ${SJ.EL[lo]} 기운의 오방색`]; }
+  const e = SJ.SE[tp.s]; return [OBANG[e], `오늘 일진 천간(${SJ.STEMS[tp.s]}) ${SJ.EL[e]} 기운의 오방색`]; }
+function renderToday(el) {
+  const t = SJ.kstNow(), tp = SJ.todayPillar(), wd = WEEK[new Date(Date.UTC(t.y, t.mo - 1, t.d)).getUTCDay()];
+  const { card, rev, h2 } = dailyDraw(); const st = stars(card, rev, h2); const [num, numLbl] = dayNumber(t); const [col, colWhy] = dayColor(tp);
+  const opened = store.get("opened", "") === todayKey() + whoKey();
+  let personal = "";
+  const sj = sajuOf(me);
+  if (sj) { const god = SJ.tenGod(sj.day.s, SJ.SE[tp.s], tp.s % 2 === 0); const rels = SJ.branchRelations(tp.b, sj.day.b);
+    personal = `<div class="panel"><div class="eyebrow">오늘의 일진</div><h2 style="margin-top:4px">오늘은 나에게 <b class="hl">${god}</b>의 날</h2>
+      <p style="margin:0">${esc(DAILY_GOD[god])}</p>${rels.map(([n, d, x]) => `<p class="small" style="margin:8px 0 0"><span class="chip ${d > 0 ? "good" : "bad"}">${n}</span> 오늘의 ${SJ.BR[tp.b]}와 내 일지 ${SJ.BR[sj.day.b]}: ${esc(x)}</p>`).join("")}
+      <p class="muted small" style="margin:10px 0 0">오늘 일진 ${SJ.ptext(tp)}(${SJ.phanja(tp)})의 천간이 내 일간 ${SJ.STEMS[sj.day.s]}(${SJ.EL[SJ.SE[sj.day.s]]})과 어떤 관계인지(십신)로 봐요.</p></div>`; }
+  else personal = `<div class="panel cta"><div><h3>🀄 나만의 일진도 볼래요?</h3><p class="muted small" style="margin:2px 0 0">생일을 넣으면 오늘이 나에게 어떤 날인지 사주로 풀어 줘요.</p></div><button class="btn sm" data-open-me>내 정보 넣기</button></div>`;
+  el.innerHTML = `<div class="eyebrow" style="margin-top:8px">${t.y}. ${t.mo}. ${t.d} (${wd}) · ${SJ.ptext(tp)}일 ${SJ.phanja(tp)}</div>
+    <h1 style="margin-top:6px">${me?.name ? esc(me.name) + "님의 " : ""}오늘의 운세</h1>
+    <p class="lead">하루 한 장, 나에게 온 카드를 뒤집어 보세요. 같은 날엔 언제 봐도 같은 카드예요.</p>
+    <div class="panel hero">
+      <div class="daily-card card3d" id="dailyCard"><div class="inner"><img class="back" src="cards/back.webp" alt="카드 뒷면"><img class="face ${rev ? "rev" : ""}" src="${IMG(card.id)}" alt="${esc(card.ko)}"></div>${opened ? "" : '<div class="hint">✦ 눌러서 뒤집기 ✦</div>'}</div>
+      <div id="dailyInfo" style="${opened ? "" : "opacity:0"}">
+        <div class="eyebrow">${esc(card.en.toUpperCase())}</div>
+        <h2 style="margin:4px 0 4px;font-size:1.6rem">${esc(card.ko)} ${rev ? '<span class="chip bad">역방향</span>' : '<span class="chip good">정방향</span>'}</h2>
+        <div class="row">${(rev ? card.rev_kw : card.up_kw).map((k) => `<span class="chip gold">${esc(k)}</span>`).join("")}</div>
+        <p>${esc(rev ? card.rev : card.up)}</p>
+        <div class="stars-row">${AREAS.map(([e, n], i) => `<span class="small">${e} ${n}</span><span class="stars" data-n="${st[i]}">${"<i>★</i>".repeat(5)}</span>`).join("")}</div>
+        <div class="lucky"><div><small>오늘의 색</small><b>🎨 ${col}</b><small>${colWhy}</small></div><div><small>${numLbl} (수비학)</small><b>🔢 ${num}</b><small>${DAY_NUM[num]}</small></div></div>
+        <p class="adv" style="color:var(--gold2);margin-bottom:0">💡 ${esc(card.advice)}</p>
+        <p class="basis">근거 · 카드: 78장 라이더-웨이트 덱에서 하루 한 장(정/역방향 포함) · 별점: 그 카드의 전통 의미를 분야별로 점수로 옮긴 것 · ${numLbl}: ${me ? "생월+생일+올해+이번 달+오늘" : "오늘 날짜"}의 숫자를 한 자리가 될 때까지 더함</p>
+        <div class="row" style="margin-top:14px"><button class="btn sm" data-go="tarot">🃏 질문하고 카드 더 뽑기</button><button class="btn ghost sm" id="dailyBig">카드 크게 보기</button></div>
+      </div>
+    </div>${personal}
+    <div class="spreads" style="grid-template-columns:repeat(auto-fit,minmax(150px,1fr))">
+      <button class="spread" data-go="saju"><span class="ic">🀄</span><b>사주팔자</b><span>오행·일간 성향·올해 운</span></button>
+      <button class="spread" data-go="love"><span class="ic">💞</span><b>연애 궁합</b><span>사주 + 이름 궁합</span></button>
+      <button class="spread" data-go="stars"><span class="ic">✨</span><b>별자리 · 띠 · 숫자</b><span>오늘의 별자리 한마디</span></button>
+    </div>`;
+  const dc = $("#dailyCard"), inner = $(".inner", dc), info = $("#dailyInfo");
+  const fillStars = () => $$(".stars", el).forEach((s, k) => $$("i", s).forEach((i, n) => { if (n < +s.dataset.n) { G.fromTo(i, { scale: 0.6, opacity: 0, filter: "blur(4px)" }, { scale: 1, opacity: 1, filter: "blur(0px)", duration: 0.8, delay: 0.2 + k * 0.15 + n * 0.09, ease: "sine.out" }); i.classList.add("on"); } }));
+  $("#dailyBig").onclick = () => cardView(card, rev);
+  if (opened) { G.set(inner, { rotationY: 180 }); fillStars(); dc.onclick = () => cardView(card, rev); return; }
+  G.to(dc, { y: -8, duration: 1.6, yoyo: true, repeat: -1, ease: "sine.inOut" });
+  dc.onclick = () => {
+    if (dc._done) return cardView(card, rev); dc._done = true; store.set("opened", todayKey() + whoKey()); $(".hint", dc)?.remove();
+    window.gsap && gsap.killTweensOf(dc); G.to(dc, { y: 0, duration: 0.6, ease: "sine.out" });
+    const tl = G.timeline();
+    tl.to(inner, { scale: 1.04, duration: 0.6, ease: "sine.inOut" }).to(inner, { rotationY: 180, duration: 1.4, ease: "sine.inOut" }).to(inner, { scale: 1, duration: 0.8, ease: "sine.out" })
+      .call(() => { dc.classList.add("glow"); FX.reveal(card, rev, dc, 1.1); }, null, 1.45).to(info, { opacity: 1, duration: 1.2, ease: "sine.out" }, 2.0).call(fillStars, null, 2.3);
+  };
+}
+function burst(target) { FX.play("light", target, 0.8); }
+function burstOld(target, colors) {
+  if (!window.confetti || REDUCED) return; const r = target.getBoundingClientRect();
+  confetti({ particleCount: 60, spread: 70, startVelocity: 28, scalar: 0.8, ticks: 140, shapes: ["star"], colors, origin: { x: (r.left + r.width / 2) / innerWidth, y: (r.top + r.height / 2) / innerHeight } });
+}
+
+// ---------- 타로
+const SPREADS = {
+  one: { ic: "🌟", name: "원카드 · 예/아니오", desc: "궁금한 한 가지에 바로 답", pos: ["답"], n: 1 },
+  three: { ic: "🃏", name: "과거 · 현재 · 미래", desc: "가장 많이 보는 3장 흐름", pos: ["과거", "현재", "미래"], n: 3 },
+  love: { ic: "💞", name: "연애 4장", desc: "내 마음·그 사람 마음·관계", pos: ["나의 마음", "그 사람의 마음", "지금 관계", "다가올 흐름"], n: 4 },
+  celtic: { ic: "✡️", name: "켈틱 크로스", desc: "10장으로 깊게 보는 정통 배열", n: 10,
+    pos: ["현재 상황", "도움·장애", "의식·목표", "기반·근원", "지나간 일", "가까운 미래", "나의 태도", "주변 환경", "희망과 두려움", "최종 결과"] },
+};
+const tarot = { spread: null, q: "", pool: [], picks: [] };
+function energy(c, r) { return (c.tone.reduce((a, b) => a + b, 0) / 4) * (r ? -0.6 : 1); }
+function overall(draws) {
+  const L = []; const majors = draws.filter(([c]) => c.arcana === "major").length;
+  if (majors >= Math.max(2, Math.ceil(draws.length * 0.5))) L.push("메이저 카드가 많이 나왔어요. 지금 고민은 일상의 작은 일이 아니라 <b>인생의 큰 흐름</b>과 닿아 있어요.");
+  else if (majors === 0) L.push("모두 마이너 카드예요. 큰 운명보다는 <b>내 선택과 행동으로 충분히 바꿀 수 있는</b> 일이에요.");
+  const cnt = {}; draws.forEach(([c]) => c.suit && (cnt[c.suit] = (cnt[c.suit] || 0) + 1));
+  const top = Object.entries(cnt).sort((a, b) => b[1] - a[1])[0];
+  if (top && top[1] >= 2) { const s = SUITS[top[0]]; L.push(`${s[1]} ${s[0]}${(s[0].charCodeAt(s[0].length - 1) - 0xac00) % 28 ? "이" : "가"} ${top[1]}장 — 이번 일의 중심은 <b>${s[3]}</b>이에요.`); }
+  const rv = draws.filter(([, r]) => r).length;
+  if (rv === draws.length && draws.length > 1) L.push("전부 역방향이에요. 일이 막힌 게 아니라 <b>안쪽에서 정리할 게 남았다</b>는 신호예요. 서두르지 말아요.");
+  else if (rv >= Math.max(2, Math.ceil(draws.length / 2))) L.push("역방향이 많아요. 바깥보다 <b>내 마음속 걸림돌</b>을 먼저 풀면 흐름이 바뀌어요.");
+  else if (rv === 0) L.push("모두 정방향이에요. 기운이 막힘없이 흐르고 있어요.");
+  if (draws.length > 1) { const f = energy(...draws[0]), l = energy(...draws[draws.length - 1]);
+    if (l - f >= 0.75) L.push("처음보다 마지막 카드가 훨씬 밝아요. <b>좋아지는 흐름</b>이에요 🌅");
+    else if (f - l >= 0.75) L.push("마지막 카드가 경고를 보내요. 지금 방향을 한 번 점검하면 충분히 피할 수 있어요.");
+    else L.push("처음과 끝의 기운이 비슷해요. 지금의 선택이 흐름을 정해요."); }
+  return L;
+}
+// 질문 주제: 단어로 분류 → 카드의 분야별 성향(tone: 연애·일·금전·건강)으로 읽음
+const TOPICS = [["연애", "💗", /연애|사랑|좋아하|짝사랑|그\s?사람|그\s?애|남친|여친|남자\s?친구|여자\s?친구|썸|고백|재회|결혼|이별|헤어|연락|애인|소개팅|커플|궁합|그\s?사람\s?마음|속마음|좋아하는\s?마음/],
+  ["일·공부", "📚", /직장|이직|취업|취직|회사|시험|공부|합격|면접|학교|승진|사업|프로젝트|업무|알바|진로|입시|자격증|창업|퇴사|일이|일은|일운|성적|대학/],
+  ["금전", "💰", /돈|금전|재물|재정|투자|주식|코인|월급|로또|빚|대출|부동산|수입|지출|용돈|연봉|매출/],
+  ["건강", "🍀", /건강|몸|아프|병원|질병|다이어트|운동|수술|컨디션|수면|체력|살 빼|살빼/]];
+const jo = (w, a, b) => w + ((w.charCodeAt(w.length - 1) - 0xac00) % 28 ? a : b);
+const SUIT_TOPIC = { cups: [0], wands: [1], pentacles: [2, 3], swords: [] };
+function topicOf(q) { if (!q) return -1; let best = -1, bn = 0; TOPICS.forEach(([, , re], i) => { const n = (q.match(new RegExp(re, "g")) || []).length; if (n > bn) { bn = n; best = i; } }); return best; }
+const lvl = (c, r, t) => (r ? -c.tone[t] * 0.6 : c.tone[t]);
+function topicLine(c, r, t) { const v = lvl(c, r, t), [name] = TOPICS[t];
+  const ph = v >= 1.5 ? `${name}에 아주 좋은 신호예요` : v >= 0.5 ? `${name} 쪽으로 좋게 기울어요` : v > -0.5 ? `${name}에는 중립적인 카드예요 — 다른 카드와 함께 봐요` : v > -1.5 ? `${name}에는 조심하라는 신호예요` : `${name}에는 강한 경고예요. 조언을 꼭 챙겨요`;
+  const direct = c.suit && SUIT_TOPIC[c.suit].includes(t) ? ` (${jo(SUITS[c.suit][0], "은", "는")} 바로 ${jo(SUITS[c.suit][3], "을", "를")} 다루는 수트라 더 직접적이에요)` : "";
+  const st = Math.max(1, Math.min(5, Math.round(3 + v))); return `<p class="topic">${TOPICS[t][1]} <b>질문 관점</b> <span class="stars">${[1, 2, 3, 4, 5].map((n) => `<i class="${n <= st ? "on" : ""}">★</i>`).join("")}</span> ${ph}${direct}</p>`; }
+function renderTarot(el) {
+  el.innerHTML = `<div class="eyebrow" style="margin-top:8px">타로 리딩</div><h1 style="margin-top:6px">타로 카드 뽑기</h1>
+    <p class="lead">마음속으로 질문을 떠올리고 배열을 고르세요. 78장을 섞어 펼치면 끌리는 카드를 직접 골라요.</p>
+    <div class="panel"><label class="f">질문 (안 적어도 돼요)</label><input type="text" id="tq" maxlength="80" placeholder="예: 이번 달 연애운은? · 이직해도 될까? · 그 사람 마음은?"></div>
+    <div class="spreads">${Object.entries(SPREADS).map(([k, s]) => `<button class="spread" data-spread="${k}"><span class="n">${s.n}장</span><span class="ic">${s.ic}</span><b>${s.name}</b><span>${s.desc}</span></button>`).join("")}</div>
+    <div id="tTable"></div>
+    <div class="panel"><div class="row" style="justify-content:space-between"><div><h2 style="margin:0">📖 타로 도감</h2><p class="muted small" style="margin:0">78장 카드 뜻을 그림과 함께 찾아봐요</p></div><button class="btn ghost sm" id="dictToggle">펼치기</button></div><div id="dictBox" hidden></div>
+    <p class="basis">근거 · 덱: 라이더-웨이트-스미스(1909) 구성 그대로 메이저 22장 + 마이너 56장(완드·컵·소드·펜타클 각 14장). 그림만 새로 그렸어요 · 뽑기: 78장 전부를 무작위로 섞어 펼치고, 카드마다 1/2 확률로 역방향 · 뜻: 라이더-웨이트 덱의 표준 해석(웨이트 『타로 그림 열쇠』(1910) 원전 + 오늘날 리더들이 공통으로 쓰는 정/역방향 의미) · 배열: 켈틱 크로스는 웨이트가 소개한 10장 배열(4번은 원전대로 일의 기반·근원)</p></div>`;
+  $$("[data-spread]", el).forEach((b) => b.onclick = () => startSpread(b.dataset.spread));
+  $("#dictToggle").onclick = () => { const box = $("#dictBox"); box.hidden = !box.hidden; $("#dictToggle").textContent = box.hidden ? "펼치기" : "접기"; if (!box.hidden && !box.innerHTML) renderDict(box, "all"); };
+}
+function renderDict(box, f) {
+  const F = [["all", "전체"], ["major", "메이저"], ["wands", "🔥 완드"], ["cups", "💧 컵"], ["swords", "⚔️ 소드"], ["pentacles", "🪙 펜타클"]];
+  const list = CARDS.filter((c) => f === "all" || (f === "major" ? c.arcana === "major" : c.suit === f));
+  box.innerHTML = `<div class="dict-filter">${F.map(([k, n]) => `<button class="chip ${k === f ? "gold" : ""}" data-f="${k}" style="cursor:pointer">${n}</button>`).join("")}</div>
+    <div class="dict">${list.map((c) => `<button data-c="${c.id}"><img loading="lazy" src="${IMG(c.id)}" alt="">${esc(c.ko)}</button>`).join("")}</div>`;
+  $$("[data-f]", box).forEach((b) => b.onclick = () => renderDict(box, b.dataset.f));
+  $$("[data-c]", box).forEach((b) => b.onclick = () => cardView(CARDS[+b.dataset.c], false));
+  G.from($$(".dict button", box), { opacity: 0, y: 8, duration: 0.6, ease: "sine.out", stagger: 0.008 });
+}
+function slotLayout(key, n) {
+  const w = Math.min(880, innerWidth - 32);
+  // 켈틱 크로스는 4줄이라 휴대폰에서는 화면 높이에 맞춰 줄여야 아래 부채꼴까지 한눈에 들어온다
+  if (key === "celtic") return { cols: 4, sw: Math.min(92, Math.floor((w - 60) / 4), Math.max(56, Math.floor(((innerHeight - 330) / 4 - 40) / 1.713))) };
+  return { cols: n, sw: Math.min(n === 1 ? 150 : 130, Math.floor((w - 40 - (n - 1) * 10) / n)) };
+}
+function startSpread(key) {
+  const s = SPREADS[key]; tarot.spread = key; tarot.q = $("#tq").value.trim(); tarot.picks = [];
+  tarot.pool = sample(CARDS, 78).map((c) => [c, rnd() < 1 / 2]); // 78장 전부 피셔-예이츠로 섞고, 카드마다 반반 확률로 뒤집힘
+  const box = $("#tTable"); const { cols, sw } = slotLayout(key, s.n);
+  box.innerHTML = `<div class="table" id="tbl"><div class="q">${tarot.q ? "“" + esc(tarot.q) + "”" : s.ic + " " + s.name}</div>
+    <div class="slots ${key === "celtic" ? "celtic" : ""}" style="--cols:${cols};--sw:${sw}px">${s.pos.map((p, i) => `<div class="slot" style="${key === "celtic" ? `grid-area:${i < 6 ? "c" : "s"}${i + 1}` : ""}"><div class="ph">${i + 1}</div><div class="lbl">${p}</div></div>`).join("")}</div>
+    <div class="fan" id="fan"></div><div class="fan-hint" id="fanHint">카드를 섞는 중…</div></div><div id="tRead"></div>`;
+  if (key === "celtic") { const c2 = $$(".slot", box)[1]; c2.style.gridArea = "c1"; c2.style.transform = "rotate(90deg) scale(.82)"; c2.style.zIndex = 2; $(".lbl", c2).style.display = "none"; }
+  box.scrollIntoView({ behavior: REDUCED ? "auto" : "smooth", block: "start" });
+  const fan = $("#fan"); layFan(fan, s);
+}
+// 부채꼴 배치: 화면 폭을 재서 카드가 가장자리·안내 문구를 넘지 않게 계산한다.
+// 줄마다 같은 중심점을 공유하는 동심원 부채라서 줄끼리 엇갈려 겹치지 않는다.
+function layFan(fan, s) {
+  const W = fan.clientWidth, mobile = W < 520, ROWS = mobile ? 3 : 2, ROW = Math.ceil(78 / ROWS);
+  const cw = Math.round(Math.max(38, Math.min(70, W / (mobile ? 8.2 : 11)))), h = cw * 514 / 300;
+  const A = (mobile ? 34 : 44) * Math.PI / 180, sinA = Math.sin(A), cosA = Math.cos(A);
+  const lift = h * (mobile ? 0.42 : 0.5);                  // 줄 사이 간격
+  const top = (ROWS - 1) * lift;                           // 맨 뒷줄이 올라간 높이
+  // 뒷줄 바깥 위 모서리가 폭 안에 들어오도록 중심점 거리 R을 구한다
+  const R = Math.max(h * 0.8, (W / 2 - 8 - (cw / 2) * cosA) / sinA - h - top);
+  const drop = R * (1 - cosA) + (cw / 2) * sinA;           // 앞줄 바깥 카드가 아래로 처지는 양
+  const base = Math.ceil(drop) + 6;
+  fan.style.height = `${Math.ceil(base + top + h + 18)}px`;
+  fan.style.setProperty("--cw", cw + "px");
+  const rowOf = (i) => Math.floor(i / ROW), colOf = (i) => i % ROW, nRow = (r) => Math.min(ROW, 78 - r * ROW);
+  const angle = (i) => { const r = rowOf(i), n = nRow(r); return (-A + (2 * A * colOf(i)) / Math.max(1, n - 1)) * 180 / Math.PI; };
+  const cards = tarot.pool.map((_, i) => { const d = document.createElement("div"); d.className = "fc"; d.dataset.i = i;
+    const up = (ROWS - 1 - rowOf(i)) * lift;
+    d.style.bottom = `${base + up}px`; d.style.transformOrigin = `50% ${((h + R + up) / h) * 100}%`; fan.appendChild(d); return d; });
+  // 섞기(카드가 살짝 좌우로 흘렀다 모이기) → 가운데부터 펼치기
+  G.set(cards, { rotation: 0, x: 0, y: 0, opacity: 0 });
+  const tl = G.timeline();
+  tl.to(cards, { opacity: 1, duration: 0.5, ease: "sine.out" });
+  for (let k = 0; k < 1; k++) tl.to(cards, { x: (i) => ((i + k) % 2 ? 1 : -1) * (cw * 0.35 + (i % 7) * 1.5), y: (i) => -((i * 37) % 9), duration: 0.5, ease: "sine.inOut", stagger: { each: 0.003, from: "random" } })
+    .to(cards, { x: 0, y: 0, duration: 0.42, ease: "sine.inOut", stagger: { each: 0.003, from: "random" } });
+  tl.to(cards, { rotation: (i) => angle(i), duration: REDUCED ? 0.01 : 1.25, ease: "power3.out", stagger: { each: 0.006, from: "center" } }, "+=0.05")
+    .call(() => hint(`78장을 모두 펼쳤어요. 끌리는 카드 ${s.n}장을 골라 주세요 (0/${s.n})`));
+  const hover = matchMedia("(hover:hover)").matches;
+  cards.forEach((c) => {
+    if (hover) {
+      c.addEventListener("mouseenter", () => !c._picked && G.to(c, { y: -12, duration: 0.45, ease: "sine.out", overwrite: "auto" }));
+      c.addEventListener("mouseleave", () => !c._picked && G.to(c, { y: 0, duration: 0.6, ease: "sine.out", overwrite: "auto" }));
+    }
+    c.onclick = () => pick(c);
+  });
+}
+function hint(t) { const el = $("#fanHint"); if (!el) return; G.to(el, { opacity: 0, duration: 0.25, ease: "sine.in", onComplete: () => { el.textContent = t; G.to(el, { opacity: 1, duration: 0.45, ease: "sine.out" }); } }); }
+function pick(el) {
+  const s = SPREADS[tarot.spread]; if (el._picked || tarot.picks.length >= s.n) return;
+  el._picked = true; const idx = tarot.picks.length; tarot.picks.push(tarot.pool[+el.dataset.i]);
+  const slot = $$("#tbl .slot")[idx], ph = $(".ph", slot);
+  const a = el.getBoundingClientRect(), b = ph.getBoundingClientRect();
+  const fly = document.createElement("div"); fly.className = "fly"; document.body.appendChild(fly);
+  const rot = +G.getProperty(el, "rotation") || 0, w0 = el.offsetWidth, h0 = el.offsetHeight;
+  // 회전된 카드의 실제 중심에서 출발해, 살짝 떠올랐다가 자리로 내려앉는다
+  const cx = a.left + a.width / 2, cy = a.top + a.height / 2, tx = b.left + b.width / 2, ty = b.top + b.height / 2;
+  G.set(fly, { left: cx - w0 / 2, top: cy - h0 / 2, width: w0, height: h0, rotation: rot });
+  G.to(el, { opacity: 0, duration: 0.3, ease: "sine.out" });
+  const [card, rev] = tarot.picks[idx];
+  const T = REDUCED ? 0.01 : 0.85, arc = Math.min(60, Math.abs(cy - ty) * 0.25 + 24);
+  const tl = G.timeline({ onComplete: () => {
+    fly.remove(); ph.innerHTML = `<div class="card3d"><div class="inner"><img class="back" src="cards/back.webp" alt=""><img class="face ${rev ? "rev" : ""}" src="${IMG(card.id)}" alt=""></div></div>`;
+    slot.classList.add("done"); G.fromTo(ph, { scale: 1.035 }, { scale: 1, duration: 0.6, ease: "sine.out" });
+    if (tarot.picks.length === s.n) reveal();
+  } });
+  tl.to(fly, { left: tx - b.width / 2, width: b.width, height: b.height, rotation: 0, duration: T, ease: "power2.inOut" }, 0)
+    .to(fly, { top: Math.min(cy, ty) - b.height / 2 - arc, duration: T * 0.45, ease: "sine.out" }, 0)
+    .to(fly, { top: ty - b.height / 2, duration: T * 0.55, ease: "sine.inOut" }, T * 0.45);
+  hint(tarot.picks.length < s.n ? `끌리는 카드 ${s.n}장을 골라 주세요 (${tarot.picks.length}/${s.n})` : "카드를 펼치는 중…");
+}
+function reveal() {
+  const s = SPREADS[tarot.spread]; const fan = $("#fan");
+  G.to($$(".fc", fan), { opacity: 0, y: 18, duration: 0.7, ease: "sine.in", stagger: { each: 0.004, from: "edges" }, onComplete: () => {
+    G.to(fan, { height: 0, marginTop: 0, duration: 0.6, ease: "sine.inOut", onComplete: () => { fan.style.display = "none"; } }); } });
+  hint("");
+  const inners = $$("#tbl .slot .inner");
+  const tl = G.timeline({ delay: 0.5 });
+  const gap = s.n > 4 ? 0.55 : 0.9;
+  inners.forEach((inn, i) => { tl.to(inn, { rotationY: 180, duration: 1.2, ease: "sine.inOut" }, i * gap).call(() => FX.reveal(...tarot.picks[i], inn.closest(".ph"), s.n > 4 ? 0.4 : 0.8, s.n > 1), null, i * gap + 0.75); });
+  tl.call(() => showReading(), null, "+=0.6");
+  $$("#tbl .slot").forEach((sl, i) => sl.onclick = () => cardView(...tarot.picks[i]));
+}
+function showReading() {
+  const s = SPREADS[tarot.spread], d = tarot.picks, box = $("#tRead"), t = topicOf(tarot.q);
+  let head = "";
+  if (tarot.q) { const avg = t >= 0 ? d.reduce((a, [c, r]) => a + lvl(c, r, t), 0) / d.length : 0;
+    head += `<div class="panel" style="margin-top:0"><div class="eyebrow">나의 질문</div><h2 style="margin:4px 0 6px">“${esc(tarot.q)}”</h2>${t >= 0
+      ? `<p style="margin:0"><span class="chip gold">${TOPICS[t][1]} ${TOPICS[t][0]} 질문으로 읽었어요</span> 뽑힌 카드들의 ${TOPICS[t][0]} 기운은 <b class="hl">${avg >= 0.75 ? "밝은 편" : avg >= 0 ? "보통" : avg > -0.75 ? "약간 흐린 편" : "어두운 편"}</b>이에요.${t === 0 && tarot.spread !== "love" ? ' <span class="muted small">연애 질문은 💞 연애 4장 배열로도 보면 좋아요.</span>' : ""}</p>`
+      : `<p class="muted small" style="margin:0">특정 분야 단어가 없어 카드의 전체 의미로 읽었어요. “연애·이직·돈·건강” 같은 말을 넣으면 그 분야로 좁혀 읽어요.</p>`}
+      <p class="basis">질문은 카드 뽑기에 영향을 주지 않아요(실제 타로도 무작위로 뽑고 질문에 맞춰 해석해요). 질문의 주제어를 찾아, 카드마다 전통 의미 중 그 분야 성향으로 읽어요. 역방향은 그 성향이 약해지거나 뒤집힌 것으로 봐요.</p></div>`; }
+  if (tarot.spread === "one") { const [c0, r0] = d[0], base = t >= 0 ? c0.tone[t] * 0.6 + energy(c0, false) * 0.4 : energy(c0, false);
+    const [ans, txt] = r0 ? (base >= 0.5 ? ["조건부 🌓", "좋은 카드가 거꾸로 나왔어요. 바라는 일이 늦어지거나 조건이 붙어요. 서두르지 말아요."] : ["아니오 🌑", "지금은 기운이 막혀 있어요. 서두르지 말고 때를 기다려요."])
+      : base >= 0.5 ? ["예 🌕", "카드가 밝은 기운이에요. 원하는 쪽으로 움직여도 좋아요."] : base <= -0.25 ? ["아니오 🌑", "카드가 어두운 기운이에요. 지금은 밀어붙이지 않는 게 좋아요."] : ["조건부 🌓", "될 수도, 안 될 수도 있어요. 아래 조언대로 움직이면 좋은 쪽으로 기울어요."];
+    head += `<div class="verdict"><span class="eyebrow">카드의 대답</span><b>${ans}</b><span class="small">${txt}</span><p class="basis" style="text-align:left">예/아니오: 원카드 리딩의 일반 규칙대로 밝은 뜻의 정방향은 예, 어두운 뜻이면 아니오, 밝은 카드의 역방향은 늦어짐(조건부), 어두운 카드의 역방향은 아니오, 뜻이 중간이면 조건부로 봐요</p></div>`; }
+  const L = overall(d);
+  box.innerHTML = `<div class="reading">${head}${d.map(([c, r], i) => `<div class="rcard"><img src="${IMG(c.id)}" class="${r ? "rev" : ""}" data-i="${i}" alt="${esc(c.ko)}">
+      <div><div class="pos">${i + 1}. ${s.pos[i]}</div><h3>${esc(cardName(c, r))} <span class="muted small">${esc(c.en)}</span></h3>
+      <div class="row">${(r ? c.rev_kw : c.up_kw).map((k) => `<span class="chip">${esc(k)}</span>`).join("")}</div>
+      <p>${esc(r ? c.rev : c.up)}</p>${t >= 0 ? topicLine(c, r, t) : ""}<p class="adv">💡 ${esc(c.advice)}</p></div></div>`).join("")}
+    ${L.length ? `<div class="panel" style="margin-top:0"><h2>🔮 전체 흐름</h2>${L.map((x) => `<p style="margin:6px 0">${x}</p>`).join("")}</div>` : ""}
+    <div class="row" style="justify-content:center"><button class="btn" id="again">✦ 다시 뽑기</button><button class="btn ghost" id="otherSpread">다른 배열 고르기</button></div></div>`;
+  $$(".rcard img", box).forEach((im) => im.onclick = () => cardView(...d[+im.dataset.i]));
+  $("#again").onclick = () => startSpread(tarot.spread);
+  $("#otherSpread").onclick = () => $(".spreads").scrollIntoView({ behavior: "smooth", block: "center" });
+  G.from($$(".reading > *", box), { opacity: 0, y: 12, filter: "blur(6px)", duration: 1, stagger: 0.12, ease: "sine.out", clearProps: "filter" });
+}
+
+// ---------- 사주
+const YEAR_GOD = {
+  비견: "독립과 자기 주도의 해. 함께할 동료가 늘고 내 힘으로 밀고 나가요. 고집 때문에 생기는 경쟁만 조심해요.",
+  겁재: "경쟁과 변동의 해. 승부욕이 성과로 이어지지만 큰 지출·보증·동업은 한 번 더 따져요.",
+  식신: "재능을 펼치고 즐기는 해. 꾸준히 만들고 표현하면 결과와 여유가 따라와요.",
+  상관: "변화와 도전의 해. 새 아이디어로 틀을 깨기 좋지만 말과 규칙 앞에서는 조심해요.",
+  편재: "활동 무대가 넓어지는 해. 기회와 돈의 흐름이 커지니 과감하되 한곳에 몰지 말아요.",
+  정재: "차곡차곡 쌓는 해. 성실함이 재물과 안정으로 돌아와요. 저축·정리에 좋아요.",
+  편관: "책임과 압박이 커지는 해. 버티면 한 단계 성장해요. 무리하지 말고 건강부터 챙겨요.",
+  정관: "인정받고 자리 잡는 해. 승진·합격·계약처럼 공식적인 일이 잘 풀려요.",
+  편인: "배움과 전환의 해. 새 분야 공부·자격에 좋고 생각이 많아질 수 있어요. 혼자만의 시간이 약이에요.",
+  정인: "도움을 받는 해. 윗사람·문서·학업운이 좋고 마음이 안정돼요.",
+};
+const tile = (s, isStem, cls = "") => { const e = isStem ? SJ.SE[s] : SJ.BE[s];
+  return `<div class="tile e${e} ${cls}"><div class="hj">${isStem ? SJ.STEMS_H[s] : SJ.BR_H[s]}</div><div class="kr">${isStem ? SJ.STEMS[s] : SJ.BR[s]} · ${SJ.EL[e]}</div></div>`; };
+function renderSaju(el) {
+  const sj = sajuOf(me); if (!sj) { el.innerHTML = `<div class="eyebrow" style="margin-top:8px">사주팔자</div><h1 style="margin-top:6px">사주팔자</h1>` + needMe("생일을 알려 주면 사주를 펼쳐 볼게요"); return; }
+  setTimeout(() => { const t = $(".pcol .god.me", el); if (t) FX.play(["wood", "fire", "earth", "light", "water"][SJ.SE[sj.day.s]], t.parentElement, 0.9); }, 450);
+  const ds = sj.day.s, cols = [["시주", sj.hour], ["일주", sj.day], ["월주", sj.month], ["년주", sj.year]];
+  const godOf = (p, stem) => stem ? (p === sj.day ? "나 (일간)" : SJ.tenGod(ds, SJ.SE[p.s], p.s % 2 === 0)) : SJ.tenGod(ds, SJ.BE[p.b], SJ.BY[p.b]);
+  const ec = SJ.elements(sj), [slabel, ratio] = SJ.strength(sj), gods = SJ.gods(sj), dm = DECK.dayMaster[SJ.STEMS[ds]];
+  const groups = {}; for (const [g, n] of Object.entries(gods)) groups[SJ.GROUP[g]] = (groups[SJ.GROUP[g]] || 0) + n;
+  const total = ec.reduce((a, b) => a + b, 0), maxE = ec.indexOf(Math.max(...ec)), miss = ec.map((c, i) => (c === 0 ? SJ.EL[i] : null)).filter(Boolean);
+  const yp = SJ.yearPillarNow(), ygod = SJ.tenGod(ds, SJ.SE[yp.p.s], yp.p.s % 2 === 0), yrels = SJ.branchRelations(sj.year.b, yp.p.b).filter((r) => r[0] !== "같은 글자");
+  const order = ["비겁", "식상", "재성", "관성", "인성"];
+  el.innerHTML = `<div class="eyebrow" style="margin-top:8px">사주팔자 · 四柱八字</div><h1 style="margin-top:6px">${me.name ? esc(me.name) + "님의 " : ""}사주팔자</h1>
+    <p class="lead">${birthText(me)} · ${SJ.ZODIAC_EMOJI[sj.year.b]} ${SJ.ptext(sj.year)}년 ${SJ.ZODIAC[sj.year.b]}띠 <button class="btn ghost sm" data-open-me style="margin-left:6px">고치기</button></p>${sj.jieNear ? `<p class="small" style="color:var(--gold);margin:6px 0 0">⚠️ 이날은 절기가 바뀌는 날이라 태어난 시각에 따라 월주(띠가 바뀌는 입춘이면 년주도)가 달라져요. 출생 시각을 넣으면 정확해져요.</p>` : ""}
+    <div class="panel"><div class="pillars">${cols.map(([n, p]) => `<div class="pcol"><div class="ph2">${n}</div>${p ? `<div class="god ${p === sj.day ? "me" : ""}">${godOf(p, true)}</div>${tile(p.s, true)}${tile(p.b, false)}<div class="god">${godOf(p, false)}</div>`
+      : `<div class="god">&nbsp;</div><div class="tile unknown"><div class="hj">?</div><div class="kr">모름</div></div><div class="tile unknown"><div class="hj">?</div><div class="kr">모름</div></div><div class="god">&nbsp;</div>`}</div>`).join("")}</div>
+      <p class="muted small" style="margin:12px 0 0">절기(태양 황경)로 년·월을, 진태양시(서울 −32분)로 시를 정했어요. ${sj.hour ? "" : "태어난 시를 넣으면 시주까지 8글자가 채워져요."}</p></div>
+    <div class="grid2">
+      <div class="panel"><div class="eyebrow">나를 나타내는 기운 (일간)</div><h2 style="margin-top:4px">나를 뜻하는 글자 · ${SJ.STEMS[ds]}${SJ.STEMS_H[ds]}</h2><h3 style="color:var(--gold2)">${dm[0]}</h3><p style="margin:6px 0 0">${esc(dm[1])}</p></div>
+      <div class="panel"><div class="eyebrow">오행 분포</div><h2 style="margin-top:4px">오행 분포</h2>
+        <div class="bars">${ec.map((c, i) => `<div class="bar"><span>${SJ.EL_H[i]} ${SJ.EL[i]}</span><div class="track"><div class="fill" data-w="${(c / total) * 100}" style="background:${ELC[i]};box-shadow:0 0 12px ${ELC[i]}"></div></div><b>${c}</b></div>`).join("")}</div>
+        <p class="small" style="margin:12px 0 0"><b class="hl">${SJ.EL[maxE]}</b> 기운이 가장 강해요.${miss.length ? ` <b class="hl">${miss.join("·")}</b> 기운이 없어요 — 그 색·계절·활동을 가까이하면 균형이 맞아요.` : " 다섯 기운이 모두 있어 고른 편이에요."}</p></div>
+    </div>
+    <div class="grid2">
+      <div class="panel"><div class="eyebrow">기운의 세기</div><h2 style="margin-top:4px">${slabel}</h2>
+        <div class="meter"><div class="knob" data-r="${ratio}"></div></div><div class="meter-l"><span>신약</span><span>중화</span><span>신강</span></div>
+        <p class="small muted" style="margin:10px 0 0">나를 돕는 글자(같은 오행·나를 생하는 오행)의 비율 ${ratio}%. 월지(태어난 계절)는 두 배로 쳐요. ${ratio >= 55 ? "에너지가 넘쳐 밖으로 쓰는 일(표현·활동·재물)에 힘이 실려요." : ratio <= 40 ? "주변의 도움과 배움으로 힘을 채우면 크게 피어나요." : "치우치지 않아 어느 쪽으로든 쓰기 좋아요."}</p></div>
+      <div class="panel"><div class="eyebrow">십성</div><h2 style="margin-top:4px">십신으로 본 성향</h2><div class="godg">${order.filter((g) => groups[g]).sort((a, b) => groups[b] - groups[a]).map((g) => `<div><b>${DECK.groupMeaning[g][0]} ${g} ×${groups[g]}</b><br><span class="muted">${esc(DECK.groupMeaning[g][1])}</span></div>`).join("")}</div></div>
+    </div>
+    <div class="grid2">
+      <div class="panel"><div class="eyebrow">${yp.year}년 운</div><h2 style="margin-top:4px">${yp.year}년 ${SJ.ptext(yp.p)}(${SJ.phanja(yp.p)})년 운</h2>
+        <p style="margin:0"><span class="chip gold">${ygod}의 해</span></p><p>${esc(YEAR_GOD[ygod])}</p>
+        ${yrels.map(([n, d, x]) => `<p class="small" style="margin:6px 0 0"><span class="chip ${d > 0 ? "good" : "bad"}">${SJ.ZODIAC[sj.year.b]}띠·${SJ.ZODIAC[yp.p.b]}해 ${n}</span> ${esc(x)}</p>`).join("")}</div>
+      <div class="panel"><div class="eyebrow">오늘</div>${(() => { const tp = SJ.todayPillar(); const g = SJ.tenGod(ds, SJ.SE[tp.s], tp.s % 2 === 0); return `<h2 style="margin-top:4px">오늘 ${SJ.ptext(tp)}일 · ${g}</h2><p style="margin:0">${esc(DAILY_GOD[g])}</p>`; })()}
+        <div class="row" style="margin-top:14px"><button class="btn sm" data-go="love">💞 이 사주로 궁합 보기</button></div></div>
+    </div><p class="basis">근거 · 만세력: 일주는 율리우스일 기준 60갑자 순환, 년·월주는 태양 황경 절기(입춘 315°부터 30°씩), 월간은 오호둔·시간은 오자둔법 · 시간: 출생 당시 한국 시계(1954~61년 UTC+8:30, 서머타임 포함)를 세계시로 풀고 서울 경도(127°) 평균태양시로 바꿈(표준시 −32분) · 절입: 한국천문연구원 발표와 분 단위로 같은 천문 계산표 · 자시: 진태양시 23시부터 다음 날 일주로 보는 방식(23~24시를 그날로 두는 학파도 있어요) · 십신: 일간과의 생극·음양 관계 · 신강/신약: 비겁·인성 비율(월지 2배) · 세운: 올해 천간이 내 일간에 주는 십신. 띠는 입춘 기준이에요(민간에서는 설날로 나누기도 해요). 출생 시각을 모르는 날짜 기준으로 실제 만세력 400개 날짜와 대조해 일치</p>`;
+  $$(".tile", el).forEach((t, i) => G.from(t, { opacity: 0, y: 10, filter: "blur(6px)", duration: 0.9, delay: 0.08 * i, ease: "sine.out", clearProps: "filter" }));
+  $$(".fill", el).forEach((f, i) => G.to(f, { width: f.dataset.w + "%", duration: 1, delay: 0.3 + i * 0.1, ease: "power3.out" }));
+  const kn = $(".knob", el); G.to(kn, { left: kn.dataset.r + "%", duration: 1.6, delay: 0.4, ease: "power2.out" });
+}
+
+// ---------- 궁합
+function renderLove(el) {
+  el.innerHTML = `<div class="eyebrow" style="margin-top:8px">궁합</div><h1 style="margin-top:6px">연애 궁합</h1>
+    <p class="lead">전통 궁합법(일간 합·일지·띠·오행 보완·배우자 별)과 이름 발음오행으로 봐요. 상대 생일을 몰라도 이름만으로 볼 수 있어요.</p>
+    <div class="grid2">
+      <div class="panel"><h2>🙋 나</h2>${me ? `<p style="margin:0">${birthText(me)}</p><label class="f" style="margin-top:10px">내 이름</label><input type="text" id="lvMy" maxlength="12" value="${esc(me.name || "")}" placeholder="예: 김민준">`
+        : `<p class="muted small" style="margin-top:0">내 생일이 없으면 이름 궁합만 볼 수 있어요.</p><button class="btn sm" data-open-me>내 정보 넣기</button><label class="f" style="margin-top:12px">내 이름</label><input type="text" id="lvMy" maxlength="12" placeholder="예: 김민준">`}</div>
+      <div class="panel"><h2>💘 그 사람</h2><label class="f">이름</label><input type="text" id="lvTh" maxlength="12" placeholder="예: 이서연"><div style="height:12px"></div>${birthFields("th", null, true)}</div>
+    </div>
+    <p id="lvErr" class="small" style="color:var(--bad);text-align:center;min-height:1.2em"></p>
+    <div class="row" style="justify-content:center"><button class="btn" id="lvGo">💞 궁합 보기</button></div>
+    <div id="lvOut"></div><p class="muted small" style="text-align:center">상대 정보는 저장하지 않아요.</p>`;
+  bindSeg("thG");
+  $("#lvGo").onclick = () => {
+    const myName = $("#lvMy").value.trim(), thName = $("#lvTh").value.trim(); const [tb, err] = readBirth("th");
+    if (err) return ($("#lvErr").textContent = err);
+    const mine = sajuOf(me), theirs = tb ? sajuOf(tb) : null;
+    const nm = SJ.nameMatch(myName, thName);
+    if (!(mine && theirs) && !(nm[1].length)) return ($("#lvErr").textContent = "두 사람 생일이나, 두 사람의 한글 이름을 넣어 주세요.");
+    $("#lvErr").textContent = "";
+    const r = SJ.compatibility(mine && theirs ? mine : null, mine && theirs ? theirs : null, myName, thName);
+    const C = 2 * Math.PI * 86;
+    $("#lvOut").innerHTML = `<div class="panel"><div class="grid2" style="align-items:center">
+      <div><div class="ring"><svg viewBox="0 0 200 200"><defs><linearGradient id="rg" x1="0" x2="1"><stop offset="0" stop-color="#ff8fb1"/><stop offset="1" stop-color="#e8c372"/></linearGradient></defs>
+        <circle cx="100" cy="100" r="86" fill="none" stroke="rgba(255,255,255,.08)" stroke-width="14"/><circle id="rgArc" cx="100" cy="100" r="86" fill="none" stroke="url(#rg)" stroke-width="14" stroke-linecap="round" stroke-dasharray="${C}" stroke-dashoffset="${C}"/></svg>
+        <div class="num"><div><b id="rgNum">0</b><div class="small muted">/ 99</div></div></div></div>
+        <h2 style="text-align:center;margin:6px 0 0">${r.grade}</h2><p style="text-align:center;margin:4px 0 0" class="muted">${r.summary}</p></div>
+      <div><h3>무엇을 봤나요</h3><div class="items">${r.items.map(([n, d, t]) => `<div class="item"><span class="t">${esc(n)}</span><span class="chip ${d > 0 ? "good" : d < 0 ? "bad" : ""}">${d > 0 ? "+" + d : d}</span><span class="d">${esc(t)}</span></div>`).join("") || '<p class="muted small">생일이 둘 다 있으면 사주 항목이 더해져요.</p>'}</div>
+        <p class="muted small" style="margin:10px 0 0">기본 60점에서 항목마다 더하고 빼요.</p><p class="basis">근거 · 전통 궁합: 일간 천간합(갑기·을경·병신·정임·무계)/충, 일지 육합·삼합·충·원진·형·해, 띠 관계, 서로 부족한 오행을 채우는지, 상대가 내 배우자 별(남:재성 · 여:관성)인지 · 이름: 훈민정음 해례본의 초성 발음오행(ㄱㅋ 목, ㄴㄷㄹㅌ 화, ㅁㅂㅍ 토, ㅅㅈㅊ 금, ㅇㅎ 수)</p></div></div></div>
+    ${nm[1].length ? `<div class="panel"><h2>✍️ 이름 획수 궁합 <span class="chip gold">${nm[0]}%</span></h2><p class="muted small" style="margin-top:0">두 이름을 한 글자씩 번갈아 놓고 획수를 이웃끼리 더해 일의 자리만 남기는, 예부터 해 온 놀이예요. 점술이 아니라 재미로만 봐 주세요.</p>
+      <div class="pyr"><div class="r letters">${[...nm[2]].map((c) => `<span>${c}</span>`).join("")}</div>${nm[1].map((row, i) => `<div class="r ${i === nm[1].length - 1 ? "last" : ""}">${row.map((x) => `<span>${x}</span>`).join("")}</div>`).join("")}</div></div>` : ""}`;
+    $("#lvOut").scrollIntoView({ behavior: REDUCED ? "auto" : "smooth", block: "start" });
+    const o = { v: 0 }; G.to(o, { v: r.score, duration: 1.6, ease: "power3.out", onUpdate: () => { $("#rgNum").textContent = Math.round(o.v); $("#rgArc").setAttribute("stroke-dashoffset", C * (1 - o.v / 100)); },
+      onComplete: () => { $("#rgNum").textContent = r.score; $("#rgArc").setAttribute("stroke-dashoffset", C * (1 - r.score / 100)); FX.play("love", $("#rgArc").closest("svg"), r.score >= 78 ? 1.1 : 0.6); } });
+    G.from($$(".item", $("#lvOut")), { opacity: 0, y: 10, duration: 0.7, ease: "sine.out", stagger: 0.08, delay: 0.3 });
+    $$(".pyr .r", $("#lvOut")).forEach((rw, i) => G.from($$("span", rw), { scale: 0.7, opacity: 0, filter: "blur(4px)", duration: 0.7, stagger: 0.05, delay: 0.6 + i * 0.25, ease: "sine.out", clearProps: "filter" }));
+  };
+}
+
+// ---------- 별자리 · 띠 · 숫자
+const SIGNS = [
+  ["양자리", "♈", "3/21 ~ 4/19", "불", "화성", "시작이 빠르고 솔직한 개척자. 경쟁에서 힘이 나고 지루한 건 못 참아요.", "마음에 들면 먼저 다가가는 직진형"],
+  ["황소자리", "♉", "4/20 ~ 5/20", "흙", "금성", "느긋하지만 한번 정하면 끝까지 가요. 맛·향·촉감 같은 감각을 즐기는 실속파.", "천천히, 그러나 깊게. 안정감이 1순위"],
+  ["쌍둥이자리", "♊", "5/21 ~ 6/21", "공기", "수성", "호기심 많고 말재주 좋은 정보통. 여러 일을 한꺼번에 굴리는 재주가 있어요.", "대화가 통해야 설레요"],
+  ["게자리", "♋", "6/22 ~ 7/22", "물", "달", "정 많고 내 사람을 챙기는 보호자. 기억력과 공감 능력이 뛰어나요.", "집처럼 따뜻하고 편안한 사랑"],
+  ["사자자리", "♌", "7/23 ~ 8/22", "불", "태양", "어디서나 빛나는 무대 체질. 당당하고 의리 있으며 통이 커요.", "아낌없이 표현하고, 인정받고 싶어 해요"],
+  ["처녀자리", "♍", "8/23 ~ 9/22", "흙", "수성", "꼼꼼하고 분석적인 해결사. 남을 돕는 데서 보람을 느껴요.", "작은 배려로 마음을 보여 줘요"],
+  ["천칭자리", "♎", "9/23 ~ 10/22", "공기", "금성", "균형과 조화를 아는 미적 감각의 소유자. 사교적이고 매너가 좋아요.", "다정한 매너, 하지만 결정은 어려워해요"],
+  ["전갈자리", "♏", "10/23 ~ 11/22", "물", "명왕성 · 화성", "깊고 강렬한 집중력. 겉은 조용해도 속은 뜨겁고, 한번 믿으면 끝까지 가요.", "한 사람에게 깊이 빠지는 올인형"],
+  ["사수자리", "♐", "11/23 ~ 12/21", "불", "목성", "자유와 모험을 사랑하는 낙천가. 배움과 여행에서 힘을 얻어요.", "친구 같은 연인, 구속은 싫어요"],
+  ["염소자리", "♑", "12/22 ~ 1/19", "흙", "토성", "성실하고 목표가 분명한 노력파. 시간이 갈수록 빛나는 대기만성형.", "말보다 행동으로 증명해요"],
+  ["물병자리", "♒", "1/20 ~ 2/18", "공기", "천왕성 · 토성", "독창적이고 자유로운 아이디어 뱅크. 틀에 박힌 걸 싫어하고 모두를 친구로 대해요.", "서로의 공간을 존중하는 사이"],
+  ["물고기자리", "♓", "2/19 ~ 3/20", "물", "해왕성 · 목성", "공감 능력과 상상력이 풍부한 예술가. 남의 마음을 내 일처럼 느껴요.", "영화 같은 로맨스를 꿈꿔요"],
+];
+const ZODIAC_TEXT = ["재치 있고 눈치 빠른 생활력의 달인", "묵묵히 끝까지 해내는 우직한 노력파", "용감하고 카리스마 있는 리더", "온화하고 섬세한 평화주의자", "꿈이 크고 기세 좋은 야심가", "지혜롭고 신중한 전략가",
+  "활동적이고 자유로운 행동파", "따뜻하고 예술적인 감성파", "재주 많고 영리한 만능 재주꾼", "부지런하고 꼼꼼한 완벽주의자", "의리 있고 정직한 든든한 친구", "너그럽고 복이 많은 낙천가"];
+const LIFE = { 1: ["개척자", "독립심과 리더십으로 스스로 길을 내는 사람. 남이 안 간 길에서 빛나요."], 2: ["조정자", "섬세하게 공감하고 사람 사이를 이어 줘요. 협력할 때 가장 강해요."],
+  3: ["표현가", "말·글·예술로 기쁨을 퍼뜨리는 사람. 밝은 에너지가 주변을 웃게 해요."], 4: ["건축가", "성실하고 체계적으로 단단한 기반을 쌓아요. 믿음직한 사람."],
+  5: ["모험가", "변화와 자유를 사랑하고 경험으로 배워요. 새로운 곳에서 힘이 나요."], 6: ["보호자", "책임감과 사랑으로 가족과 공동체를 돌봐요. 따뜻한 중심."],
+  7: ["탐구자", "분석과 직관으로 진리를 파고들어요. 혼자 생각하는 시간이 꼭 필요해요."], 8: ["실현가", "야망과 실행력으로 큰 성취를 이뤄요. 재물과 권한을 다루는 힘."],
+  9: ["이상가", "넓은 시야와 너그러움으로 세상에 나누는 사람. 끝맺음을 잘해요."], 11: ["영감가 · 마스터 넘버", "직관과 영감이 특히 강해요. 사람들에게 빛과 방향을 보여 줘요."],
+  22: ["마스터 빌더", "큰 꿈을 현실의 구조로 바꾸는 힘. 오래 남는 것을 만들어요."], 33: ["마스터 힐러", "헌신과 치유의 숫자. 사랑으로 사람을 일으켜 세워요."] };
+function renderStars(el) {
+  const sj = sajuOf(me); if (!sj) { el.innerHTML = `<div class="eyebrow" style="margin-top:8px">별자리 · 수비학</div><h1 style="margin-top:6px">별자리 · 띠 · 숫자</h1>` + needMe("생일을 알려 주면 별자리를 찾아 줄게요"); return; }
+  const si = SJ.signOf(sj), S = SIGNS[si], lp = SJ.lifePath(me.y, me.mo, me.d), L = LIFE[lp];
+  // 트랜싯: 지금 태양 황경과 태어날 때 태양 황경 사이 각도(애스펙트)
+  const nowLon = SJ.sunLon(Date.now()), diff = SJ.mod(nowLon - sj.lon, 360), sep = Math.min(diff, 360 - diff);
+  const ASP = [[0, "컨정션 (0°) · 태양 회귀", "태양이 태어날 때 자리로 돌아온 시기예요. 새 1년의 시작, 나를 다시 세우기 좋아요.", 5],
+    [60, "섹스타일 (60°)", "작은 기회가 열리는 각도예요. 먼저 손을 내밀면 잘 이어져요.", 4],
+    [90, "스퀘어 (90°)", "긴장의 각도예요. 부딪히는 일이 있어도 그만큼 밀고 나갈 힘이 생겨요.", 2],
+    [120, "트라인 (120°)", "가장 순한 조화의 각도예요. 흐름이 부드럽고 하는 일이 잘 풀려요.", 5],
+    [180, "오포지션 (180°)", "태양이 내 자리 정반대에 있어요. 관계·상대방이 거울이 되는 시기, 균형을 찾아요.", 3]];
+  const hit = ASP.find(([a]) => Math.abs(sep - a) <= 8);
+  const curSign = SIGNS[Math.floor(nowLon / 30)];
+  const [aspName, aspText, sc] = hit ? hit.slice(1) : ["주요 각도 없음", `지금 태양은 ${curSign[0]}에 있어요. 나의 태양과 큰 각을 이루지 않아 잔잔한 시기예요.`, 3];
+  el.innerHTML = `<div class="eyebrow" style="margin-top:8px">별자리 · 수비학</div><h1 style="margin-top:6px">별자리 · 띠 · 숫자</h1>
+    <p class="lead">태어난 순간 태양이 있던 자리(황경 ${sj.lon.toFixed(1)}°)로 별자리를 정해요. 경계일에 태어나도 정확해요.</p>
+    <div class="panel"><div class="sign"><div class="glyph" id="glyph">${S[1]}</div><div><div class="eyebrow">나의 별자리</div><h2 style="margin:2px 0 0;font-size:1.5rem">${S[0]}</h2><span class="muted small">${S[2]}</span></div></div>
+      <dl class="kv"><dt>원소</dt><dd>${S[3]}</dd><dt>수호성</dt><dd>${S[4]}</dd><dt>성향</dt><dd>${S[5]}</dd><dt>연애</dt><dd>${S[6]}</dd></dl>
+      <div class="lucky"><div style="flex:2"><small>요즘 태양 흐름 · 지금 태양 ${curSign[1]} ${curSign[0]} ${(nowLon % 30).toFixed(0)}°</small><b style="font-size:1rem">☀️ ${aspName}</b><small style="color:var(--text);font-size:.85rem">${aspText}</small></div><div><small>흐름 세기</small><b class="stars">${[1, 2, 3, 4, 5].map((n) => `<i class="${n <= sc ? "on" : ""}">★</i>`).join("")}</b></div></div>
+      <p class="basis">근거 · 별자리: 태어난 시각의 태양 황경(트로피컬 황도대, 30°씩 12궁) · 태양 흐름: 오늘 태양과 출생 태양 사이 각도를 점성술의 5대 애스펙트(오브 ±8°)로 판정</p></div>
+    <div class="grid2">
+      <div class="panel"><div class="eyebrow">나의 띠</div><h2 style="margin-top:4px">${SJ.ZODIAC_EMOJI[sj.year.b]} ${SJ.ZODIAC[sj.year.b]}띠 · ${SJ.ptext(sj.year)}년</h2><p style="margin:0">${ZODIAC_TEXT[sj.year.b]}</p>
+        <p class="muted small" style="margin:8px 0 0">띠는 1월 1일이 아니라 입춘(2월 4일 무렵)에 바뀌어요. 1~2월 초에 태어났다면 앞 해의 띠일 수 있어요.</p></div>
+      <div class="panel"><div class="eyebrow">생명수 (라이프 패스)</div><div class="row" style="gap:16px"><div class="lp" id="lpNum">${lp}</div><div><h2 style="margin:0">${L[0]}</h2><span class="muted small">생년월일 숫자를 모두 더해 한 자리로 (11·22·33은 그대로)</span></div></div><p style="margin:8px 0 0">${L[1]}</p><p class="basis">근거 · 피타고라스식 수비학: 생년월일 숫자를 모두 더해 한 자리로 줄이는 생명수(마스터 넘버 11·22·33 유지)</p></div>
+    </div>`;
+  G.from("#glyph", { rotation: -25, scale: 0.85, opacity: 0, filter: "blur(8px)", duration: 1.6, ease: "sine.out", clearProps: "filter" });
+  G.from("#lpNum", { scale: 1.15, opacity: 0, filter: "blur(8px)", duration: 1.3, delay: 0.3, ease: "sine.out", clearProps: "filter" });
+}
+
+// ---------- 화면 전환
+const PAGES = { today: renderToday, tarot: renderTarot, saju: renderSaju, love: renderLove, stars: renderStars };
+const rendered = new Set(); let current = null;
+function show(tab, force) {
+  if (!PAGES[tab]) tab = "today";
+  $$("nav.tabs button").forEach((b) => b.classList.toggle("on", b.dataset.tab === tab));
+  $$("section.page").forEach((s) => s.classList.toggle("on", s.id === "p-" + tab));
+  const el = $("#p-" + tab);
+  if (!rendered.has(tab) || force) { PAGES[tab](el); rendered.add(tab); }
+  if (current !== tab || force) G.fromTo(el, { opacity: 0, y: 8, filter: "blur(4px)" }, { opacity: 1, y: 0, filter: "blur(0px)", duration: 0.6, ease: "sine.out", clearProps: "filter" });
+  current = tab; store.set("tab", tab);
+}
+function go(tab) { show(tab); scrollTo({ top: 0, behavior: REDUCED ? "auto" : "smooth" }); }
+$$("nav.tabs button").forEach((b) => b.onclick = () => go(b.dataset.tab));
+show(store.get("tab", "today"));
+$("#meLabel").textContent = me ? `${me.name || "나"} · ${me.y}.${me.mo}.${me.d}` : "내 정보 입력";
+})();
+</script>
